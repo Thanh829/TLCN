@@ -1,0 +1,19 @@
+/* You can add global styles to this file, and also import other style files */
+body{
+    position: relative;
+}
+button[disabled]{
+    opacity: .5;
+    cursor: not-allowed;
+}
+
+footer.footer{
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+}
+
+.p-relative{
+    position: relative;
+}

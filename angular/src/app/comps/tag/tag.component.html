@@ -1,0 +1,45 @@
+<section class="password-section section">
+    <h1> Tag </h1>
+
+    <div class="alert alert-success" *ngIf='message'>{{message}}</div>
+    <div class="container">
+
+
+        <div class="col-4 col-mdr-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Update</th>
+
+                    </tr>
+                </thead>
+                <tbody *ngFor="let tag of tags">
+                    <!--   for (Todo todo: todos) {  -->
+                    <tr>
+                        <td>{{tag.title}}</td>
+                        <td><button (click)="updateTag(tag.id)" class="btn btn-success">Update</button></td>
+                    </tr>
+                    <!-- } -->
+                </tbody>
+                <button (click)="show()" class="btn btn-success">Show Add Form</button>
+            </table>
+
+            <form class="w-100 upload" [formGroup]="tagForm">
+
+                <!-- <div class="col-1 flex-end number">
+                <div class="form-group m-0">1.</div>
+              </div> -->
+                <div class="form-group m-0 col-6">
+                    <label for="name"> <span>Title</span></label>
+                    <input type="text" id="name" autocomplete="off" formControlName="title" />
+                </div>
+
+                <div class="form-group col-10 col-mdr-12">
+                    <button (click)="addTag()" class="btn btn-success">Add</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</section>

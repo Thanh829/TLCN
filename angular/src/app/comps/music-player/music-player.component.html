@@ -1,0 +1,52 @@
+<!-- ================ Video ================ -->
+<video #video>
+</video>
+<!-- ================ /Video ================ -->
+<div class="player" *ngIf="song">
+
+
+    <div class="close-icon" (click)="close()"><i class="fas fa-times"></i></div>
+    <div class="player-container">
+        <!-- <section class="user d-flex"><img [src]="song.user.pic ? song.user.pic : 'assets/images/placeholder.png'" />
+            <div class="user-info">
+                <a class="username" [routerLink]="['/user', song.user.slug]">{{ song.user.name | titlecase}}</a>
+                <span>{{ song.title }}</span></div>
+        </section>-->
+        <section class="controls d-flex">
+            <span class="play" (click)="toggle()">
+          <i class="fas fa-play" *ngIf="!isPlaying"></i> 
+          <i class="fas fa-pause" *ngIf="isPlaying"></i>
+        </span>
+            <span class="repeat active" (click)="toggleLoop()">
+          <i class="fas fa-retweet" [style.opacity]="isLoop ? 1: .5"></i>
+        </span>
+            <span class="number">{{ song.time | songTime}}</span>
+            <div class="slider" id="bar" (appBar)="songBar($event)" (finalClick)="finalClick()">
+                <div class="full">
+                    <div class="finished" [style.width]="barWidth">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <span class="number">{{ currentTime}}</span>
+            </div>
+
+        </section>
+        <section class="sound d-flex">
+            <div class="icon" (click)="toggleMute()">
+                <!-- Volume icon -->
+                <i class="fas fa-volume-up" *ngIf="volumeWidth >= 50 && !isMuted"></i>
+                <i class="fas fa-volume-down" *ngIf="volumeWidth < 50 && volumeWidth > 0  && !isMuted"></i>
+                <i class="fas fa-volume-mute" *ngIf="volumeWidth == 0 || isMuted" style="opacity: .8"></i>
+            </div>
+            <div class="slider" (appBar)="soundBar($event)">
+                <div class="full">
+                    <div class="finished" [style.width]="isMuted ? '0%' : volumeWidth + '%'">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
