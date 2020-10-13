@@ -1,0 +1,29 @@
+<section class="password-section section">
+    <div class="container">
+        <div class="row">
+            <div class="offset-md-1"></div>
+            <div class="col-10 col-mdr-12">
+                <form class="w-100 upload" [formGroup]="uploadForm" (ngSubmit)="upload()">
+                    <div class="row">
+                        <!-- <div class="col-1 flex-end number">
+                  <div class="form-group m-0">1.</div>
+                </div> -->
+                        <tr>
+                            <td colspan="2" style="text-align: center;">
+                                <h4> Third Way: Using NG2-Completer</h4>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                User ID with dynamic data:
+                            </td>
+                            <td>
+                                <ng2-completer [datasource]="userData" [minSearchLength]="2"></ng2-completer>
+                            </td>
+                        </tr>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

@@ -34,10 +34,8 @@ import { UserModule } from './user/user.module';
 //import { httpInterceptorsProviders } from './shared/interceptors';
 import { TimePipe } from './shared/pipes/time.pipe';
 import { TagComponent } from './comps/tag/tag.component';
-import { AutocompleteComponent } from './autocomplete/autocomplete.component';
-import { AutocompleteContentDirective } from './autocomplete-content.directive';
-import { OptionComponent } from './option/option.component';
-import { AutocompleteDirective } from './autocomplete.directive';
+import { TestComponent } from './comps/test/test.component';
+import { Ng2CompleterModule } from 'ng2-completer';
 
 @NgModule({
   declarations: [
@@ -58,10 +56,7 @@ import { AutocompleteDirective } from './autocomplete.directive';
     NotFoundComponent,
     TimePipe,
     TagComponent,
-    AutocompleteComponent,
-    AutocompleteContentDirective,
-    OptionComponent,
-    AutocompleteDirective
+    TestComponent,
   ],
   imports: [
     BrowserModule,
@@ -74,7 +69,8 @@ import { AutocompleteDirective } from './autocomplete.directive';
       positionClass: 'toast-bottom-right',
     }), // ToastrModule added
     SharedModule,
-    UserModule
+    UserModule,
+    Ng2CompleterModule
   ],
   providers: [
     AuthService,

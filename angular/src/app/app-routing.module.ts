@@ -12,6 +12,7 @@ import { ChangePasswordComponent } from './comps/change-password/change-password
 import { NotFoundComponent } from './comps/not-found/not-found.component';
 import { NotAuthGuard } from './guards/not-auth.guard';
 import { TagComponent } from './comps/tag/tag.component';
+import { TestComponent } from './comps/test/test.component';
 
 
 export const routes: Routes = [
@@ -24,6 +25,7 @@ export const routes: Routes = [
   {path: "user", component: ProfileComponent},
   {path: "upload", component: UploadComponent},
   {path: "tags", component: TagComponent},
+  {path: "test", component: TestComponent},
   {path: "**", redirectTo: "404"},
   {path: "404", component: NotFoundComponent},
 ];
