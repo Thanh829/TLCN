@@ -10,7 +10,7 @@ export class TagService {
   constructor(private http: HttpClient) { }
 
   getALLTag(){
-    return this.http.get<Tag[]>("http://localhost:8090/api/v1/tag/all");
+    return this.http.get<any>("http://localhost:8090/api/v1/tag/all");
   }
 
   addTag(title: any)

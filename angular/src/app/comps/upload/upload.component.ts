@@ -4,6 +4,8 @@ import { AuthService } from "src/app/shared/services/auth.service";
 import { HttpClient, HttpHeaders, HttpEventType } from "@angular/common/http";
 import { environment } from 'src/environments/environment';
 import { MessagesService } from 'src/app/shared/services/messages.service';
+import { CompleterService, CompleterData } from 'ng2-completer';
+import { TagService } from 'src/app/shared/services/tag.service';
 
 @Component({
   selector: "app-upload",
@@ -12,13 +14,18 @@ import { MessagesService } from 'src/app/shared/services/messages.service';
 })
 export class UploadComponent implements OnInit {
   uploadForm: FormGroup;
+  myGroup:FormGroup;
+
 
   fileError: string = "";
+  public text="";
+  dataService: CompleterData;
   @ViewChild("fileNameInput", { static: true }) fileNameInput: ElementRef;
 
   loading: boolean = false;
   width: number = 0;
   file: File = null;
+  tagData: String[]=[];
 
   @ViewChild("tagsBox", { static: true }) tagsBox: ElementRef;
   tagsError: string = "";
@@ -26,9 +33,23 @@ export class UploadComponent implements OnInit {
   // Drop box
   @ViewChild("box", { static: true }) box: ElementRef;
 
-  constructor(private _auth: AuthService, private _http: HttpClient, private _msg: MessagesService) {}
+
+  constructor(private _auth: AuthService, private _http: HttpClient, private _msg: MessagesService, private completerService: CompleterService, private tagService: TagService ) {}
 
   ngOnInit() {
+    this.myGroup = new FormGroup({
+      firstName: new FormControl(null, {validators: [Validators.required, Validators.minLength(3), Validators.maxLength(255)]})
+   });
+   this.tagService.getALLTag().subscribe(
+     res=> {
+       res.forEach(element => {
+       this.tagData.push(element.title)  
+       });
+       console.log(this.tagData[0])
+     }
+   )
+
+
     this.uploadForm = new FormGroup({
       name: new FormControl(null, {
         validators: [
@@ -92,10 +113,48 @@ export class UploadComponent implements OnInit {
 
     });
   }
+ 
 
   /**
    * Upload the song to the server
    */
+onKey()
+{
+  
+  let value = this.myGroup.value.firstName;
+
+  // Base condition
+  if (value[value.length - 1] != " ") return;
+  else this.myGroup.value.firstName = value.replace(' ', '');
+
+
+  value = value.replace(' ', ''); // Trim sapces
+  if(!this.tagData.includes(value))
+{
+  this.tagsError = "This tag does not exist";
+    return;
+}
+  if(this.uploadForm.value.tags.length >= 5){
+    this.tagsError = "You can't have more than 5 tags";
+    return;
+  } else if (value.length < 3) {
+    this.tagsError = "The tag can't be less than 3 characters long";
+    return;
+  } else if (value.length > 10) {
+    this.tagsError = "The tag can't be greater than 10 characters long";
+    return;
+  } else if (this.uploadForm.value.tags.indexOf(value) != -1) {
+    this.tagsError = "The tag is already used";
+    return;
+  }
+
+  let newTag = this.createTagInput(value);
+  (<FormArray>this.uploadForm.get("tags")).push(newTag);
+  console.log(this.uploadForm.invalid,this.loading,!this.file)
+  this.myGroup.reset();
+
+}
+
   upload() {
     // Get the token
     //let token = this._auth.getToken();
@@ -110,14 +169,15 @@ export class UploadComponent implements OnInit {
 
     // Append tags
     for (let i = 0; i < this.uploadForm.value.tags.length; i++) {
-      fd.append("tags[]", this.uploadForm.value.tags[i]);
+      
     }
+    fd.append("tags[]", this.uploadForm.value.tags);
 
     fd.append("song", this.file);
-    // Upload file
+    //Upload file
     this.loading = true;
     this._http
-      .post("http://localhost:8090/songs/add", fd, {
+      .post("http://localhost:8090/api/v1/songs/add", fd, {
      //   headers: headers,
         reportProgress: true,
         observe: "events"

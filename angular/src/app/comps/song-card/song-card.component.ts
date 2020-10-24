@@ -65,7 +65,10 @@ export class SongCardComponent implements OnInit {
 
     });
   }
-
+in()
+{
+  console.log("add to cart")
+}
   playSong(){
 
     if(this.playingSong && this.playingSong.id == this.song.id){
