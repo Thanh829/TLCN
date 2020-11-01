@@ -13,6 +13,7 @@ import { NotFoundComponent } from './comps/not-found/not-found.component';
 import { NotAuthGuard } from './guards/not-auth.guard';
 import { TagComponent } from './comps/tag/tag.component';
 import { TestComponent } from './comps/test/test.component';
+import { CartComponent } from './comps/cart/cart.component';
 
 
 export const routes: Routes = [
@@ -26,6 +27,7 @@ export const routes: Routes = [
   {path: "upload", component: UploadComponent},
   {path: "tags", component: TagComponent},
   {path: "test", component: TestComponent},
+  {path: "cart", component: CartComponent},
   {path: "**", redirectTo: "404"},
   {path: "404", component: NotFoundComponent},
 ];

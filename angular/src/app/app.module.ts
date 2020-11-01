@@ -36,6 +36,20 @@ import { TimePipe } from './shared/pipes/time.pipe';
 import { TagComponent } from './comps/tag/tag.component';
 import { TestComponent } from './comps/test/test.component';
 import { Ng2CompleterModule } from 'ng2-completer';
+import { CartComponent } from './comps/cart/cart.component';
+import { 
+	IgxAvatarModule,
+	IgxIconModule,
+	IgxListModule,
+	IgxSliderModule,
+	IgxToastModule,
+  IgxIconService,
+	IgxFilterModule,
+	IgxRippleModule,
+	IgxForOfModule,
+	IgxInputGroupModule
+ } from "igniteui-angular";
+import { NgxPayPalModule } from 'ngx-paypal';
 
 @NgModule({
   declarations: [
@@ -57,8 +71,10 @@ import { Ng2CompleterModule } from 'ng2-completer';
     TimePipe,
     TagComponent,
     TestComponent,
+    CartComponent,
   ],
   imports: [
+    
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
@@ -70,12 +86,25 @@ import { Ng2CompleterModule } from 'ng2-completer';
     }), // ToastrModule added
     SharedModule,
     UserModule,
-    Ng2CompleterModule
+    Ng2CompleterModule,
+    IgxAvatarModule,
+		IgxIconModule,
+		IgxListModule,
+		IgxSliderModule,
+		IgxToastModule,
+    IgxFilterModule,
+    IgxRippleModule,
+    IgxForOfModule,
+    IgxInputGroupModule,
+    NgxPayPalModule
+    
   ],
+  
   providers: [
     AuthService,
     MusicPlayerService,
     MessagesService,
+    IgxIconService,
     //httpInterceptorsProviders
   ],
   bootstrap: [AppComponent]

@@ -31,6 +31,7 @@
             </div>
         </div>
     </div>
+
     <div class="upload-section">
         <div class="container">
             <div class="row">
@@ -55,17 +56,19 @@
             </div>
         </div>
     </div>
-    <div class="create-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-6 mx-auto col-mdr-12">
-                    <app-song-card *ngFor="let song of songs; let i = index" [song]="song" [user]="user" (deleted)="delete(i)" @songCardTrigger></app-song-card>
-                    <app-fetching (bottom)="loadSong()" *ngIf="page<=2"></app-fetching>
-                </div>
+    <div class="container">
+        <div class="row">
+            <div class="offset-md-1"></div>
+
+            <div class="col-10 col-mdr-12">
+                <app-song-card *ngFor="let song of songs; let i = index" [song]="song" [user]="user" @songCardTrigger></app-song-card>
+                <app-fetching (bottom)="loadSong()" *ngIf="page<=2"></app-fetching>
             </div>
         </div>
     </div>
+
 </div>
+
 
 <!-- Users -->
 <app-users *ngIf="logged"></app-users>

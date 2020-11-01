@@ -2,11 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { songCardTrigger, fadeTrigger } from "../../shared/animations/animations";
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
+  animations: [songCardTrigger, fadeTrigger]
 })
 export class HomeComponent implements OnInit {
 
@@ -27,6 +29,9 @@ export class HomeComponent implements OnInit {
     this._auth.statusEmitter.subscribe(status => {
       this.logged = status;
     });
+    this.page=0
+    this.loadSong()
+    console.log(this.songs)
   }
 
   loadSong() {
