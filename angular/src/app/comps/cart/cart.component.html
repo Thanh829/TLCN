@@ -8,14 +8,29 @@
 
                 <igx-list>
                     <igx-list-item [isHeader]="true">Contacts: {{(data | igxFilter: fo).length}} </igx-list-item>
-                    <div [style.height]="'500px'" [style.overflow]="'hidden'" [style.position]="'relative'">
+                    <div [style.height]="'300px'" [style.overflow]="'hidden'" [style.position]="'relative'">
                         <igx-list-item [style.width]="'calc(100% - 18px)'" igxRipple="pink" igxRippleTarget=".igx-list__item" *igxFor="let item of data | igxFilter: fo; scrollOrientation : 'vertical'; containerSize: '500px'; itemSize: '50px'">
                             <igx-avatar igxListThumbnail [src]="item.avatar" roundShape="true"></igx-avatar>
-                            <span igxListLineTitle>{{ item.name }}</span>
-                            <igx-icon igxListAction [color]="item.favorite ? 'orange' : 'lightgray'" (click)="toggleFavorite(item)">star</igx-icon>
+
+                            <div class="play-icon">
+                                <igx-icon><i class="fas fa-play"></i></igx-icon>
+                            </div>
+                            <div class="name">
+                                <igx-icon>{{ item.name }}</igx-icon>
+                            </div>
+                            <span igxListLineTitle></span>
+
+
+
+                            <div>
+                                <igx-icon><i class="fas fa-times"></i></igx-icon>
+                            </div>
+
+
                         </igx-list-item>
                     </div>
                 </igx-list>
+
             </div>
         </form>
         <ngx-paypal [config]="payPalConfig"></ngx-paypal>
