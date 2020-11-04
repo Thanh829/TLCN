@@ -5,7 +5,6 @@ import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ToastrModule } from 'ngx-toastr';
 
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './comps/home/home.component';
@@ -37,18 +36,7 @@ import { TagComponent } from './comps/tag/tag.component';
 import { TestComponent } from './comps/test/test.component';
 import { Ng2CompleterModule } from 'ng2-completer';
 import { CartComponent } from './comps/cart/cart.component';
-import { 
-	IgxAvatarModule,
-	IgxIconModule,
-	IgxListModule,
-	IgxSliderModule,
-	IgxToastModule,
-  IgxIconService,
-	IgxFilterModule,
-	IgxRippleModule,
-	IgxForOfModule,
-	IgxInputGroupModule
- } from "igniteui-angular";
+import { IgxAvatarModule, IgxIconModule, IgxListModule, IgxSliderModule, IgxToastModule, IgxIconService, IgxFilterModule, IgxRippleModule, IgxForOfModule, IgxInputGroupModule } from "igniteui-angular";
 import { NgxPayPalModule } from 'ngx-paypal';
 
 @NgModule({
@@ -74,7 +62,6 @@ import { NgxPayPalModule } from 'ngx-paypal';
     CartComponent,
   ],
   imports: [
-    
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
@@ -83,30 +70,28 @@ import { NgxPayPalModule } from 'ngx-paypal';
     BrowserAnimationsModule,
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right',
-    }), // ToastrModule added
+    }),
     SharedModule,
     UserModule,
     Ng2CompleterModule,
     IgxAvatarModule,
-		IgxIconModule,
-		IgxListModule,
-		IgxSliderModule,
-		IgxToastModule,
+    IgxIconModule,
+    IgxListModule,
+    IgxSliderModule,
+    IgxToastModule,
     IgxFilterModule,
     IgxRippleModule,
     IgxForOfModule,
     IgxInputGroupModule,
     NgxPayPalModule
-    
   ],
-  
   providers: [
     AuthService,
     MusicPlayerService,
     MessagesService,
     IgxIconService,
-    //httpInterceptorsProviders
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
