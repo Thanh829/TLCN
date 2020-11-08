@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { CartService } from 'src/app/shared/services/cart.service';
 import { songCardTrigger, fadeTrigger } from "../../shared/animations/animations";
 
 @Component({
@@ -21,7 +22,11 @@ export class HomeComponent implements OnInit {
   songs: any[] = [];
   time: number = 100;
 
-  constructor(private _auth: AuthService,private _http: HttpClient, private _route: ActivatedRoute, private _router: Router) {
+  constructor(private _auth: AuthService,
+    private _http: HttpClient, 
+    private _route: ActivatedRoute, 
+    private _router: Router,
+    private cartService: CartService) {
     this.logged = this._auth.isLogged();
    }
 
@@ -65,6 +70,20 @@ export class HomeComponent implements OnInit {
         }
       );
       this.page++
+  }
+
+  addToCart(song)
+  {
+
+    console.log("add to cart at home "+song.id)
+    let price ="3.0"
+    this.cartService.addToCart(song.id,price, song.title).subscribe(
+      res=> {
+        console.log("total at home", res)
+          this.cartService.setMyCount(res)
+          
+      }
+    )
   }
 
 }

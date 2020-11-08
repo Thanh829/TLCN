@@ -20,7 +20,7 @@ export class MusicPlayerComponent implements OnInit, AfterViewInit {
   lastVolume: number = 50;  // Last volume value before muting
   isMuted: boolean = false;
   isLoop: boolean = false;
-dem:number =0
+  dem:number =0
 
   constructor(private _player: MusicPlayerService, private _auth: AuthService) { }
 
@@ -53,8 +53,7 @@ dem:number =0
     });
 
     this._player.playObserve.subscribe( play =>{ 
-      console.log("Play:", play);
-      console.log("day la video cho kia kia" + this.video.nativeElement.duration)
+    
       if(play){
         this.video.nativeElement.play();
         this.isPlaying = true;
@@ -87,15 +86,14 @@ dem:number =0
       
       // Format the time
       time = parseInt(time);
-      console.log("current1 ");
+   
       let minuts : any = parseInt((time / 60).toString());
       let sec : any = time % 60;
 
       sec = sec < 10 ? '0' + sec : sec;
 
       this.currentTime = minuts + ":" + sec;
-      console.log("current2 " + this.currentTime);
-      console.log("current3 " + video.currentTime);
+    
       // Chagne progress width
       this.barWidth = ((video.currentTime / video.duration) * 100) + "%"; 
 

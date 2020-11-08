@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { CartService } from 'src/app/shared/services/cart.service';
 
 @Component({
   selector: 'app-navbar',
@@ -11,10 +12,16 @@ export class NavbarComponent implements OnInit {
   logged: boolean = true;
   showMenu: boolean = false;
   user: any = null;
+  totalItem: any
 
-  constructor(private _auth: AuthService) { }
+  constructor(private _auth: AuthService, private cartService: CartService) { 
+    cartService.myCount$.subscribe((newCount: number)=> {this.totalItem=newCount;})
+    
+  }
 
   ngOnInit() {
+    
+   this.loadCartItem()
     this._auth.userEmitter.subscribe((user)=>{
       this.user = user;
     });
@@ -32,6 +39,18 @@ export class NavbarComponent implements OnInit {
 
   logout(){
     this._auth.logout();
+  }
+
+  loadCartItem()
+  {
+    console.log("load cart item")
+    this.cartService.getTotalItem("1").subscribe(
+      res=>{
+        console.log("total at nav: "+this.totalItem)
+        this.totalItem=res;
+       
+      }
+    )
   }
 
 }

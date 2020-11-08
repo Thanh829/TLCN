@@ -4,6 +4,7 @@ import { AuthService } from '../../shared/services/auth.service';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { MessagesService } from 'src/app/shared/services/messages.service';
+import { CartService } from 'src/app/shared/services/cart.service';
 
 @Component({
   selector: 'app-song-card',
@@ -15,6 +16,8 @@ export class SongCardComponent implements OnInit {
   @Input("song") song;
   @Input("user") user: any;
   @Output("deleted") deleted: EventEmitter<any> = new EventEmitter();
+  @Output() songAddToCart: EventEmitter<any> = new EventEmitter<any>();
+
   isOwner: boolean = false;
   isPlaying: boolean = false;
   playingSong: any = null;
@@ -22,7 +25,8 @@ export class SongCardComponent implements OnInit {
   constructor(private _player: MusicPlayerService, 
               private _auth: AuthService, 
               private _http: HttpClient, 
-              private _msg: MessagesService) { }
+              private _msg: MessagesService,
+              private cartService: CartService) { }
 
   ngOnInit() {
     if(this.user){
@@ -65,10 +69,6 @@ export class SongCardComponent implements OnInit {
 
     });
   }
-in()
-{
-  console.log("add to cart")
-}
   playSong(){
 
     if(this.playingSong && this.playingSong.id == this.song.id){
@@ -93,6 +93,12 @@ in()
         this.playingSong = song;
         this.isPlaying = this.playingSong.id == this.song.id;
       }
+  }
+  addToCart()
+  {
+    console.log("add to cart")
+    this.songAddToCart.emit(this.song)
+    console.log("add to cart sau")
   }
   
 
@@ -128,6 +134,18 @@ in()
     
 
   }
+  loadCartItem()
+  {
+    console.log("load cart item")
+    this.cartService.getTotalItem("1").subscribe(
+      res=>{
+        console.log("total at nav: "+res)
+       
+      }
+    )
+  }
 
 
 }
+
+

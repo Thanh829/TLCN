@@ -7,6 +7,8 @@ import { IgxFilterOptions, IgxListComponent, IgxToastComponent } from "igniteui-
 import { IPayPalConfig, ICreateOrderRequest } from 'ngx-paypal';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { femaleFNames, lastName, maleFNames, middleNames } from "./name";
+import { CartService } from 'src/app/shared/services/cart.service';
+import { MusicPlayerService } from 'src/app/shared/services/music-player.service';
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
@@ -15,7 +17,7 @@ import { femaleFNames, lastName, maleFNames, middleNames } from "./name";
 })
 export class CartComponent implements OnInit {
   public search: string;
-  public data: object[] = [];
+  public data: any[] = [];
   get fo() {
       const _fo = new IgxFilterOptions();
       _fo.key = "name";
@@ -31,33 +33,106 @@ export class CartComponent implements OnInit {
   time: number = 100;
   public payPalConfig?: IPayPalConfig;
   loginForm: FormGroup;
+  isPlaying: boolean = false;
+  playingSong: any = null;
+
+
+
   @ViewChild("toast", { static: true })
   public toast: IgxToastComponent;
-    @ViewChild("mainIgxList", { static: true })
-    public list: IgxListComponent;
+  @ViewChild("mainIgxList", { static: true })
+  public list: IgxListComponent;
 
    
-  constructor(private _auth: AuthService,private _http: HttpClient, private _route: ActivatedRoute, private _router: Router) {
+  constructor(private _auth: AuthService,
+    private _http: HttpClient, 
+    private _route: ActivatedRoute, 
+    private _router: Router,
+    private cartService: CartService,
+    private _player: MusicPlayerService) {
    
    }
 
   ngOnInit() {
+    console.log("playing" +this._player.playingSong)
     this.loginForm = new FormGroup({
       email: new FormControl(null, {validators: [Validators.required]}),
       password: new FormControl(null, {validators: [Validators.required, Validators.minLength(6)]})
     });
     this.initConfig()
     this.page=0
-    const data = [];
-        for (let i = 0; i < 100000; i++) {
-            const item = this.generatePerson(i);
-            data.push(item);
-        }
-        this.data = data;
+    // const data = [];
+    //     for (let i = 0; i < 100000; i++) {
+    //         const item = this.generatePerson(i);
+    //         data.push(item);
+    //     }
+    //     this.data = data;
     
-   // this.loadSong()
-    
+    this.loadSong()
+    this._player.playObserve.subscribe(play => {
+
+      
+      if(!this._player.playingSong) return;
+
+      this.isPlaying = play;
+
+    });
   }
+    
+//    // Playing song
+//    this._player.songObserve.subscribe(this.getPlayingSong.bind(this));
+//    this.getPlayingSong(this._player.playingSong)
+
+//    // Play or Pause observer
+//    this._player.playObserve.subscribe(play => {
+
+     
+//      if(!this.playingSong || this.playingSong.id != this.song.id) return;
+
+//      this.isPlaying = play;
+
+//    });
+//  }
+ playSong(item){
+
+  let song;
+  if(this._player.playingSong==null ||this._player.playingSong.id!=item.songId)
+    this._http.get(`http://localhost:8090/api/v1/songs/${item.songId}`).subscribe(
+      res=> {
+        song=res
+        
+            
+        console.log("pause 1")
+          this._player.emitSong(song);
+          this.isPlaying=true
+      }
+    )
+  else
+  if(this._player.playingSong && this._player.playingSong.id == item.songId){
+          console.log("pause 2")
+    if(this.isPlaying){
+      console.log("pause")
+      this._player.pause();
+      this.isPlaying=false
+    } else {
+      this._player.play();
+    }
+    
+  } 
+
+   
+   
+ }
+ 
+//  getPlayingSong(song){
+//      if(song == null){
+//        this.playingSong = null;
+//        this.isPlaying = false;
+//      } else {
+//        this.playingSong = song;
+//        this.isPlaying = this.playingSong.id == this.song.id;
+//      }
+//  }
   public toggleFavorite(contact: any) {
     contact.isFavorite = !contact.isFavorite;
 }
@@ -146,6 +221,16 @@ public repopulateHandler() {
     //this.contacts = Object.assign([], this.dataSource);
 }
 
+deleteCartItem(item)
+{
+  this.data.splice(this.data.indexOf(item),1)
+  this.cartService.deleteCartItem(item.id).subscribe(
+    res=>{
+
+    }
+  )
+}
+
 public get panThreshold() {
     const result = this.list.panEndTriggeringThreshold;
     return Math.round(result * 100) + "%";
@@ -157,7 +242,7 @@ public get panThreshold() {
     console.log("page: "+this.page)
     // Search
     this._http
-      .get(`http://localhost:8090/api/v1/songs/all?page=${this.page}`)
+      .get(`http://localhost:8090/api/v1/cart/1`)
       .subscribe(
         (res: any) => {
           
@@ -170,7 +255,7 @@ public get panThreshold() {
           // Stagger animation
           for(let i = 0; i < newSongs.length; i++){
             setTimeout(()=>{
-              this.songs.push(newSongs[i]);
+              this.data.push(newSongs[i]);
             },i * this.time);
           }
 

@@ -38,6 +38,7 @@ import { Ng2CompleterModule } from 'ng2-completer';
 import { CartComponent } from './comps/cart/cart.component';
 import { IgxAvatarModule, IgxIconModule, IgxListModule, IgxSliderModule, IgxToastModule, IgxIconService, IgxFilterModule, IgxRippleModule, IgxForOfModule, IgxInputGroupModule } from "igniteui-angular";
 import { NgxPayPalModule } from 'ngx-paypal';
+import { CartitemComponent } from './comps/cart/cartitem/cartitem.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { NgxPayPalModule } from 'ngx-paypal';
     TagComponent,
     TestComponent,
     CartComponent,
+    CartitemComponent,
   ],
   imports: [
     BrowserModule,
