@@ -21,6 +21,7 @@ export class HomeComponent implements OnInit {
   user: any = null;
   songs: any[] = [];
   time: number = 100;
+  count:any
 
   constructor(private _auth: AuthService,
     private _http: HttpClient, 
@@ -34,9 +35,15 @@ export class HomeComponent implements OnInit {
     this._auth.statusEmitter.subscribe(status => {
       this.logged = status;
     });
-    this.page=0
-    this.loadSong()
-    console.log(this.songs)
+    this._http.get("http://localhost:8090/api/v1/songs/count").subscribe(
+     res=>{
+       this.count=res
+       if(this.count % 4!=0) this.count++
+       this.page=0
+       this.loadSong()
+     }
+   )
+    
   }
 
   loadSong() {
@@ -75,11 +82,8 @@ export class HomeComponent implements OnInit {
   addToCart(song)
   {
 
-    console.log("add to cart at home "+song.id)
-    let price ="3.0"
-    this.cartService.addToCart(song.id,price, song.title).subscribe(
+    this.cartService.addToCart(song.id,song.price, song.title).subscribe(
       res=> {
-        console.log("total at home", res)
           this.cartService.setMyCount(res)
           
       }

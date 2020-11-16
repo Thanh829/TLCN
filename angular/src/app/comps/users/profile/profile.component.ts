@@ -19,6 +19,7 @@ export class ProfileComponent implements OnInit {
   loading: boolean = false;
   nextPage: string = null;
   page:number
+  count: any
 
   time: number = 100;
 
@@ -27,7 +28,7 @@ export class ProfileComponent implements OnInit {
   ngOnInit() {
     // Get the query
     //this.query = this._route.snapshot.paramMap.get("query");
-    this.page=0
+    
     /*
     this._route.paramMap.subscribe(params => {
       this.query = params.get("query");
@@ -36,8 +37,17 @@ export class ProfileComponent implements OnInit {
       this.search();
     });
     */
+   this.page=0
+   this._http.get("http://localhost:8090/api/v1/songs/count").subscribe(
+     res=>{
+       this.count=res
+       if(this.count %4 !=0) this.count++
+       
+       this.loadSong();
+     }
+   )
 
-    this.loadSong();
+    
   }
 
   search() {
@@ -110,6 +120,8 @@ export class ProfileComponent implements OnInit {
       );
       this.page++
   }
+
+  
 
   delete(index: number){
     this.songs.splice(index, 1);

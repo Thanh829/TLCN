@@ -5,13 +5,18 @@
             <a routerLink="/"><img src="assets/images/logo.svg" /></a>
         </div>
         <app-search-form></app-search-form>
-        <div class="menu-icon ml-auto" *ngIf="logged" (click)="toggleMenu()">
-            <img src="assets/images/menu.svg" alt="">
-        </div>
-        <ul class="navbar-nav" *ngIf="!logged">
+        <ul class="navbar-nav" *ngIf="logged">
             <li>
                 <a routerLink="/cart"> <i class="fas fa-shopping-cart"></i> {{ totalItem }}</a>
             </li>
+
+        </ul>
+        <div class="menu-icon ml-auto" *ngIf="logged" (click)="toggleMenu()">
+            <img src="assets/images/menu.svg" alt="">
+        </div>
+
+        <ul class="navbar-nav" *ngIf="!logged">
+
             <li><a routerLink="/login">Login</a></li>
             <li class="btn"><a routerLink="/register">Join</a></li>
         </ul>

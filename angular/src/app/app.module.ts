@@ -30,7 +30,7 @@ import { MessagesService } from './shared/services/messages.service';
 import { LoadingButtonComponent } from './comps/loading-button/loading-button.component';
 import { SharedModule } from './shared/modules/shared.module';
 import { UserModule } from './user/user.module';
-//import { httpInterceptorsProviders } from './shared/interceptors';
+import { httpInterceptorsProviders } from './shared/interceptors';
 import { TimePipe } from './shared/pipes/time.pipe';
 import { TagComponent } from './comps/tag/tag.component';
 import { TestComponent } from './comps/test/test.component';
@@ -39,6 +39,9 @@ import { CartComponent } from './comps/cart/cart.component';
 import { IgxAvatarModule, IgxIconModule, IgxListModule, IgxSliderModule, IgxToastModule, IgxIconService, IgxFilterModule, IgxRippleModule, IgxForOfModule, IgxInputGroupModule } from "igniteui-angular";
 import { NgxPayPalModule } from 'ngx-paypal';
 import { CartitemComponent } from './comps/cart/cartitem/cartitem.component';
+import { InvoiceComponent } from './comps/invoice/invoice.component';
+import { AuthGuardGuard } from './guards/auth-guard.guard';
+import { NotAuthGuard } from './guards/not-auth.guard';
 
 @NgModule({
   declarations: [
@@ -62,6 +65,7 @@ import { CartitemComponent } from './comps/cart/cartitem/cartitem.component';
     TestComponent,
     CartComponent,
     CartitemComponent,
+    InvoiceComponent,
   ],
   imports: [
     BrowserModule,
@@ -88,10 +92,14 @@ import { CartitemComponent } from './comps/cart/cartitem/cartitem.component';
     NgxPayPalModule
   ],
   providers: [
+    httpInterceptorsProviders,
     AuthService,
     MusicPlayerService,
     MessagesService,
     IgxIconService,
+    AuthGuardGuard,
+    NotAuthGuard
+    
   ],
   bootstrap: [AppComponent]
 })

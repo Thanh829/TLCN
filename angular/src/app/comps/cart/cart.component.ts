@@ -9,6 +9,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { femaleFNames, lastName, maleFNames, middleNames } from "./name";
 import { CartService } from 'src/app/shared/services/cart.service';
 import { MusicPlayerService } from 'src/app/shared/services/music-player.service';
+import { PaymentService } from 'src/app/shared/services/payment.service';
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
@@ -25,6 +26,7 @@ export class CartComponent implements OnInit {
       return _fo;
   }
 
+  link :any
   loading: boolean = false;
   nextPage: string = null;
   page:number
@@ -35,6 +37,7 @@ export class CartComponent implements OnInit {
   loginForm: FormGroup;
   isPlaying: boolean = false;
   playingSong: any = null;
+  TotalCost:any=0
 
 
 
@@ -49,7 +52,8 @@ export class CartComponent implements OnInit {
     private _route: ActivatedRoute, 
     private _router: Router,
     private cartService: CartService,
-    private _player: MusicPlayerService) {
+    private _player: MusicPlayerService,
+    private paymentService: PaymentService) {
    
    }
 
@@ -140,34 +144,34 @@ private initConfig(): void {
   this.payPalConfig = {
   currency: 'EUR',
   clientId: 'sb',
-  createOrderOnClient: (data) => <ICreateOrderRequest>{
-    intent: 'CAPTURE',
-    purchase_units: [
-      {
-        amount: {
-          currency_code: 'EUR',
-          value: '9.99',
-          breakdown: {
-            item_total: {
-              currency_code: 'EUR',
-              value: '9.99'
-            }
-          }
-        },
-        items: [
-          {
-            name: 'Enterprise Subscription',
-            quantity: '1',
-            category: 'DIGITAL_GOODS',
-            unit_amount: {
-              currency_code: 'EUR',
-              value: '9.99',
-            },
-          }
-        ]
-      }
-    ]
-  },
+  // createOrderOnClient: (data) => <ICreateOrderRequest>{
+  //   intent: 'CAPTURE',
+  //   purchase_units: [
+  //     {
+  //       amount: {
+  //         currency_code: 'EUR',
+  //         value: '9.99',
+  //         breakdown: {
+  //           item_total: {
+  //             currency_code: 'EUR',
+  //             value: '9.99'
+  //           }
+  //         }
+  //       },
+  //       items: [
+  //         {
+  //           name: 'Enterprise Subscription',
+  //           quantity: '1',
+  //           category: 'DIGITAL_GOODS',
+  //           unit_amount: {
+  //             currency_code: 'EUR',
+  //             value: '9.99',
+  //           },
+  //         }
+  //       ]
+  //     }
+  //   ]
+  // },
   advanced: {
     commit: 'true'
   },
@@ -192,37 +196,45 @@ private initConfig(): void {
     console.log('OnError', err);
   },
   onClick: (data, actions) => {
+    this.paymentService.checkout(this.data,this.TotalCost,"USD","Paypal","sale","ban").subscribe(
+      res=>{
+        this.link= res
+        console.log(this.link.url)
+        window.open (this.link.url.toString()),"_blank";
+      }
+    )
     console.log('onClick', data, actions);
   },
 };
 }
 
-private generatePerson(index): object {
-  const item = new Person();
-  item.key = index;
-  const gender = index % 2 === 0 ? "M" : "F";
-  item.name = this.generateName(gender);
-  item.avatar = "https://www.infragistics.com/angular-demos/assets/images/" +
-      (gender === "M" ? "men" : "women") +
-      "/" + Math.floor((Math.random() * 100)) + ".jpg";
-  item.favorite = Math.floor((Math.random() * 3)) % 3 === 0;
-  return item;
-}
-private generateName(gender): string {
-  let name = "";
-  const fNames = gender === "M" ? maleFNames : femaleFNames;
-  name += fNames[Math.floor(Math.random() * fNames.length)] + " ";
-  name += middleNames[Math.floor(Math.random() * middleNames.length)] + " ";
-  name += lastName[Math.floor(Math.random() * lastName.length)];
-  return name;
-}
+// private generatePerson(index): object {
+//   const item = new Person();
+//   item.key = index;
+//   const gender = index % 2 === 0 ? "M" : "F";
+//   item.name = this.generateName(gender);
+//   item.avatar = "https://www.infragistics.com/angular-demos/assets/images/" +
+//       (gender === "M" ? "men" : "women") +
+//       "/" + Math.floor((Math.random() * 100)) + ".jpg";
+//   item.favorite = Math.floor((Math.random() * 3)) % 3 === 0;
+//   return item;
+// }
+// private generateName(gender): string {
+//   let name = "";
+//   const fNames = gender === "M" ? maleFNames : femaleFNames;
+//   name += fNames[Math.floor(Math.random() * fNames.length)] + " ";
+//   name += middleNames[Math.floor(Math.random() * middleNames.length)] + " ";
+//   name += lastName[Math.floor(Math.random() * lastName.length)];
+//   return name;
+// }
 
-public repopulateHandler() {
-    //this.contacts = Object.assign([], this.dataSource);
-}
+// public repopulateHandler() {
+//     //this.contacts = Object.assign([], this.dataSource);
+// }
 
 deleteCartItem(item)
 {
+  this.TotalCost-=item.price
   this.data.splice(this.data.indexOf(item),1)
   this.cartService.deleteCartItem(item.id).subscribe(
     res=>{
@@ -242,7 +254,7 @@ public get panThreshold() {
     console.log("page: "+this.page)
     // Search
     this._http
-      .get(`http://localhost:8090/api/v1/cart/1`)
+      .get(`http://localhost:8090/api/v1/cart/`)
       .subscribe(
         (res: any) => {
           
@@ -256,6 +268,7 @@ public get panThreshold() {
           for(let i = 0; i < newSongs.length; i++){
             setTimeout(()=>{
               this.data.push(newSongs[i]);
+              this.TotalCost+=newSongs[i].price
             },i * this.time);
           }
 

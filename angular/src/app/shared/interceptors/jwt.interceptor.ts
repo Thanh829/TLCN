@@ -1,9 +1,10 @@
 import { HttpInterceptor, HttpHandler, HttpRequest, HttpEvent, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { Injectable } from '@angular/core';
 
 
-
+@Injectable()
 export class JWTInterceptor implements HttpInterceptor{
 
     constructor(private router: Router){}

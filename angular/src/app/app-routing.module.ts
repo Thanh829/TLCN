@@ -14,6 +14,7 @@ import { NotAuthGuard } from './guards/not-auth.guard';
 import { TagComponent } from './comps/tag/tag.component';
 import { TestComponent } from './comps/test/test.component';
 import { CartComponent } from './comps/cart/cart.component';
+import { InvoiceComponent } from './comps/invoice/invoice.component';
 
 
 export const routes: Routes = [
@@ -23,11 +24,12 @@ export const routes: Routes = [
   ]},
   {path: "settings", loadChildren: "./user/user.module#UserModule"},
   {path: "search/:query", component: SearchComponent},
-  {path: "user", component: ProfileComponent},
+  {path: "user", component: ProfileComponent,canActivate:[AuthGuardGuard]},
   {path: "upload", component: UploadComponent},
   {path: "tags", component: TagComponent},
   {path: "test", component: TestComponent},
-  {path: "cart", component: CartComponent},
+  {path: "cart", component: CartComponent,canActivate:[AuthGuardGuard]},
+  {path: "invoice", component: InvoiceComponent},
   {path: "**", redirectTo: "404"},
   {path: "404", component: NotFoundComponent},
 ];

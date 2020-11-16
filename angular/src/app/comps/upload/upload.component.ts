@@ -60,7 +60,8 @@ export class UploadComponent implements OnInit {
       }),
       tags: new FormArray([], {
         validators: [Validators.required, Validators.maxLength(5)]
-      })
+      }),
+      price: new FormControl(null, {validators: [Validators.required, Validators.minLength(2), Validators.maxLength(255)]})
     });
 
     // ============== Drop Box ==============
@@ -172,6 +173,7 @@ onKey()
       
     }
     fd.append("tags[]", this.uploadForm.value.tags);
+    fd.append("price", this.uploadForm.value.price);
 
     fd.append("song", this.file);
     //Upload file

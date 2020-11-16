@@ -7,7 +7,7 @@
             <div class="list-sample">
 
                 <igx-list *ngIf="data.length!=0">
-                    <igx-list-item [isHeader]="true">Songs: {{(data | igxFilter: fo).length}} </igx-list-item>
+                    <igx-list-item [isHeader]="true">Total Price: ${{TotalCost}} </igx-list-item>
                     <div [style.height]="'400px'" [style.overflow]="'hidden'" [style.position]="'relative'">
                         <igx-list-item [style.width]="'calc(100% - 18px)'" igxRipple="pink" igxRippleTarget=".igx-list__item" *igxFor="let item of data | igxFilter: fo; scrollOrientation : 'vertical'; containerSize: '300px'; itemSize: '50px'">
                             <igx-avatar igxListThumbnail [src]="item.avatar" roundShape="true"></igx-avatar>
@@ -18,6 +18,10 @@
                             </div>
                             <div class="name">
                                 <span igxListLineTitle>{{ item.songName}}</span>
+                            </div>
+
+                            <div class="price">
+                                <span igxListLineTitle>${{ item.price}}</span>
                             </div>
                             <span igxListLineTitle></span>
 

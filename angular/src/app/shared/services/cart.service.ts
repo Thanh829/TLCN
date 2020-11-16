@@ -25,9 +25,9 @@ export class CartService {
     this.myCount$ = newValue;
     this.boolSubject.next(newValue);
   }
-  getTotalItem(userId)
+  getTotalItem()
   {
-    return this.http.get(`http://localhost:8090/api/v1/cart/count/${userId}`)
+    return this.http.get(`http://localhost:8090/api/v1/cart/count/`)
   }
   
   addToCart(songId,price,songName)

@@ -1,4 +1,4 @@
-<div *ngIf="!logged">
+<div>
     <section class="hero-section d-flex" style="background-image: url('assets/images/bg.jpg')">
         <div class="overlay"></div>
         <div class="container">
@@ -62,7 +62,7 @@
 
             <div class="col-10 col-mdr-12">
                 <app-song-card *ngFor="let song of songs; let i = index" [song]="song" [user]="user" (songAddToCart)="addToCart($event)" @songCardTrigger></app-song-card>
-                <app-fetching (bottom)="loadSong()" *ngIf="page<=2"></app-fetching>
+                <app-fetching (bottom)="loadSong()" *ngIf="page<=count"></app-fetching>
             </div>
         </div>
     </div>

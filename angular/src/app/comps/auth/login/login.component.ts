@@ -33,8 +33,9 @@ export class LoginComponent implements OnInit {
     this._auth.login(email, password).subscribe(
       (data: any)=>{
         //this._auth.storeData(data.expires_in, data.access_token, data.refresh_token)
-        this._auth.saveToken(data.accessToken)
-        this._auth.saveUser(data)
+        console.log(Date.now())
+        this._auth.storeData(data.timeExpire,data.accessToken,data.accessToken,false)
+        this._auth.storeUser(data)
         this._msg.success("Login success");
       },
       (error: any)=>{
