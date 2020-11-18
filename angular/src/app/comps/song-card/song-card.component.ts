@@ -137,7 +137,7 @@ export class SongCardComponent implements OnInit {
   loadCartItem()
   {
     console.log("load cart item")
-    this.cartService.getTotalItem("1").subscribe(
+    this.cartService.getTotalItem().subscribe(
       res=>{
         console.log("total at nav: "+res)
        

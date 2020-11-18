@@ -49,8 +49,6 @@ export class CartComponent implements OnInit {
    
   constructor(private _auth: AuthService,
     private _http: HttpClient, 
-    private _route: ActivatedRoute, 
-    private _router: Router,
     private cartService: CartService,
     private _player: MusicPlayerService,
     private paymentService: PaymentService) {
@@ -58,7 +56,7 @@ export class CartComponent implements OnInit {
    }
 
   ngOnInit() {
-    console.log("playing" +this._player.playingSong)
+    console.log("playing" + Date.now())
     this.loginForm = new FormGroup({
       email: new FormControl(null, {validators: [Validators.required]}),
       password: new FormControl(null, {validators: [Validators.required, Validators.minLength(6)]})
@@ -196,13 +194,7 @@ private initConfig(): void {
     console.log('OnError', err);
   },
   onClick: (data, actions) => {
-    this.paymentService.checkout(this.data,this.TotalCost,"USD","Paypal","sale","ban").subscribe(
-      res=>{
-        this.link= res
-        console.log(this.link.url)
-        window.open (this.link.url.toString()),"_blank";
-      }
-    )
+   
     console.log('onClick', data, actions);
   },
 };
@@ -232,13 +224,24 @@ private initConfig(): void {
 //     //this.contacts = Object.assign([], this.dataSource);
 // }
 
+checkout()
+{
+  this.paymentService.checkout(this.data,this.TotalCost,"USD","Paypal","sale","ban").subscribe(
+    res=>{
+      this.link= res
+      console.log(this.link.url)
+      window.open (this.link.url.toString()),"_blank";
+    }
+  )
+}
+
 deleteCartItem(item)
 {
   this.TotalCost-=item.price
   this.data.splice(this.data.indexOf(item),1)
   this.cartService.deleteCartItem(item.id).subscribe(
     res=>{
-
+          this.cartService.setMyCount(this.data.length)
     }
   )
 }

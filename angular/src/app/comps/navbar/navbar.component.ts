@@ -12,7 +12,7 @@ export class NavbarComponent implements OnInit {
   logged: boolean = true;
   showMenu: boolean = false;
   user: any = null;
-  totalItem: any
+  totalItem: any=0;
 
   constructor(private _auth: AuthService, private cartService: CartService) { 
     cartService.myCount$.subscribe((newCount: number)=> {this.totalItem=newCount;})

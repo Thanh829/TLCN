@@ -30,10 +30,10 @@ export class CartService {
     return this.http.get(`http://localhost:8090/api/v1/cart/count/`)
   }
   
-  addToCart(songId,price,songName)
+  addToCart(songId,price,songName,userId)
   {
     return this.http.post('http://localhost:8090/api/v1/cart/addtocart',{
-      userId:1,
+      userId:userId,
       price:price,
       songId:songId,
       songName:songName

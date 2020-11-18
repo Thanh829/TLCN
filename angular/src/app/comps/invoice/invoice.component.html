@@ -14,7 +14,7 @@
                         </td>
 
                         <td>
-                            Invoice #: 123<br> Created: January 1, 2015<br> Due: February 1, 2015
+                            Invoice #: 123<br> Created: {{date}}
                         </td>
                     </tr>
                 </table>
@@ -26,13 +26,17 @@
                 <table>
                     <tr>
                         <td>
-                            Sparksuite, Inc.<br> 12345 Sunny Road<br> Sunnyville, CA 12345
+                            {{invoice.shippingAddress.line1}} <br> {{invoice.shippingAddress.city}} <br> {{invoice.shippingAddress.state}} <br> Country Code: {{invoice.shippingAddress.countryCode}}<br> Postal Code: {{invoice.shippingAddress.postalCode}}
                         </td>
 
                         <td>
-                            Acme Corp.<br> John Doe<br> john@example.com
+                            Payer:<br> {{invoice.shippingAddress.recipientName }} <br> {{invoice.payerInfo.email }} <br>
+                            <!-- <invoice class="payerInfo"></invoice>.email}} -->
                         </td>
+
                     </tr>
+
+
                 </table>
             </td>
         </tr>
@@ -41,20 +45,15 @@
             <td>
                 Payment Method
             </td>
-
-            <td>
-                Check #
-            </td>
+            <td></td>
         </tr>
 
         <tr class="details">
             <td>
-                Check
+                Paypal
             </td>
 
-            <td>
-                1000
-            </td>
+
         </tr>
 
         <tr class="heading">
@@ -67,44 +66,27 @@
             </td>
         </tr>
 
-        <tr class="item">
+        <tr class="item" *ngFor="let item of invoice.transaction.itemList.items">
             <td>
-                Website design
+                {{item.name}}
             </td>
 
             <td>
-                $300.00
+                ${{item.price}}
             </td>
         </tr>
 
-        <tr class="item">
-            <td>
-                Hosting (3 months)
-            </td>
 
-            <td>
-                $75.00
-            </td>
-        </tr>
-
-        <tr class="item last">
-            <td>
-                Domain name (1 year)
-            </td>
-
-            <td>
-                $10.00
-            </td>
-        </tr>
 
         <tr class="total">
             <td></td>
 
             <td>
-                Total: $385.00
+                Total: {{invoice.transaction.amount.total}}
             </td>
         </tr>
-        <button class="apple-pay-button apple-pay-button-white-with-line" (click)="excutePayment()">Pay Now</button>
+        <div *ngIf="token"><button class="apple-pay-button apple-pay-button-white-with-line" (click)="excutePayment()">Pay Now</button></div>
+
     </table>
 
 </div>

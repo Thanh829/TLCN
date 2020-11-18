@@ -1,0 +1,48 @@
+<form style="height: 500px;max-width: 1000px; position: relative; left: 150px; ">
+
+    <div class="list-sample">
+
+        <igx-list *ngIf="data.length!=0">
+            <igx-list-item [isHeader]="true">INVOICES </igx-list-item>
+            <div [style.height]="'200px'" [style.overflow]="'hidden'" [style.position]="'relative'">
+                <igx-list-item>
+                    <div class="name">
+                        <span igxListLineTitle>Payee</span>
+                    </div>
+
+                    <div class="price">
+                        <span igxListLineTitle>Total Cost</span>
+                    </div>
+                    <div class="order-date">
+                        <span igxListLineTitle>Order Date</span>
+                    </div>
+                </igx-list-item>
+                <igx-list-item>
+
+                </igx-list-item>
+
+                <igx-list-item [style.width]="'calc(100% - 18px)'" igxRipple="pink" igxRippleTarget=".igx-list__item" *igxFor="let item of data | igxFilter: fo; scrollOrientation : 'vertical'; containerSize: '300px'; itemSize: '50px'" (click)="getInvoice(item.paymentId)">
+
+                    <div class="name">
+                        <span igxListLineTitle>{{ item.payeeEmail}}</span>
+                    </div>
+
+                    <div class="price">
+                        <span igxListLineTitle>${{ item.totalCost}}</span>
+                    </div>
+                    <div class="order-date">
+                        <span igxListLineTitle>{{ item.orderDate}}</span>
+                    </div>
+                    <span igxListLineTitle></span>
+
+                    <!-- <hr style="width:50%;text-align:left;margin-left:0"> -->
+
+                </igx-list-item>
+            </div>
+        </igx-list>
+        <div *ngIf="data.length==0">
+            <p>Cart is empty</p>
+        </div>
+
+    </div>
+</form>

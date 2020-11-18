@@ -15,6 +15,7 @@ import { TagComponent } from './comps/tag/tag.component';
 import { TestComponent } from './comps/test/test.component';
 import { CartComponent } from './comps/cart/cart.component';
 import { InvoiceComponent } from './comps/invoice/invoice.component';
+import { ListinvoiceComponent } from './comps/listinvoice/listinvoice.component';
 
 
 export const routes: Routes = [
@@ -29,6 +30,7 @@ export const routes: Routes = [
   {path: "tags", component: TagComponent},
   {path: "test", component: TestComponent},
   {path: "cart", component: CartComponent,canActivate:[AuthGuardGuard]},
+  {path: "list-invoice", component: ListinvoiceComponent},
   {path: "invoice", component: InvoiceComponent},
   {path: "**", redirectTo: "404"},
   {path: "404", component: NotFoundComponent},

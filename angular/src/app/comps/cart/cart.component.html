@@ -30,7 +30,7 @@
                             <div (click)="deleteCartItem(item)">
                                 <igx-icon><i class="fas fa-times"></i></igx-icon>
                             </div>
-
+                            <!-- <hr style="width:50%;text-align:left;margin-left:0"> -->
 
                         </igx-list-item>
                     </div>
@@ -40,7 +40,9 @@
                 </div>
 
             </div>
+            <button mat-raised-button color="primary" [disabled]="data.length==0" (click)="checkout()">Checkout</button>
         </form>
-        <ngx-paypal [config]="payPalConfig"></ngx-paypal>
+
+        <!-- <ngx-paypal [config]="payPalConfig"></ngx-paypal> -->
     </div>
 </div>

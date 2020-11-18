@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Router } from "@angular/router";
 import { environment } from "src/environments/environment";
 const TOKEN_KEY = 'auth-token';
-const USER_KEY = 'auth-user';
+const USER_KEY = 'user';
 @Injectable({
   providedIn: "root"
 })
@@ -11,7 +11,7 @@ const USER_KEY = 'auth-user';
 export class AuthService {
   logged: boolean = false;
   token: string;
-  expires_in: number = null;
+  expires_in: number = parseInt(localStorage.getItem("expires_in"));
   access_token: string = null;
   refresh_token: string = null;
 
@@ -24,7 +24,11 @@ export class AuthService {
     let expires_in = parseInt(localStorage.getItem("expires_in"));
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");
-    if (expires_in < Date.now()) {
+    console.log(expires_in)
+    console.log(Date.now())
+    console.log(this.expires_in-Date.now())
+    if (expires_in > Date.now()) {
+
       this.logged = true;
 
       // get user
@@ -36,6 +40,7 @@ export class AuthService {
 
       this.storeData(expires_in, access_token, refresh_token, true);
     }
+    
   }
 
   /**
@@ -207,7 +212,7 @@ export class AuthService {
   }
 
   public getUser(): any {
-    return JSON.parse(sessionStorage.getItem(USER_KEY));
+    return JSON.parse(localStorage.getItem(USER_KEY));
   }
 
 }

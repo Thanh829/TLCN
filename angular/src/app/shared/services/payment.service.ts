@@ -21,8 +21,12 @@ export class PaymentService {
   })
  }
 
- excutePayment(paymentId,token,payerId)
+ excutePayment(paymentId,token,payerId,userId)
  {
-    return this.http.get(`http://localhost:8090/pay/success?paymentId=${paymentId}&token=${token}&PayerID=${payerId}`)
+    return this.http.get(`http://localhost:8090/pay/success?paymentId=${paymentId}&token=${token}&PayerID=${payerId}&userId=${userId}`)
+ }
+ getReviewPayment(paymentId)
+ {
+  return this.http.get(`http://localhost:8090/review?paymentId=${paymentId}`)
  }
 }

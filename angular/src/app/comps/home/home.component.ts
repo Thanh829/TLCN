@@ -81,8 +81,11 @@ export class HomeComponent implements OnInit {
 
   addToCart(song)
   {
-
-    this.cartService.addToCart(song.id,song.price, song.title).subscribe(
+    let userId;
+    if(this._auth.isLogged())
+      userId=this._auth.getUser().id
+    console.log(userId)
+    this.cartService.addToCart(song.id,song.price, song.title, userId).subscribe(
       res=> {
           this.cartService.setMyCount(res)
           

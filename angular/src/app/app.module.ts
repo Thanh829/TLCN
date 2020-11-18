@@ -42,6 +42,7 @@ import { CartitemComponent } from './comps/cart/cartitem/cartitem.component';
 import { InvoiceComponent } from './comps/invoice/invoice.component';
 import { AuthGuardGuard } from './guards/auth-guard.guard';
 import { NotAuthGuard } from './guards/not-auth.guard';
+import { ListinvoiceComponent } from './comps/listinvoice/listinvoice.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ import { NotAuthGuard } from './guards/not-auth.guard';
     CartComponent,
     CartitemComponent,
     InvoiceComponent,
+    ListinvoiceComponent,
   ],
   imports: [
     BrowserModule,
