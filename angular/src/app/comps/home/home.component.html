@@ -61,7 +61,7 @@
             <div class="offset-md-1"></div>
 
             <div class="col-10 col-mdr-12">
-                <app-song-card *ngFor="let song of songs; let i = index" [song]="song" [user]="user" (songAddToCart)="addToCart($event)" @songCardTrigger></app-song-card>
+                <app-song-card *ngFor="let song of songs; let i = index" [song]="song" [user]="user" (songAddToCart)="addToCart($event)" (songAddToPlaylist)="addToPlaylist($event)" @songCardTrigger></app-song-card>
                 <app-fetching (bottom)="loadSong()" *ngIf="page<=count"></app-fetching>
             </div>
         </div>
@@ -69,7 +69,7 @@
 
 </div>
 
-
+<app-playlist></app-playlist>
 <!-- Users -->
 <app-users *ngIf="logged"></app-users>
 

@@ -1,0 +1,40 @@
+:host {
+    display: flex;
+    flex-flow: column nowrap;
+    padding: 16px;
+}
+
+igx-checkbox {
+    margin-top: 16px;
+}
+
+.checkbox {
+    font-size: 5px;
+    position: absolute;
+    left: 150px;
+}
+
+.wrapper {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.button-sample {
+    position: relative;
+    left: 170px;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: inherit;
+    flex: 1 0 30%;
+    margin: 16px 0;
+}
+
+.button-create {
+    position: relative;
+    left: 260px;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: inherit;
+    margin: 16px 0;
+}

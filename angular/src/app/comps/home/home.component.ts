@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { CartService } from 'src/app/shared/services/cart.service';
+import { PlaylistService } from 'src/app/shared/services/playlist.service';
 import { songCardTrigger, fadeTrigger } from "../../shared/animations/animations";
 
 @Component({
@@ -25,8 +26,7 @@ export class HomeComponent implements OnInit {
 
   constructor(private _auth: AuthService,
     private _http: HttpClient, 
-    private _route: ActivatedRoute, 
-    private _router: Router,
+   private playlistService: PlaylistService, 
     private cartService: CartService) {
     this.logged = this._auth.isLogged();
    }
@@ -91,6 +91,12 @@ export class HomeComponent implements OnInit {
           
       }
     )
+  }
+
+  addToPlaylist(song)
+  {
+    console.log(song)
+      this.playlistService.setSong(song)
   }
 
 }

@@ -16,6 +16,7 @@ import { TestComponent } from './comps/test/test.component';
 import { CartComponent } from './comps/cart/cart.component';
 import { InvoiceComponent } from './comps/invoice/invoice.component';
 import { ListinvoiceComponent } from './comps/listinvoice/listinvoice.component';
+import { PlaylistComponent } from './comps/playlist/playlist.component';
 
 
 export const routes: Routes = [
@@ -32,6 +33,7 @@ export const routes: Routes = [
   {path: "cart", component: CartComponent,canActivate:[AuthGuardGuard]},
   {path: "list-invoice", component: ListinvoiceComponent},
   {path: "invoice", component: InvoiceComponent},
+  {path: "playlist", component: PlaylistComponent,canActivate:[AuthGuardGuard]},
   {path: "**", redirectTo: "404"},
   {path: "404", component: NotFoundComponent},
 ];

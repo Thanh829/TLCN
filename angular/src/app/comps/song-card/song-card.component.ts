@@ -4,7 +4,6 @@ import { AuthService } from '../../shared/services/auth.service';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { MessagesService } from 'src/app/shared/services/messages.service';
-import { CartService } from 'src/app/shared/services/cart.service';
 
 @Component({
   selector: 'app-song-card',
@@ -17,6 +16,7 @@ export class SongCardComponent implements OnInit {
   @Input("user") user: any;
   @Output("deleted") deleted: EventEmitter<any> = new EventEmitter();
   @Output() songAddToCart: EventEmitter<any> = new EventEmitter<any>();
+  @Output() songAddToPlaylist: EventEmitter<any> = new EventEmitter<any>();
 
   isOwner: boolean = false;
   isPlaying: boolean = false;
@@ -25,80 +25,87 @@ export class SongCardComponent implements OnInit {
   constructor(private _player: MusicPlayerService, 
               private _auth: AuthService, 
               private _http: HttpClient, 
-              private _msg: MessagesService,
-              private cartService: CartService) { }
+              private _msg: MessagesService) { }
 
-  ngOnInit() {
-    if(this.user){
-      this.song.user = this.user;
-    }
-    
-    // console.log(this._auth.getUser().id, this.song.user.id);
-    console.log(this._auth.isLogged());
-    if(this._auth.isLogged()){
-      
-      if(!this._auth.getUser()){
-        let interval = setInterval(()=>{
-          
-          if(this._auth.getUser()){            
-            if(this._auth.user.id == this.song.user.id){
-              this.isOwner = true;
-            }
-            clearInterval(interval);
-          }
-        }, 1000);
-      } else {
-        if(this._auth.user.id == this.song.user.id){
-          this.isOwner = true;
-        }
-
-      }
-    }
-
-    // Playing song
-    this._player.songObserve.subscribe(this.getPlayingSong.bind(this));
-    this.getPlayingSong(this._player.playingSong)
-
-    // Play or Pause observer
-    this._player.playObserve.subscribe(play => {
-
-      
-      if(!this.playingSong || this.playingSong.id != this.song.id) return;
-
-      this.isPlaying = play;
-
-    });
-  }
-  playSong(){
-
-    if(this.playingSong && this.playingSong.id == this.song.id){
-      
-      if(this.isPlaying){
-        this._player.pause();
-      } else {
-        this._player.play();
-      }
-      
-    } else {
-      this._player.emitSong(this.song);
-    }
-    
+ngOnInit() {
+  if(this.user){
+    this.song.user = this.user;
   }
   
-  getPlayingSong(song){
-      if(song == null){
-        this.playingSong = null;
-        this.isPlaying = false;
-      } else {
-        this.playingSong = song;
-        this.isPlaying = this.playingSong.id == this.song.id;
-      }
+  // console.log(this._auth.getUser().id, this.song.user.id);
+  console.log(this._auth.isLogged());
+  // if(this._auth.isLogged()){
+    
+  //   if(!this._auth.getUser()){
+  //     let interval = setInterval(()=>{
+        
+  //       if(this._auth.getUser()){            
+  //         if(this._auth.user.id == this.song.user.id){
+  //           this.isOwner = true;
+  //         }
+  //         clearInterval(interval);
+  //       }
+  //     }, 1000);
+  //   } else {
+  //     if(this._auth.user.id == this.song.user.id){
+  //       this.isOwner = true;
+  //     }
+
+  //   }
+  // }
+
+  // Playing song
+  this._player.songObserve.subscribe(this.getPlayingSong.bind(this));
+  console.log("co toi day k")
+  this.getPlayingSong(this._player.playingSong)
+  
+
+  // Play or Pause observer
+  this._player.playObserve.subscribe(play => {
+
+    
+    if(!this.playingSong || this.playingSong.id != this.song.id) return;
+
+    this.isPlaying = play;
+
+  });
+}
+
+playSong(){
+
+  if(this.playingSong && this.playingSong.id == this.song.id){
+    
+    if(this.isPlaying){
+      this._player.pause();
+    } else {
+      this._player.play();
+    }
+    
+  } else {
+    this._player.emitSong(this.song);
   }
+  
+}
+
+getPlayingSong(song){
+    if(song == null){
+      this.playingSong = null;
+      this.isPlaying = false;
+    } else {
+      this.playingSong = song;
+      this.isPlaying = this.playingSong.id == this.song.id;
+    }
+}
+              
+            
   addToCart()
   {
-    console.log("add to cart")
     this.songAddToCart.emit(this.song)
-    console.log("add to cart sau")
+  }
+
+  addToPlaylist()
+  {
+    this.songAddToPlaylist.emit(this.song)
   }
   
 
@@ -134,16 +141,7 @@ export class SongCardComponent implements OnInit {
     
 
   }
-  loadCartItem()
-  {
-    console.log("load cart item")
-    this.cartService.getTotalItem().subscribe(
-      res=>{
-        console.log("total at nav: "+res)
-       
-      }
-    )
-  }
+  
 
 
 }

@@ -36,13 +36,15 @@ import { TagComponent } from './comps/tag/tag.component';
 import { TestComponent } from './comps/test/test.component';
 import { Ng2CompleterModule } from 'ng2-completer';
 import { CartComponent } from './comps/cart/cart.component';
-import { IgxAvatarModule, IgxIconModule, IgxListModule, IgxSliderModule, IgxToastModule, IgxIconService, IgxFilterModule, IgxRippleModule, IgxForOfModule, IgxInputGroupModule } from "igniteui-angular";
+import { IgxAvatarModule, IgxIconModule, IgxListModule, IgxSliderModule, 	IgxButtonModule, IgxIconService, IgxFilterModule, IgxRippleModule, IgxForOfModule, IgxInputGroupModule } from "igniteui-angular";
 import { NgxPayPalModule } from 'ngx-paypal';
 import { CartitemComponent } from './comps/cart/cartitem/cartitem.component';
 import { InvoiceComponent } from './comps/invoice/invoice.component';
 import { AuthGuardGuard } from './guards/auth-guard.guard';
 import { NotAuthGuard } from './guards/not-auth.guard';
 import { ListinvoiceComponent } from './comps/listinvoice/listinvoice.component';
+import { PlaylistComponent } from './comps/playlist/playlist.component';
+import { IgxDividerModule } from "igniteui-angular";
 
 @NgModule({
   declarations: [
@@ -68,6 +70,7 @@ import { ListinvoiceComponent } from './comps/listinvoice/listinvoice.component'
     CartitemComponent,
     InvoiceComponent,
     ListinvoiceComponent,
+    PlaylistComponent,
   ],
   imports: [
     BrowserModule,
@@ -86,12 +89,13 @@ import { ListinvoiceComponent } from './comps/listinvoice/listinvoice.component'
     IgxIconModule,
     IgxListModule,
     IgxSliderModule,
-    IgxToastModule,
+    IgxButtonModule,
     IgxFilterModule,
     IgxRippleModule,
     IgxForOfModule,
     IgxInputGroupModule,
-    NgxPayPalModule
+    NgxPayPalModule,
+    IgxDividerModule
   ],
   providers: [
     httpInterceptorsProviders,
