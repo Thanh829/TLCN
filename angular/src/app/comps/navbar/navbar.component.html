@@ -1,24 +1,24 @@
 <nav class="navbar">
     <div class="container">
         <div class="offset-md-1"></div>
+        <div style="position: relative;left: -100px;" *ngIf="logged" (click)="toggleMenu()">
+            <img src="assets/images/menu.svg" alt="">
+        </div>
         <div class="navbar-logo">
-            <a routerLink="/"><img src="assets/images/logo.svg" /></a>
+            <a routerLink="/start"><img src="assets/images/logo.svg" /></a>
         </div>
         <app-search-form></app-search-form>
         <ul class="navbar-nav" *ngIf="logged">
             <li>
                 <a routerLink="/cart"> <i class="fas fa-shopping-cart"></i> {{ totalItem }}</a>
             </li>
+            <li><a routerLink="/start/login">{{_auth.getUser().email}}</a></li>
 
         </ul>
-        <div class="menu-icon ml-auto" *ngIf="logged" (click)="toggleMenu()">
-            <img src="assets/images/menu.svg" alt="">
-        </div>
-
         <ul class="navbar-nav" *ngIf="!logged">
 
-            <li><a routerLink="/login">Login</a></li>
-            <li class="btn"><a routerLink="/register">Join</a></li>
+            <li><a routerLink="/start/login">Login</a></li>
+            <li class="btn"><a routerLink="/start/register">Join</a></li>
         </ul>
         <div class="offset-md-1"></div>
     </div>

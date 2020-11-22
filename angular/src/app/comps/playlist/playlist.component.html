@@ -1,7 +1,7 @@
 <div class="modal modal-login" *ngIf="song">
-    <i routerLink="/" class="fas fa-times" style="color: white; font-size: 32px; position: absolute; top: 40px; right: 50px; z-index: 100; cursor: pointer;"></i>
+    <i (click)="closePlaylist()" class="fas fa-times" style="color: white; font-size: 32px; position: absolute; top: 40px; right: 50px; z-index: 100; cursor: pointer;"></i>
     <div class="form-container">
-        <div class="overlay" routerLink="/"></div>
+        <div class="overlay" (click)="closePlaylist()"></div>
         <form style="z-index: 50;" [formGroup]="inputForm">
             <label for="" style="position: relative; left: 190px;">Playlist</label>
             <igx-divider></igx-divider>

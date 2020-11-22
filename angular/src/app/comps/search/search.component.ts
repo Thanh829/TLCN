@@ -13,10 +13,12 @@ import { songSearchCardTrigger } from 'src/app/shared/animations/animations';
 export class SearchComponent implements OnInit {
   query: string = "";
   songs: any[] = [];
-
+  id:string
+  count:any;
   loading: boolean = false;
   nextPage: string | boolean = true;
-
+  page:number=0
+  sumPage:number
   noResutls: boolean = false;
   time: number = 100; 
   last: boolean = false;  // Last page on search
@@ -27,28 +29,37 @@ export class SearchComponent implements OnInit {
   ngOnInit() {
     // Get the query
     this.query = this._route.snapshot.paramMap.get("query");
-
+    this.id=this._route.snapshot.paramMap.get("id");
     this._route.paramMap.subscribe(params => {
       this.query = params.get("query");
+      this.id=params.get("id");
+      console.log("id ne: "+ this.id)
       this.nextPage = environment.url + "api/search/" + this.query;
       this.songs = [];
       this.noResutls = false;
       this.last = false;
-      this.search();
+      this._http.get(`http://localhost:8090/api/v1/songs/countbytag?tagId=${this.id}`).subscribe(
+        res=>{
+          this.count=res
+          if(this.count % 4!=0) this.sumPage=this.count/4;
+          console.log("count ne: "+ this.sumPage)
+          this.page=0
+          this.search();
+     }
+      )
 
     })
 
-    this.search();
   }
 
   search() {
 
-    if(this.loading || this.nextPage == null) return;
+    //if(this.loading || this.nextPage == null) return;
     this.loading = true;
     // Search
 
     this._http
-      .get(<string>this.nextPage, {
+      .get(`http://localhost:8090/api/v1/songs/getAllByTag?page=${this.page}&tagId=${this.id}`, {
         headers: new HttpHeaders().set("Accept", "application/json")
       })
       .subscribe(
@@ -58,7 +69,7 @@ export class SearchComponent implements OnInit {
 
           console.log(data);
 
-          let newSongs = data.data.map((s)=>{
+          let newSongs = data.map((s)=>{
             s.path = environment.url + s.path;
             return s;
           });
@@ -69,9 +80,10 @@ export class SearchComponent implements OnInit {
               this.songs.push(newSongs[i]);
             },i * this.time);
           }
-          
-          if(newSongs.length < 10){
+          this.page++
+          if(this.page >=this.sumPage){
             this.last = true;
+          
           }
 
           if(this.songs.length == 0){
@@ -83,7 +95,9 @@ export class SearchComponent implements OnInit {
         () => {
           this.loading = false;
         }
+        
       );
+      
   }
 
   deleted(index: number){

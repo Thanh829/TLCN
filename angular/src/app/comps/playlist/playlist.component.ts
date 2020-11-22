@@ -98,5 +98,10 @@ addSongToPlaylist()
     )
 }
 
+closePlaylist()
+{
+  this.playlistService.setSong(null)
+}
+
 
 }

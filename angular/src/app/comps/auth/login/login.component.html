@@ -1,7 +1,7 @@
 <div class="modal modal-login">
-    <i routerLink="/" class="fas fa-times" style="color: white; font-size: 32px; position: absolute; top: 40px; right: 50px; z-index: 100; cursor: pointer;"></i>
+    <i routerLink="/start" class="fas fa-times" style="color: white; font-size: 32px; position: absolute; top: 40px; right: 50px; z-index: 100; cursor: pointer;"></i>
     <div class="form-container">
-        <div class="overlay" routerLink="/"></div>
+        <div class="overlay" routerLink="/start"></div>
         <form style="z-index: 50;" [formGroup]="loginForm" (ngSubmit)="loginSubmit()">
             <div class="form-group">
                 <label for="email">

@@ -8,9 +8,10 @@
 
                 <igx-list *ngIf="data.length!=0">
                     <igx-list-item [isHeader]="true">Total Price: ${{TotalCost}} </igx-list-item>
+                    <igx-divider></igx-divider>
                     <div [style.height]="'400px'" [style.overflow]="'hidden'" [style.position]="'relative'">
                         <igx-list-item [style.width]="'calc(100% - 18px)'" igxRipple="pink" igxRippleTarget=".igx-list__item" *igxFor="let item of data | igxFilter: fo; scrollOrientation : 'vertical'; containerSize: '300px'; itemSize: '50px'">
-                            <igx-avatar igxListThumbnail [src]="item.avatar" roundShape="true"></igx-avatar>
+                            <igx-avatar igxListThumbnail [src]="item.avatar"></igx-avatar>
 
                             <div class="play-icon" (click)="playSong(item)">
                                 <igx-icon *ngIf="_player.playingSong==null || _player.playingSong.id!=item.songId || !isPlaying"><i class="fas fa-play"></i></igx-icon>
@@ -30,6 +31,7 @@
                             <div (click)="deleteCartItem(item)">
                                 <igx-icon><i class="fas fa-times"></i></igx-icon>
                             </div>
+
                             <!-- <hr style="width:50%;text-align:left;margin-left:0"> -->
 
                         </igx-list-item>

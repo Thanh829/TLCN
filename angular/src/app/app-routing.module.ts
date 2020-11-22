@@ -17,22 +17,27 @@ import { CartComponent } from './comps/cart/cart.component';
 import { InvoiceComponent } from './comps/invoice/invoice.component';
 import { ListinvoiceComponent } from './comps/listinvoice/listinvoice.component';
 import { PlaylistComponent } from './comps/playlist/playlist.component';
+import { StartComponent } from './comps/start/start.component';
+import { UserPlaylistsComponent } from './comps/user-playlists/user-playlists.component';
 
 
 export const routes: Routes = [
-  {path: "", component: HomeComponent, children: [
+  
+  {path: "start", component: HomeComponent, children: [
   {path: "login", component: LoginComponent, canActivate: [NotAuthGuard]},
   {path: "register", component: RegisterComponent, canActivate: [NotAuthGuard]}
   ]},
   {path: "settings", loadChildren: "./user/user.module#UserModule"},
-  {path: "search/:query", component: SearchComponent},
+  {path: "search/:id/:query", component: SearchComponent},
   {path: "user", component: ProfileComponent,canActivate:[AuthGuardGuard]},
   {path: "upload", component: UploadComponent},
   {path: "tags", component: TagComponent},
   {path: "test", component: TestComponent},
+  {path: "", component: StartComponent},
   {path: "cart", component: CartComponent,canActivate:[AuthGuardGuard]},
   {path: "list-invoice", component: ListinvoiceComponent},
   {path: "invoice", component: InvoiceComponent},
+  {path: "user-playlists", component: UserPlaylistsComponent},
   {path: "playlist", component: PlaylistComponent,canActivate:[AuthGuardGuard]},
   {path: "**", redirectTo: "404"},
   {path: "404", component: NotFoundComponent},

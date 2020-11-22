@@ -134,7 +134,7 @@ export class AuthService {
    * Redirect the user to home page
    */
   redirectHome() {
-    this._router.navigate(["/"]);
+    this._router.navigate(["/start"]);
   }
   /**
    * Redirect the user to profile page

@@ -23,11 +23,13 @@ export class HomeComponent implements OnInit {
   songs: any[] = [];
   time: number = 100;
   count:any
+  noPage:number
 
   constructor(private _auth: AuthService,
     private _http: HttpClient, 
    private playlistService: PlaylistService, 
-    private cartService: CartService) {
+    private cartService: CartService,
+    private route: Router) {
     this.logged = this._auth.isLogged();
    }
 
@@ -38,7 +40,7 @@ export class HomeComponent implements OnInit {
     this._http.get("http://localhost:8090/api/v1/songs/count").subscribe(
      res=>{
        this.count=res
-       if(this.count % 4!=0) this.count++
+       if(this.count % 4!=0) this.noPage=this.count/4 +1 
        this.page=0
        this.loadSong()
      }
@@ -49,7 +51,6 @@ export class HomeComponent implements OnInit {
   loadSong() {
 
     this.loading = true;
-    console.log("page: "+this.page)
     // Search
     this._http
       .get(`http://localhost:8090/api/v1/songs/all?page=${this.page}`)
@@ -81,9 +82,10 @@ export class HomeComponent implements OnInit {
 
   addToCart(song)
   {
+
     let userId;
-    if(this._auth.isLogged())
-      userId=this._auth.getUser().id
+    if(!this._auth.isLogged()) this.route.navigate(["/start/login"])
+    userId=this._auth.getUser().id
     console.log(userId)
     this.cartService.addToCart(song.id,song.price, song.title, userId).subscribe(
       res=> {
@@ -95,6 +97,7 @@ export class HomeComponent implements OnInit {
 
   addToPlaylist(song)
   {
+    if(!this._auth.isLogged()) this.route.navigate(["/start/login"])
     console.log(song)
       this.playlistService.setSong(song)
   }

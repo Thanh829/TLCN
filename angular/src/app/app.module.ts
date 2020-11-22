@@ -45,6 +45,8 @@ import { NotAuthGuard } from './guards/not-auth.guard';
 import { ListinvoiceComponent } from './comps/listinvoice/listinvoice.component';
 import { PlaylistComponent } from './comps/playlist/playlist.component';
 import { IgxDividerModule } from "igniteui-angular";
+import { StartComponent } from './comps/start/start.component';
+import { UserPlaylistsComponent } from './comps/user-playlists/user-playlists.component';
 
 @NgModule({
   declarations: [
@@ -71,6 +73,8 @@ import { IgxDividerModule } from "igniteui-angular";
     InvoiceComponent,
     ListinvoiceComponent,
     PlaylistComponent,
+    StartComponent,
+    UserPlaylistsComponent,
   ],
   imports: [
     BrowserModule,

@@ -45,7 +45,7 @@
     </div>
     <ul class="tags">
         <li *ngFor="let tag of song.tags">
-            <a [routerLink]="['/search', tag]">{{ tag.title }}</a>
+            <a [routerLink]="['/search', tag.id,tag.title]">{{ tag.title }}</a>
         </li>
         <!-- Bad practice :( to be changed-->
         <button class="delete" *ngIf="isOwner" (click)="delete()">Delete</button>
