@@ -1,0 +1,65 @@
+<!------ Include the above in your HEAD tag ---------->
+
+<div>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <div class="cover-area">
+        <div class="fb-profile">
+            <img align="left" class="fb-image-lg" [src]="_auth.getUser().coverImage" alt="Profile image example" />
+            <img align="left" class="fb-image-profile thumbnail" [src]="_auth.getUser().avatar" width="100 " height="100" alt="Profile image example" />
+            <span></span>
+            <div class="fb-profile-text">
+                <h3>Eli Macy</h3>
+            </div>
+        </div>
+
+    </div>
+    <!-- <section class="hero-section d-flex"> -->
+    <div>
+        <div class="col album">
+
+            <div class="col col-sm-3">
+                <img src="https://cdn.artlist.io/artlist-images/44797_Ian-Post-Magnetism-A.jpg" class="image-album" alt="Magnetism">
+                <span class="name btn">   Some album</span>
+            </div>
+            <div class="col col-sm-3">
+                <img src="https://cdn.artlist.io/artlist-images/44797_Ian-Post-Magnetism-A.jpg" class="image-album" alt="Magnetism">
+                <span class="name btn">   Some album</span>
+            </div>
+
+
+
+            <div class="col col-sm-3">
+                <img src="https://cdn.artlist.io/artlist-images/44797_Ian-Post-Magnetism-A.jpg" class="image-album" alt="Magnetism">
+                <span class="name">   Some album</span>
+            </div>
+            <div class="col col-sm-3">
+                <img src="https://cdn.artlist.io/artlist-images/44797_Ian-Post-Magnetism-A.jpg" class="image-album" alt="Magnetism">
+                <span class="name">   Some album</span>
+            </div>
+
+            <div class="col col-sm-3">
+                <img src="https://cdn.artlist.io/artlist-images/44797_Ian-Post-Magnetism-A.jpg" class="image-album" alt="Magnetism">
+                <span class="name">   Some album</span>
+            </div>
+            <div class="col col-sm-3">
+                <img src="https://cdn.artlist.io/artlist-images/44797_Ian-Post-Magnetism-A.jpg" class="image-album" alt="Magnetism">
+            </div>
+
+        </div>
+    </div>
+    <!-- </section> -->
+    <div class="containerr">
+        <div class="row ">
+            <div class="offset-md-1"></div>
+
+            <div class="col-8 col-mdr-12">
+                <app-song-card *ngFor="let song of songs; let i = index" [song]="song" [user]="user" (songAddToCart)="addToCart($event)" (songAddToPlaylist)="addToPlaylist($event)" @songCardTrigger></app-song-card>
+                <app-fetching (bottom)="loadSong()" *ngIf="page<=noPage"></app-fetching>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- /container -->

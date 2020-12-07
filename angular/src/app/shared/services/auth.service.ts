@@ -24,9 +24,6 @@ export class AuthService {
     let expires_in = parseInt(localStorage.getItem("expires_in"));
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");
-    console.log(expires_in)
-    console.log(Date.now())
-    console.log(this.expires_in-Date.now())
     if (expires_in > Date.now()) {
 
       this.logged = true;
@@ -40,7 +37,8 @@ export class AuthService {
 
       this.storeData(expires_in, access_token, refresh_token, true);
     }
-    
+    else
+    localStorage.clear(); 
   }
 
   /**

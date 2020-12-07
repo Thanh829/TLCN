@@ -1,8 +1,13 @@
 import { Component, OnInit } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { environment } from 'src/environments/environment';
 import { songSearchCardTrigger } from 'src/app/shared/animations/animations';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { Route } from '@angular/compiler/src/core';
+import { CartService } from 'src/app/shared/services/cart.service';
+import { PaymentService } from 'src/app/shared/services/payment.service';
+import { PlaylistService } from 'src/app/shared/services/playlist.service';
 
 @Component({
   selector: "app-search",
@@ -24,7 +29,11 @@ export class SearchComponent implements OnInit {
   last: boolean = false;  // Last page on search
 
 
-  constructor(private _http: HttpClient, private _route: ActivatedRoute) {}
+  constructor(private _http: HttpClient, private _route: ActivatedRoute,
+    private _auth:AuthService,
+    private route: Router,
+    private cartService: CartService,
+    private playlistService:PlaylistService) {}
 
   ngOnInit() {
     // Get the query
@@ -44,7 +53,7 @@ export class SearchComponent implements OnInit {
           if(this.count % 4!=0) this.sumPage=this.count/4;
           console.log("count ne: "+ this.sumPage)
           this.page=0
-          this.search();
+          //this.search();
      }
       )
 
@@ -57,7 +66,7 @@ export class SearchComponent implements OnInit {
     //if(this.loading || this.nextPage == null) return;
     this.loading = true;
     // Search
-
+console.log("page new"+ this.page)
     this._http
       .get(`http://localhost:8090/api/v1/songs/getAllByTag?page=${this.page}&tagId=${this.id}`, {
         headers: new HttpHeaders().set("Accept", "application/json")
@@ -102,6 +111,27 @@ export class SearchComponent implements OnInit {
 
   deleted(index: number){
     this.songs.splice(index, 1);
+  }
+  addToCart(song)
+  {
+
+    let userId;
+    if(!this._auth.isLogged()) this.route.navigate(["/start/login"])
+    userId=this._auth.getUser().id
+    console.log(userId)
+    this.cartService.addToCart(song.id,song.price, song.title, userId).subscribe(
+      res=> {
+          this.cartService.setMyCount(res)
+          
+      }
+    )
+  }
+
+  addToPlaylist(song)
+  {
+    if(!this._auth.isLogged()) this.route.navigate(["/start/login"])
+    console.log(song)
+      this.playlistService.setSong(song)
   }
 
 }

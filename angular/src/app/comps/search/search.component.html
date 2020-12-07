@@ -17,7 +17,7 @@
         </div> -->
                 <div class="col-10">
                     <!-- Song Card -->
-                    <app-song-card [song]="song" (deleted)="deleted(i)"></app-song-card>
+                    <app-song-card [song]="song" (deleted)="deleted(i)" (songAddToCart)="addToCart($event)" (songAddToPlaylist)="addToPlaylist($event)"></app-song-card>
                 </div>
             </div>
             <div class="offset-md-1"></div>

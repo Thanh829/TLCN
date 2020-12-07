@@ -17,6 +17,7 @@ export class SettingsComponent implements OnInit {
 
   imagePath: string = "";
   file: File = null;
+  coverfile: File = null;
 
   width: number = 0;
   loading: boolean = false;
@@ -26,23 +27,33 @@ export class SettingsComponent implements OnInit {
   isLoading: boolean = false;
 
   @ViewChild("img", {static: true}) img: ElementRef;
+  @ViewChild("coverimg", {static: true}) coverimg: ElementRef;
 
   @ViewChild("file", {static: true}) imageBox: ElementRef;
+  @ViewChild("coverfile", {static: true}) coverBox: ElementRef;
 
   constructor(private _auth: AuthService, private _http: HttpClient, private _msg: MessagesService) { }
 
   ngOnInit() {
 
-    this._auth.userEmitter.subscribe((user)=>{
-      this.user = user;
-      this.setPath(this.user.pic ? this.user.pic : "/assets/images/placeholder.png");
-      this.updateForm.setValue({
-        email: this.user.email,
-        name: this.user.name,
-      });
+    this.updateForm = new FormGroup({
+      email: new FormControl({value: this.user ? this.user.username : null, disabled :true}, {validators: [Validators.required, Validators.email,Validators.minLength(3), Validators.maxLength(15)]}),
+      name: new FormControl(this.user? this.user.email : null, {validators: [Validators.required]}),
+      paypal: new FormControl({value: this.user ? this.user.username : null, disabled :true}, {validators: [Validators.required, Validators.email,Validators.minLength(3), Validators.maxLength(15)]}),
     });
+      this.user = this._auth.getUser();
+      console.log("user")
+      console.log( this.user)
+      this.setPath( "/assets/images/placeholder.png");
+      this.coverimg.nativeElement.src =  "/assets/images/placeholder.png";
+      this.updateForm.setValue({
+        email: this.user.username,
+        name: this.user.email,
+        paypal: this.user.paypalAccount
+      });
+    
 
-
+   
     // Get user
     this.user = this._auth.getUser();
     if(this.user){
@@ -50,10 +61,7 @@ export class SettingsComponent implements OnInit {
     }
 
 
-    this.updateForm = new FormGroup({
-      email: new FormControl(this.user ? this.user.email : null, {validators: [Validators.required, Validators.email]}),
-      name: new FormControl(this.user? this.user.name : null, {validators: [Validators.required, Validators.minLength(3), Validators.maxLength(15)]}),
-    });
+ 
    
     // Email input subscriber
     this.updateForm.get("email").statusChanges.subscribe(()=>{
@@ -70,8 +78,22 @@ export class SettingsComponent implements OnInit {
         this.storeFile(e.dataTransfer.files[0]);
       }
     });
+    this.coverBox.nativeElement.addEventListener("drop", (e: any) => {
+      e.stopPropagation();
+      e.preventDefault();
+
+      if (e.dataTransfer.files.length) {
+        this.storeCoverFile(e.dataTransfer.files[0]);
+      }
+    });
     // Drag over the element event
     this.imageBox.nativeElement.addEventListener("dragover", (e: any) => {
+      e.stopPropagation();
+      e.preventDefault();
+
+      e.dataTransfer.dropEffect = "copy";
+    });
+    this.coverBox.nativeElement.addEventListener("dragover", (e: any) => {
       e.stopPropagation();
       e.preventDefault();
 
@@ -85,16 +107,24 @@ export class SettingsComponent implements OnInit {
     let fd = new FormData();
 
     // Append form values
-    fd.append("name", this.updateForm.value.name);
-    fd.append("email", this.updateForm.value.email);
+    fd.append("userId",this.user.id)
+    fd.append("artistId",this.user.artistId)
     if(this.file){
-      fd.append("pic", this.file);
+      fd.append("avatar", this.file);
+
     }
+    if(this.coverfile){
+      fd.append("coverImage", this.coverfile);
+      
+    }
+    fd.append("artistName", this.updateForm.value.email);
+    fd.append("paypalAccount", this.user.paypalAccount);
+   
 
         
     this.isLoading = true;
 
-    this._http.post( environment.url + "api/user/settings", fd, {
+    this._http.post( environment.url + "auth/artist/edit", fd, {
       observe: "events",
       reportProgress: true
     })
@@ -148,6 +178,21 @@ export class SettingsComponent implements OnInit {
     this.file = file;
     // this.img.nativeElement.src = URL.createObjectURL(this.file);
     this.setPath(URL.createObjectURL(this.file));
+  }
+  storeCoverFile(file: File){
+    console.log(file.type);
+    if(file.size > (1024 * 1024 * 2)){
+      return;
+    }
+    let validTypes = ["image/jpeg", "image/png", "image/jpg"];
+    if(validTypes.indexOf(file.type) == -1){
+      return;
+    }
+    
+    // Store the file
+    this.coverfile = file;
+    // this.img.nativeElement.src = URL.createObjectURL(this.file);
+    this.coverimg.nativeElement.src =  URL.createObjectURL(this.coverfile);
   }
 
   /**

@@ -47,6 +47,7 @@ import { PlaylistComponent } from './comps/playlist/playlist.component';
 import { IgxDividerModule } from "igniteui-angular";
 import { StartComponent } from './comps/start/start.component';
 import { UserPlaylistsComponent } from './comps/user-playlists/user-playlists.component';
+import { ArtistPageComponent } from './comps/artist-page/artist-page.component';
 
 @NgModule({
   declarations: [
@@ -75,6 +76,7 @@ import { UserPlaylistsComponent } from './comps/user-playlists/user-playlists.co
     PlaylistComponent,
     StartComponent,
     UserPlaylistsComponent,
+    ArtistPageComponent,
   ],
   imports: [
     BrowserModule,

@@ -14,7 +14,14 @@
             height: 20px;
         }
     </style>
+
     <div class="body" [class.playing]="playingSong?.id == song.id">
+        <section class="user d-flex"><img [src]="song.avatarImage  ? song.avatarImage  : 'assets/images/placeholder.png'" />
+            <div class="user-info">
+                <!-- <a class="username" [routerLink]="['/user', song.user.slug]">{{ song.user.name | titlecase}}</a> -->
+
+            </div>
+        </section>
         <div class="play-icon" (click)="playSong()">
             <i class="fas fa-play" *ngIf="!isPlaying"></i>
             <i class="fas fa-pause" *ngIf="isPlaying"></i>

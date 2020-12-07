@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { MusicPlayerService } from 'src/app/shared/services/music-player.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
-
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 @Component({
   selector: 'app-music-player',
   templateUrl: './music-player.component.html',
@@ -20,7 +20,7 @@ export class MusicPlayerComponent implements OnInit, AfterViewInit {
   lastVolume: number = 50;  // Last volume value before muting
   isMuted: boolean = false;
   isLoop: boolean = false;
-  dem:number =0
+  duration:any
 
   constructor(private _player: MusicPlayerService, private _auth: AuthService) { }
 
@@ -80,10 +80,12 @@ export class MusicPlayerComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(){
     // Native element
     let video = this.video.nativeElement;
-   
+  
+    
     video.addEventListener("timeupdate", ()=>{
       let time = video.currentTime;
-      
+      this.duration=parseInt((video.duration/60).toString())+":"+video.duration%60;
+     
       // Format the time
       time = parseInt(time);
    
@@ -97,8 +99,13 @@ export class MusicPlayerComponent implements OnInit, AfterViewInit {
       // Chagne progress width
       this.barWidth = ((video.currentTime / video.duration) * 100) + "%"; 
 
-      // console.log(video.currentTime);
-
+      // need to get purchase
+      if(minuts>0||sec>=59) 
+      {
+        this.purchaseNotification()
+        video.currentTime = 0;
+        this.pause();
+      }
       // Return the bar to the begining
       if(video.duration == video.currentTime){
         video.currentTime = 0;
@@ -119,7 +126,9 @@ export class MusicPlayerComponent implements OnInit, AfterViewInit {
 
 
   }
-
+  purchaseNotification(){
+    Swal.fire('Hi', 'You need to purchase to listen to the whole song!', 'warning')
+  }
   // Close the song & hide song player
   close(){
     this.song = null;

@@ -1,4 +1,4 @@
-button.delete{
+button.delete {
     display: block;
     border: 0px;
     margin-left: auto;
@@ -8,15 +8,57 @@ button.delete{
     border-radius: 3px;
     cursor: pointer;
     padding: 4px 5px;
-    &:hover{
+    &:hover {
         background-color: darken(#FF5050, 10);
     }
 }
 
-.body.playing{
-    .play-icon{
-        &:hover{
+.body.playing {
+    .play-icon {
+        &:hover {
             background-color: darken(#6763FF, 5);
         }
     }
+}
+
+.user {
+    margin-right: 50px
+}
+
+@media (max-width: 900px) {
+    .user {
+        margin-right: 20px
+    }
+}
+
+.user img {
+    width: 60px;
+    max-height: 60px;
+    -o-object-position: center;
+    object-position: center;
+    -o-object-fit: cover;
+    object-fit: cover;
+    margin-right: 5px
+}
+
+.user-info {
+    font-weight: bold
+}
+
+.user-info .username,
+.user-info span {
+    display: block
+}
+
+.user-info .username {
+    font-size: 14px;
+    margin-bottom: 10px
+}
+
+.user-info .username:hover {
+    color: #e6e6e6
+}
+
+.user-info span {
+    font-size: 12px
 }

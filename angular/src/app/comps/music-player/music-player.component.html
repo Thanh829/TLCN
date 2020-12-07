@@ -20,7 +20,8 @@
             <span class="repeat active" (click)="toggleLoop()">
           <i class="fas fa-retweet" [style.opacity]="isLoop ? 1: .5"></i>
         </span>
-            <span class="number">{{ song.time | songTime}}</span>
+
+            <span class="number">{{ currentTime}}</span>
             <div class="slider" id="bar" (appBar)="songBar($event)" (finalClick)="finalClick()">
                 <div class="full">
                     <div class="finished" [style.width]="barWidth">
@@ -29,7 +30,7 @@
                 </div>
             </div>
             <div>
-                <span class="number">{{ currentTime}}</span>
+                <span class="number">{{duration| songTime}}</span>
             </div>
 
         </section>

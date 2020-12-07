@@ -25,6 +25,7 @@ export class UploadComponent implements OnInit {
   loading: boolean = false;
   width: number = 0;
   file: File = null;
+  imageFile: File = null;
   tagData: String[]=[];
 
   @ViewChild("tagsBox", { static: true }) tagsBox: ElementRef;
@@ -32,11 +33,15 @@ export class UploadComponent implements OnInit {
 
   // Drop box
   @ViewChild("box", { static: true }) box: ElementRef;
+  @ViewChild("img", {static: true}) img: ElementRef;
+
+  @ViewChild("file", {static: true}) imageBox: ElementRef;
 
 
   constructor(private _auth: AuthService, private _http: HttpClient, private _msg: MessagesService, private completerService: CompleterService, private tagService: TagService ) {}
 
   ngOnInit() {
+    this.setPath("/assets/images/placeholder.png");
     this.myGroup = new FormGroup({
       firstName: new FormControl(null, {validators: [Validators.required, Validators.minLength(3), Validators.maxLength(255)]})
    });
@@ -83,7 +88,21 @@ export class UploadComponent implements OnInit {
 
       e.dataTransfer.dropEffect = "copy";
     });
+    this.imageBox.nativeElement.addEventListener("drop", (e: any) => {
+      e.stopPropagation();
+      e.preventDefault();
 
+      if (e.dataTransfer.files.length) {
+        this.storeImageFile(e.dataTransfer.files[0]);
+      }
+    });
+    // Drag over the element event
+    this.imageBox.nativeElement.addEventListener("dragover", (e: any) => {
+      e.stopPropagation();
+      e.preventDefault();
+
+      e.dataTransfer.dropEffect = "copy";
+    });
     // ============== Tags Box ==============
     this.tagsBox.nativeElement.addEventListener("keyup", () => {
       let value = this.tagsBox.nativeElement.value; // Input value
@@ -113,6 +132,9 @@ export class UploadComponent implements OnInit {
       this.tagsBox.nativeElement.value = "";
 
     });
+
+   
+   
   }
  
 
@@ -176,6 +198,7 @@ onKey()
     fd.append("price", this.uploadForm.value.price);
 
     fd.append("song", this.file);
+    fd.append("image",this.imageFile)
     //Upload file
     this.loading = true;
     this._http
@@ -248,5 +271,28 @@ onKey()
 
   removeTag(index: number){
     (<FormArray>this.uploadForm.get("tags")).removeAt(index);
+  }
+
+  setPath(path){
+
+    this.img.nativeElement.src = path;
+
+    console.log("Path ne")
+    console.log(path)
+  }
+  storeImageFile(file: File){
+    console.log(file.type);
+    if(file.size > (1024 * 1024 * 2)){
+      return;
+    }
+    let validTypes = ["image/jpeg", "image/png", "image/jpg"];
+    if(validTypes.indexOf(file.type) == -1){
+      return;
+    }
+    
+    // Store the file
+    this.imageFile = file;
+    // this.img.nativeElement.src = URL.createObjectURL(this.file);
+    this.setPath(URL.createObjectURL(this.imageFile));
   }
 }

@@ -246,6 +246,7 @@ deleteCartItem(item)
   )
 }
 
+
 public get panThreshold() {
     const result = this.list.panEndTriggeringThreshold;
     return Math.round(result * 100) + "%";

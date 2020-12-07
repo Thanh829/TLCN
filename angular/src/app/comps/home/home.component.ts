@@ -56,7 +56,8 @@ export class HomeComponent implements OnInit {
       .get(`http://localhost:8090/api/v1/songs/all?page=${this.page}`)
       .subscribe(
         (res: any) => {
-          
+          console.log("loi ne")
+          console.log(res)
           this.user = null;
           let newSongs = res.map(s => {
             s.path = s.url;

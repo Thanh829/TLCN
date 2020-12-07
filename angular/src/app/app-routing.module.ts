@@ -19,6 +19,7 @@ import { ListinvoiceComponent } from './comps/listinvoice/listinvoice.component'
 import { PlaylistComponent } from './comps/playlist/playlist.component';
 import { StartComponent } from './comps/start/start.component';
 import { UserPlaylistsComponent } from './comps/user-playlists/user-playlists.component';
+import { ArtistPageComponent } from './comps/artist-page/artist-page.component';
 
 
 export const routes: Routes = [
@@ -33,10 +34,12 @@ export const routes: Routes = [
   {path: "upload", component: UploadComponent},
   {path: "tags", component: TagComponent},
   {path: "test", component: TestComponent},
+  {path: "artist", component: ArtistPageComponent},
   {path: "", component: StartComponent},
   {path: "cart", component: CartComponent,canActivate:[AuthGuardGuard]},
   {path: "list-invoice", component: ListinvoiceComponent},
   {path: "invoice", component: InvoiceComponent},
+  {path: "setting", component: SettingsComponent, canActivate: [AuthGuardGuard]},
   {path: "user-playlists", component: UserPlaylistsComponent},
   {path: "playlist", component: PlaylistComponent,canActivate:[AuthGuardGuard]},
   {path: "**", redirectTo: "404"},

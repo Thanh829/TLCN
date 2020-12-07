@@ -10,7 +10,7 @@ import { ChangePasswordComponent } from '../comps/change-password/change-passwor
 
 
 const userRoutes: Routes = [
-    {path: "", component: SettingsComponent, canActivate: [AuthGuardGuard]},
+    
     {path: "upload", component: UploadComponent, canActivate: [AuthGuardGuard]},
     {path: "change-password", component: ChangePasswordComponent, canActivate: [AuthGuardGuard]},
 ];

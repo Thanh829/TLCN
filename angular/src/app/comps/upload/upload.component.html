@@ -1,7 +1,11 @@
 <section class="password-section section">
+
     <div class="container">
         <div class="row">
+
+
             <div class="offset-md-1"></div>
+
             <div class="col-10 col-mdr-12">
                 <form class="w-100 upload" [formGroup]="uploadForm" (ngSubmit)="upload()">
                     <div class="row">
@@ -62,6 +66,14 @@
                         </div>
                     </div>
 
+                    <div class="col-3 col-mdr-12">
+                        <div class="upload-img-container" #file>
+                            <div class="msg">
+                                <h2>Upload New Photo</h2>
+                            </div>
+                            <img #img/>
+                        </div>
+                    </div>
                     <div class="row form-group col-12">
                         <div class="upload-box w-100" #box>
                             <small class="error">{{ fileError }}</small>
