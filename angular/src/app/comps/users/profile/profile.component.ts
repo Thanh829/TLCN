@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { songCardTrigger, fadeTrigger } from "../../../shared/animations/animations";
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: "app-profile",
@@ -23,7 +24,8 @@ export class ProfileComponent implements OnInit {
 
   time: number = 100;
 
-  constructor(private _http: HttpClient, private _route: ActivatedRoute, private _router: Router) {}
+  constructor(private _http: HttpClient, private _route: ActivatedRoute, private _router: Router,
+    private _auth: AuthService) {}
 
   ngOnInit() {
     // Get the query
@@ -37,8 +39,9 @@ export class ProfileComponent implements OnInit {
       this.search();
     });
     */
+   this.user= this._auth.getUser()
    this.page=0
-   this._http.get("http://localhost:8090/api/v1/songs/count").subscribe(
+   this._http.get(`http://localhost:8090/api/v1/songs/count-song-of-user?userId=${this.user.id}`).subscribe(
      res=>{
        this.count=res
        if(this.count %4 !=0) this.count++
@@ -91,14 +94,12 @@ export class ProfileComponent implements OnInit {
   loadSong() {
 
     this.loading = true;
-    console.log("page: "+this.page)
     // Search
     this._http
-      .get(`http://localhost:8090/api/v1/songs/all?page=${this.page}`)
+      .get(`http://localhost:8090/api/v1/songs/get-user-song?page=${this.page}&userId=${this.user.id}`)
       .subscribe(
         (res: any) => {
           
-          this.user = null;
           let newSongs = res.map(s => {
             s.path = s.url;
             return s;

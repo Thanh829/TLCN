@@ -4,6 +4,7 @@ import { AuthService } from '../../shared/services/auth.service';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { MessagesService } from 'src/app/shared/services/messages.service';
+import { CartService } from 'src/app/shared/services/cart.service';
 
 @Component({
   selector: 'app-song-card',
@@ -25,12 +26,16 @@ export class SongCardComponent implements OnInit {
   constructor(private _player: MusicPlayerService, 
               private _auth: AuthService, 
               private _http: HttpClient, 
-              private _msg: MessagesService) { }
+              private _msg: MessagesService,
+              private cartService: CartService)
+               { }
 
 ngOnInit() {
   if(this.user){
     this.song.user = this.user;
+   
   }
+  this.user =this._auth.getUser()
   
   // console.log(this._auth.getUser().id, this.song.user.id);
   console.log(this._auth.isLogged());
@@ -56,7 +61,6 @@ ngOnInit() {
 
   // Playing song
   this._player.songObserve.subscribe(this.getPlayingSong.bind(this));
-  console.log("co toi day k")
   this.getPlayingSong(this._player.playingSong)
   
 
@@ -82,7 +86,19 @@ playSong(){
     }
     
   } else {
-    this._player.emitSong(this.song);
+    this.cartService.checkOwned(this.song.id,this.user.id).subscribe(
+      res=> {
+        if(res>0)
+        {
+          this._player.owner=true
+        }
+        else this._player.owner =false
+
+        console.log("owner: " + this._player.owner)
+        this._player.emitSong(this.song);
+      }
+    )
+   
   }
   
 }

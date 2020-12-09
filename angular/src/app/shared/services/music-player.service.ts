@@ -9,6 +9,7 @@ export class MusicPlayerService {
   songObserve: Subject<any> = new Subject<any>();
   playObserve: Subject<boolean> = new Subject<any>();
   playingSong: any = null;
+  owner:boolean=false
 
   constructor() { }
 

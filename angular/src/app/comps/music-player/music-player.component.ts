@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angula
 import { MusicPlayerService } from 'src/app/shared/services/music-player.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
+import { CartService } from 'src/app/shared/services/cart.service';
 @Component({
   selector: 'app-music-player',
   templateUrl: './music-player.component.html',
@@ -21,13 +22,15 @@ export class MusicPlayerComponent implements OnInit, AfterViewInit {
   isMuted: boolean = false;
   isLoop: boolean = false;
   duration:any
+  user:any
 
-  constructor(private _player: MusicPlayerService, private _auth: AuthService) { }
+
+  constructor(private _player: MusicPlayerService, private _auth: AuthService,private cartService: CartService) { }
 
   ngOnInit() {
     this._player.songObserve.subscribe((song)=>{
       if(song == null) return;
-      
+      this.user= this._auth.getUser()
       let storedVolume = localStorage.getItem("volume");
 
       this.song = song;
@@ -80,7 +83,7 @@ export class MusicPlayerComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(){
     // Native element
     let video = this.video.nativeElement;
-  
+    let owner:boolean
     
     video.addEventListener("timeupdate", ()=>{
       let time = video.currentTime;
@@ -100,12 +103,16 @@ export class MusicPlayerComponent implements OnInit, AfterViewInit {
       this.barWidth = ((video.currentTime / video.duration) * 100) + "%"; 
 
       // need to get purchase
-      if(minuts>0||sec>=59) 
-      {
-        this.purchaseNotification()
-        video.currentTime = 0;
-        this.pause();
-      }
+     
+       if(!this._player.owner) {
+        if(minuts>0||sec>=59) 
+        {
+          this.purchaseNotification()
+          video.currentTime = 0;
+          this.pause();
+        }
+       }
+      
       // Return the bar to the begining
       if(video.duration == video.currentTime){
         video.currentTime = 0;

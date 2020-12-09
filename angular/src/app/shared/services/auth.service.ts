@@ -57,6 +57,17 @@ export class AuthService {
     );
   }
 
+  forgot(email:String)
+  {
+    return this._http.post(this.baseURL("api/v1/auth/forgot"),{
+      email:email
+    })
+  }
+  verify(code:String)
+  {
+    return this._http.post(this.baseURL("api/v1/auth/verify"),code)
+  }
+
   /**
    * Return post request to log the user in
    * @param email string
@@ -70,6 +81,15 @@ export class AuthService {
         username, email, password
       }
     );
+  }
+
+  changePassword(oldPass:string, newPassword:string)
+  {
+    let fd = new FormData()
+    fd.append("oldpass", oldPass);
+    fd.append("newpass", newPassword)
+
+    return this._http.post(this.baseURL("api/v1/auth/changepassword"),fd)
   }
 
   storeData(expires_in: number, access_token: string, refresh_token: string, bootstraping: boolean = false) {
@@ -169,14 +189,14 @@ export class AuthService {
     this.redirectHome();
   }
 
-  changePassword(old: string, newPassword: string, confirm: string) {
+  // changePassword(old: string, newPassword: string, confirm: string) {
 
-    return this._http.post(environment.url + "/api/user/password", {
-      old_password: old,
-      password: newPassword,
-      password_confirmation: confirm
-    });
-  }
+  //   return this._http.post(environment.url + "/api/user/password", {
+  //     old_password: old,
+  //     password: newPassword,
+  //     password_confirmation: confirm
+  //   });
+  // }
 
 
   /**

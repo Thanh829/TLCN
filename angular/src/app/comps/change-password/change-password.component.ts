@@ -31,9 +31,9 @@ export class ChangePasswordComponent implements OnInit {
 
     this.isLoading = true;
 
-    this._auth.changePassword(value.old_password, value.password, value.password_confirmation).subscribe(
+    this._auth.changePassword(value.old_password, value.password).subscribe(
       (data)=>{
-        this._auth.redirectProfile();
+        //this._auth.redirectProfile();
         this._msg.success("Congratulations!", "Your password updated successfully.");
       },
       (err)=>{

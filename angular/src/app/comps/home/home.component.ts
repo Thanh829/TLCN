@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { CartService } from 'src/app/shared/services/cart.service';
+import { MessagesService } from 'src/app/shared/services/messages.service';
 import { PlaylistService } from 'src/app/shared/services/playlist.service';
 import { songCardTrigger, fadeTrigger } from "../../shared/animations/animations";
 
@@ -29,7 +30,8 @@ export class HomeComponent implements OnInit {
     private _http: HttpClient, 
    private playlistService: PlaylistService, 
     private cartService: CartService,
-    private route: Router) {
+    private route: Router,
+    private messageService: MessagesService) {
     this.logged = this._auth.isLogged();
    }
 
@@ -88,12 +90,22 @@ export class HomeComponent implements OnInit {
     if(!this._auth.isLogged()) this.route.navigate(["/start/login"])
     userId=this._auth.getUser().id
     console.log(userId)
-    this.cartService.addToCart(song.id,song.price, song.title, userId).subscribe(
+    this.cartService.checkOwned(userId,song.id).subscribe(
       res=> {
-          this.cartService.setMyCount(res)
-          
+        if(res>0)
+        {
+          this.cartService.addToCart(song.id,song.price, song.title, userId).subscribe(
+            res=> {
+                this.cartService.setMyCount(res)
+                
+            }
+          )
+        }
+        else this.messageService.danger("You have own this song")
       }
     )
+
+   
   }
 
   addToPlaylist(song)

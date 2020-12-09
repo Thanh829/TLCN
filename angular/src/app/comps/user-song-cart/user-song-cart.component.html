@@ -1,0 +1,59 @@
+<div class="song-card">
+    <!-- body.playing -->
+    <style>
+        .a {
+            position: relative;
+            width: 400px;
+            height: 200px;
+            border: 3px solid red;
+        }
+        
+        .b {
+            display: flex;
+            width: 100px;
+            height: 20px;
+        }
+    </style>
+
+    <div class="body" [class.playing]="playingSong?.id == song.id">
+        <section class="user d-flex"><img [src]="song.avatarImage  ? song.avatarImage  : 'assets/images/placeholder.png'" />
+            <div class="user-info">
+                <!-- <a class="username" [routerLink]="['/user', song.user.slug]">{{ song.user.name | titlecase}}</a> -->
+
+            </div>
+        </section>
+        <div class="play-icon" (click)="playSong()">
+            <i class="fas fa-play" *ngIf="!isPlaying"></i>
+            <i class="fas fa-pause" *ngIf="isPlaying"></i>
+        </div>
+        <div class="info">
+            <div class="info-row">
+                <span class="song-name">{{ song.title | titlecase }}</span>
+                <span class="song-date">{{ song.createdAtHuman }}</span>
+            </div>
+
+        </div>
+        <div class="btn">
+            <span class="song-length">${{ song.price }}</span>
+            <!-- <span class="song-plays"> <i class="fas fa-play"></i> 20.1k</span> -->
+        </div>
+        <div class="offset-md-1"></div>
+        <!-- <div class="btn" (click)="addToCart()">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="song-length">{{ song.time | songTime }}</span>
+            <!-- <span class="song-plays"> <i class="fas fa-play"></i> 20.1k</span> 
+        </div> -->
+        <div class="offset-md-1"></div>
+        <div class="btn" (click)="download(song)">
+            <i class="fas fa-download"></i>
+            <!-- <span class="song-plays"> <i class="fas fa-play"></i> 20.1k</span> -->
+        </div>
+    </div>
+    <ul class="tags">
+        <li *ngFor="let tag of song.tags">
+            <a [routerLink]="['/search', tag.id,tag.title]">{{ tag.title }}</a>
+        </li>
+        <!-- Bad practice :( to be changed-->
+        <button class="delete" *ngIf="isOwner" (click)="delete()">Delete</button>
+    </ul>
+</div>

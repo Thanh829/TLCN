@@ -17,7 +17,6 @@ import { BrowserModule } from '@angular/platform-browser';
     declarations: [
         UploadComponent,
         SettingsComponent,
-        ChangePasswordComponent,
     ],
     imports: [
         //BrowserModule, 

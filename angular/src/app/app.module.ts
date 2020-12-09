@@ -22,7 +22,6 @@ import { ProfileComponent } from './comps/users/profile/profile.component';
 import { FetchingComponent } from './comps/fetching/fetching.component';
 import { UploadComponent } from './comps/upload/upload.component';
 import { SettingsComponent } from './comps/settings/settings.component';
-import { ChangePasswordComponent } from './comps/change-password/change-password.component';
 import { MusicPlayerComponent } from './comps/music-player/music-player.component';
 import { MusicPlayerService } from './shared/services/music-player.service';
 import { NotFoundComponent } from './comps/not-found/not-found.component';
@@ -48,6 +47,9 @@ import { IgxDividerModule } from "igniteui-angular";
 import { StartComponent } from './comps/start/start.component';
 import { UserPlaylistsComponent } from './comps/user-playlists/user-playlists.component';
 import { ArtistPageComponent } from './comps/artist-page/artist-page.component';
+import { ForgotComponent } from './comps/auth/forgot/forgot.component';
+import { ChangePasswordComponent } from './comps/change-password/change-password.component';
+import { UserSongCartComponent } from './comps/user-song-cart/user-song-cart.component';
 
 @NgModule({
   declarations: [
@@ -77,6 +79,9 @@ import { ArtistPageComponent } from './comps/artist-page/artist-page.component';
     StartComponent,
     UserPlaylistsComponent,
     ArtistPageComponent,
+    ForgotComponent,
+    ChangePasswordComponent,
+    UserSongCartComponent,
   ],
   imports: [
     BrowserModule,

@@ -20,6 +20,7 @@ import { PlaylistComponent } from './comps/playlist/playlist.component';
 import { StartComponent } from './comps/start/start.component';
 import { UserPlaylistsComponent } from './comps/user-playlists/user-playlists.component';
 import { ArtistPageComponent } from './comps/artist-page/artist-page.component';
+import { ForgotComponent } from './comps/auth/forgot/forgot.component';
 
 
 export const routes: Routes = [
@@ -42,6 +43,8 @@ export const routes: Routes = [
   {path: "setting", component: SettingsComponent, canActivate: [AuthGuardGuard]},
   {path: "user-playlists", component: UserPlaylistsComponent},
   {path: "playlist", component: PlaylistComponent,canActivate:[AuthGuardGuard]},
+  {path: "forgot", component: ForgotComponent},
+  {path: "change-password", component: ChangePasswordComponent},
   {path: "**", redirectTo: "404"},
   {path: "404", component: NotFoundComponent},
 ];

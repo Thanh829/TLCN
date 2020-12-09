@@ -6,7 +6,7 @@
                 <app-user-card *ngIf="user" [user]="user"></app-user-card>
             </div>
             <div class="col-7 col-mdr-12">
-                <app-song-card *ngFor="let song of songs; let i = index" [song]="song" [user]="user" (deleted)="delete(i)" @songCardTrigger></app-song-card>
+                <app-user-song-cart *ngFor="let song of songs; let i = index" [song]="song" [user]="user" (deleted)="delete(i)" @songCardTrigger></app-user-song-cart>
                 <app-fetching (bottom)="loadSong()" *ngIf="page<=count"></app-fetching>
             </div>
         </div>
