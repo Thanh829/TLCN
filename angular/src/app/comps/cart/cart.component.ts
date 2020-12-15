@@ -226,7 +226,7 @@ private initConfig(): void {
 
 checkout()
 {
-  this.paymentService.checkout(this.data,this.TotalCost,"USD","Paypal","sale","ban").subscribe(
+  this.paymentService.checkout("sb-43gsoj3559342@business.example.com",this.data,this.TotalCost,"USD","Paypal","sale","ban","http://localhost:4200/invoice").subscribe(
     res=>{
       this.link= res
       console.log(this.link.url)

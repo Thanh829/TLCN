@@ -42,7 +42,6 @@ export class LoginComponent implements OnInit {
         if(error.status == 400){
           this.wrongInfo = true;
         } else {
-          console.log(error.error.message=="Error: Unauthorized")
           if(error.error.message=="Error: Unauthorized")
           this._msg.danger("Error!", "Wrong username or password");
           else

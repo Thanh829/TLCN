@@ -11,6 +11,19 @@ export class InvoiceService {
   private isReview:boolean=true
   constructor(private http: HttpClient) { }
 
+  createArtistInvoice(userId, items,subtotal,total,payer,payee)
+  {
+    return this.http.post('http://localhost:8090/api/v1/invoice/create-artist-invoice',{
+      artistId: userId,
+      items: items,
+      subtotal: subtotal,
+      total:  total,
+      payer:payer,
+     payee:payee,
+     date:""
+    })
+  }
+
   createInvoice(userId, userName, orderDate, payeeEmail, paymentId,totalCost)
   {
     return this.http.post('http://localhost:8090/api/v1/invoice/create',{
@@ -42,6 +55,12 @@ export class InvoiceService {
   getOneInvoice()
   {
     return this.http.get(`http://localhost:8090/api/v1/invoice/personal?invoiceId=${this.invoiceId}`)   
+
+  }
+
+  getDetailsInvoice(id)
+  {
+    return this.http.get(`http://localhost:8090/api/v1/invoice/artist?id=${id}`)   
 
   }
 

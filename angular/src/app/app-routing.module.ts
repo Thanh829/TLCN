@@ -21,6 +21,11 @@ import { StartComponent } from './comps/start/start.component';
 import { UserPlaylistsComponent } from './comps/user-playlists/user-playlists.component';
 import { ArtistPageComponent } from './comps/artist-page/artist-page.component';
 import { ForgotComponent } from './comps/auth/forgot/forgot.component';
+import { ArtistManagementComponent } from './comps/artist-management/artist-management.component';
+import { TagManagementComponent } from './comps/tag-management/tag-management.component';
+import { ArtistRevenueComponent } from './comps/artist-revenue/artist-revenue.component';
+import { ArtistInvoiceComponent } from './comps/artist-invoice/artist-invoice.component';
+import { UsersComponent } from './comps/users/users.component';
 
 
 export const routes: Routes = [
@@ -45,6 +50,11 @@ export const routes: Routes = [
   {path: "playlist", component: PlaylistComponent,canActivate:[AuthGuardGuard]},
   {path: "forgot", component: ForgotComponent},
   {path: "change-password", component: ChangePasswordComponent},
+  {path: "manage-artist", component: ArtistManagementComponent},
+  {path: "manage-tag", component: TagManagementComponent},
+  {path: "revenue", component: ArtistRevenueComponent},
+  {path: "artist-detail-invoice", component: ArtistInvoiceComponent},
+  {path: "all-artist", component: UsersComponent},
   {path: "**", redirectTo: "404"},
   {path: "404", component: NotFoundComponent},
 ];

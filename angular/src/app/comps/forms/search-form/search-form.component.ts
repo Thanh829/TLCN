@@ -24,7 +24,7 @@ export class SearchFormComponent implements OnInit {
     let query = this.searchForm.value.query;
 
     if(query.length > 0){
-      this._router.navigate(['/search', query]);
+      this._router.navigate(['/search', 0,query]);
     }
   }
 }

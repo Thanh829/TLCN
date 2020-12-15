@@ -67,7 +67,6 @@ getAllPlaylistOfUser()
         this.playlists=res
        
         this.checklist= new Array(this.playlists.length).fill(false)
-        console.log(this.playlists)
     }
   )
 }

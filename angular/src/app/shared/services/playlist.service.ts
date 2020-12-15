@@ -29,7 +29,7 @@ export class PlaylistService {
 
   addSongToPlayList(playlistId,song)
   {
-    return this.http.put(`http://localhost:8090/api/v1/playlist/addtoplaylist`,{
+    return this.http.post(`http://localhost:8090/api/v1/playlist/addtoplaylist`,{
       playlistId:playlistId,
       song:song
     })

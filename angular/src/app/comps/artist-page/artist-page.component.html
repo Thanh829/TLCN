@@ -1,7 +1,7 @@
 <!------ Include the above in your HEAD tag ---------->
 
-<div>
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<div *ngIf="_auth.getUser().active">
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css" />
     <div class="cover-area">
         <div class="fb-profile">
             <img align="left" class="fb-image-lg" [src]="_auth.getUser().coverImage" alt="Profile image example" />
@@ -11,55 +11,42 @@
                 <h3>Eli Macy</h3>
             </div>
         </div>
-
     </div>
     <!-- <section class="hero-section d-flex"> -->
     <div>
         <div class="col album">
-
-            <div class="col col-sm-3">
-                <img src="https://cdn.artlist.io/artlist-images/44797_Ian-Post-Magnetism-A.jpg" class="image-album" alt="Magnetism">
-                <span class="name btn">   Some album</span>
+            <div class="col col-sm-3" *ngFor="let playlist of playlists">
+                <img [src]="playlist.listSong[0].avatarImage" class="image-album" alt="Magnetism" (click)="setSong(playlist.listSong)" />
+                <span class="name btn"> {{playlist.name}}</span>
             </div>
-            <div class="col col-sm-3">
-                <img src="https://cdn.artlist.io/artlist-images/44797_Ian-Post-Magnetism-A.jpg" class="image-album" alt="Magnetism">
-                <span class="name btn">   Some album</span>
-            </div>
-
-
-
-            <div class="col col-sm-3">
-                <img src="https://cdn.artlist.io/artlist-images/44797_Ian-Post-Magnetism-A.jpg" class="image-album" alt="Magnetism">
-                <span class="name">   Some album</span>
-            </div>
-            <div class="col col-sm-3">
-                <img src="https://cdn.artlist.io/artlist-images/44797_Ian-Post-Magnetism-A.jpg" class="image-album" alt="Magnetism">
-                <span class="name">   Some album</span>
-            </div>
-
-            <div class="col col-sm-3">
-                <img src="https://cdn.artlist.io/artlist-images/44797_Ian-Post-Magnetism-A.jpg" class="image-album" alt="Magnetism">
-                <span class="name">   Some album</span>
-            </div>
-            <div class="col col-sm-3">
-                <img src="https://cdn.artlist.io/artlist-images/44797_Ian-Post-Magnetism-A.jpg" class="image-album" alt="Magnetism">
-            </div>
-
         </div>
     </div>
     <!-- </section> -->
     <div class="containerr">
-        <div class="row ">
+        <div class="row">
             <div class="offset-md-1"></div>
 
             <div class="col-8 col-mdr-12">
                 <app-song-card *ngFor="let song of songs; let i = index" [song]="song" [user]="user" (songAddToCart)="addToCart($event)" (songAddToPlaylist)="addToPlaylist($event)" @songCardTrigger></app-song-card>
-                <app-fetching (bottom)="loadSong()" *ngIf="page<=noPage"></app-fetching>
+                <app-fetching (bottom)="loadSong()" *ngIf="page <= noPage"></app-fetching>
             </div>
         </div>
     </div>
-
 </div>
+<section class="hero-section d-flex" *ngIf="!_auth.getUser().active">
+    <!-- <div class="overlay"></div> -->
+    <div class="container">
+        <div class="row">
+            <div class="offset-md-1"></div>
+            <div class="text-container col-10">
+                <small>Error</small>
+                <p>Your accout being disable cause copyright</p>
 
+                <app-search-form></app-search-form>
+                <a class="explor-btn" routerLink="/start">Explore</a>
+            </div>
+        </div>
+    </div>
+</section>
 
 <!-- /container -->

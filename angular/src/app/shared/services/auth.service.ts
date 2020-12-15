@@ -17,6 +17,10 @@ export class AuthService {
 
   user: any = null; // Authenticated user
 
+  artistId:number=0;
+  artistActive:boolean
+  artistUserId:number;
+
   userEmitter: EventEmitter<any> = new EventEmitter<any>();
   statusEmitter: EventEmitter<any> = new EventEmitter<any>();
 
@@ -24,6 +28,12 @@ export class AuthService {
     let expires_in = parseInt(localStorage.getItem("expires_in"));
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");
+    if(this.getUser()) 
+    {
+      this.artistActive=this.getUser().active
+      this.artistId=this.getUser().artistId
+      this.artistUserId=this.getUser().id
+    }
     if (expires_in > Date.now()) {
 
       this.logged = true;
@@ -77,6 +87,17 @@ export class AuthService {
 
     return this._http.post(
       this.baseURL("api/v1/auth/signup"),
+      {
+        username, email, password
+      }
+    );
+  }
+
+
+  artistRegister(username: string, email: string, password: string) {
+
+    return this._http.post(
+      this.baseURL("api/v1/artist/signup"),
       {
         username, email, password
       }

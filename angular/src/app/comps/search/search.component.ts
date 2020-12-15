@@ -48,20 +48,42 @@ export class SearchComponent implements OnInit {
       this.nextPage = environment.url + "api/search/" + this.query;
       this.songs = [];
       this.noResutls = false;
-      this.last = false;
-      this._http
+      this.last = true;
+      if(this.id!="0")
+      {
+        console.log(this.id)
+        console.log("id khac 0")
+        this._http
         .get(`http://localhost:8090/api/v1/songs/countbytag?tagId=${this.id}`)
         .subscribe((res) => {
           this.count = res;
           if (this.count % 4 != 0) this.sumPage = this.count / 4;
           console.log("count ne: " + this.sumPage);
           this.page = 0;
-          //this.search();
+          this.searchByTag();
+          this.last = false;
         });
+      }
+
+      else if(this.id=="0"){
+        
+        console.log("id o quey"+this.id)
+        this._http
+        .get(`http://localhost:8090/api/v1/songs/countbyquery?query=${this.query}`)
+        .subscribe((res) => {
+          this.count = res;
+          if (this.count % 4 != 0) this.sumPage = this.count / 4;
+          console.log("count ne: " + this.sumPage);
+          this.page = 0;
+          this.searchByQuery();
+          this.last = false;
+        });
+      }
+
     });
   }
 
-  search() {
+  searchByTag() {
     //if(this.loading || this.nextPage == null) return;
     this.loading = true;
     // Search
@@ -75,7 +97,7 @@ export class SearchComponent implements OnInit {
       .subscribe(
         (data: any) => {
           this.nextPage = data.next_page_url;
-
+          console.log("asdajgsd")
           console.log(data);
 
           let newSongs = data.map((s) => {
@@ -92,6 +114,7 @@ export class SearchComponent implements OnInit {
           this.page++;
           if (this.page >= this.sumPage) {
             this.last = true;
+            this.loading = false;
           }
 
           if (this.songs.length == 0) {
@@ -104,6 +127,58 @@ export class SearchComponent implements OnInit {
         }
       );
   }
+
+
+  searchByQuery() {
+    //if(this.loading || this.nextPage == null) return;
+    this.loading = true;
+    if (this.page >= this.sumPage) {
+      console.log("page:" +this.page)
+      console.log("sum:" +this.sumPage)
+      this.last = true;
+      this.loading = false;
+    }
+    // Search
+    this._http
+      .get(
+        `http://localhost:8090/api/v1/songs/search?page=${this.page}&query=${this.query}`,
+        {
+          headers: new HttpHeaders().set("Accept", "application/json"),
+        }
+      )
+      .subscribe(
+        (data: any) => {
+          this.nextPage = data.next_page_url;
+          
+          console.log(data);
+
+          let newSongs = data.map((s) => {
+            s.path = environment.url + s.path;
+            return s;
+          });
+
+          // Stagger animation
+          for (let i = 0; i < newSongs.length; i++) {
+            setTimeout(() => {
+              this.songs.push(newSongs[i]);
+            }, i * this.time);
+          }
+         
+        
+        
+
+          if (this.songs.length == 0) {
+            this.noResutls = true;
+          }
+        },
+        (error) => {},
+        () => {
+          this.loading = false;
+        }
+      );
+      this.page++;
+  }
+
 
   deleted(index: number) {
     this.songs.splice(index, 1);

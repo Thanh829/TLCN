@@ -50,6 +50,11 @@ import { ArtistPageComponent } from './comps/artist-page/artist-page.component';
 import { ForgotComponent } from './comps/auth/forgot/forgot.component';
 import { ChangePasswordComponent } from './comps/change-password/change-password.component';
 import { UserSongCartComponent } from './comps/user-song-cart/user-song-cart.component';
+import { ArtistManagementComponent } from './comps/artist-management/artist-management.component';
+import { TagManagementComponent } from './comps/tag-management/tag-management.component';
+import { ArtistRevenueComponent } from './comps/artist-revenue/artist-revenue.component';
+import { ArtistInvoiceComponent } from './comps/artist-invoice/artist-invoice.component';
+import { SuggestComponent } from './comps/suggest/suggest.component';
 
 @NgModule({
   declarations: [
@@ -82,6 +87,11 @@ import { UserSongCartComponent } from './comps/user-song-cart/user-song-cart.com
     ForgotComponent,
     ChangePasswordComponent,
     UserSongCartComponent,
+    ArtistManagementComponent,
+    TagManagementComponent,
+    ArtistRevenueComponent,
+    ArtistInvoiceComponent,
+    SuggestComponent,
   ],
   imports: [
     BrowserModule,

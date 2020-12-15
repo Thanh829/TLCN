@@ -19,6 +19,7 @@ export class UserCardComponent implements OnInit {
     this._auth.userEmitter.subscribe((user)=>{
       this.loggedUser = user;
     });
+    console.log(this.user)
   }
 
 }

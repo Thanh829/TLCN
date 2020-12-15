@@ -1,47 +1,63 @@
 <div class="modal modal-login" *ngIf="song">
-    <i (click)="closePlaylist()" class="fas fa-times" style="color: white; font-size: 32px; position: absolute; top: 40px; right: 50px; z-index: 100; cursor: pointer;"></i>
+    <i (click)="closePlaylist()" class="fas fa-times" style="
+      color: white;
+      font-size: 32px;
+      position: absolute;
+      top: 40px;
+      right: 50px;
+      z-index: 100;
+      cursor: pointer;
+    "></i>
     <div class="form-container">
         <div class="overlay" (click)="closePlaylist()"></div>
-        <form style="z-index: 50;" [formGroup]="inputForm">
-            <label for="" style="position: relative; left: 190px;">Playlist</label>
+        <form style="z-index: 50" [formGroup]="inputForm">
+            <label for="" style="position: relative; left: 190px">Playlist</label>
             <igx-divider></igx-divider>
-            <label *ngFor="let playlist of playlists ;let i=index">
-                 {{playlist.name}}<input type="checkbox" checklist-model="playlist" class="checkbox" [checked]="checklist[i]" (click)="selectItem(i,playlist.id)">
-              </label>
-
+            <label *ngFor="let playlist of playlists; let i = index">
+        {{ playlist.name
+        }}<input
+          type="checkbox"
+          checklist-model="playlist"
+          class="checkbox"
+          [checked]="checklist[i]"
+          (click)="selectItem(i, playlist.id)"
+        />
+      </label>
 
             <igx-divider></igx-divider>
             <div *ngIf="showDone">
-                <label for=""><i class="far fa-plus-square" (click)="showFormCreate()">  New playlist</i> </label>
+                <label for=""><i class="far fa-plus-square" (click)="showFormCreate()">
+            New playlist</i
+          >
+        </label>
                 <igx-divider></igx-divider>
-                <div class="button-sample" (click)="addSongToPlaylist()"> <button igxButton="raised" igxButtonBackground="#6763FF">Done</button></div>
+                <div class="button-sample" (click)="addSongToPlaylist()">
+                    <button igxButton="raised" igxButtonBackground="#6763FF">Done</button>
+                </div>
             </div>
-
 
             <div *ngIf="showCreate">
                 <div class="form-group">
                     <label for="name">
-                    <span>Name of Playlist</span>
-                    <!-- Errors -->
-                    <small class="error" *ngIf="inputForm.get('name').errors?.required">This field is require</small>
-                  </label>
+            <span>Name of Playlist</span>
+            <!-- Errors -->
+            <small class="error" *ngIf="inputForm.get('name').errors?.required"
+              >This field is require</small
+            >
+          </label>
                     <input type="email" id="name" formControlName="name" />
-
                 </div>
-
             </div>
             <div class="wrapper" *ngIf="showCreate">
-
                 <div class="button-create" (click)="showFormDone()">
                     <button igxButton="flat" igxRipple="#6763FF">Close</button>
                 </div>
                 <div class="button-create" (click)="createPlaylist()">
-                    <button igxButton="raised" igxButtonBackground="#6763FF" [disabled]="inputForm.get('name').errors?.required">Create</button>
+                    <button igxButton="raised" igxButtonBackground="#6763FF" [disabled]="inputForm.get('name').errors?.required">
+            Create
+          </button>
                 </div>
-
             </div>
-
-
         </form>
     </div>
 </div>

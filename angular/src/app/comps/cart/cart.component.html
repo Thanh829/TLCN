@@ -1,48 +1,70 @@
 <div class="thanh modal-login">
-    <i routerLink="/" class="fas fa-times" style="color: white; font-size: 32px; position: absolute; top: 40px; right: 50px; z-index: 100; cursor: pointer;"></i>
+    <i routerLink="/" class="fas fa-times" style="
+      color: white;
+      font-size: 32px;
+      position: absolute;
+      top: 40px;
+      right: 50px;
+      z-index: 100;
+      cursor: pointer;
+    "></i>
     <div class="form-container">
         <div class="overlay" routerLink="/"></div>
-        <form style="z-index: 50; height: 500px;" [formGroup]="loginForm" (ngSubmit)="loginSubmit()">
-
+        <form style="z-index: 50; height: 500px" [formGroup]="loginForm" (ngSubmit)="loginSubmit()">
             <div class="list-sample">
-
-                <igx-list *ngIf="data.length!=0">
-                    <igx-list-item [isHeader]="true">Total Price: ${{TotalCost}} </igx-list-item>
+                <igx-list *ngIf="data.length != 0">
+                    <igx-list-item [isHeader]="true">Total Price: ${{ TotalCost }}
+                    </igx-list-item>
                     <igx-divider></igx-divider>
                     <div [style.height]="'400px'" [style.overflow]="'hidden'" [style.position]="'relative'">
-                        <igx-list-item [style.width]="'calc(100% - 18px)'" igxRipple="pink" igxRippleTarget=".igx-list__item" *igxFor="let item of data | igxFilter: fo; scrollOrientation : 'vertical'; containerSize: '300px'; itemSize: '50px'">
+                        <igx-list-item [style.width]="'calc(100% - 18px)'" igxRipple="pink" igxRippleTarget=".igx-list__item" *igxFor="
+                let item of data | igxFilter: fo;
+                scrollOrientation: 'vertical';
+                containerSize: '300px';
+                itemSize: '50px'
+              ">
                             <igx-avatar igxListThumbnail [src]="item.avatar"></igx-avatar>
 
                             <div class="play-icon" (click)="playSong(item)">
-                                <igx-icon *ngIf="_player.playingSong==null || _player.playingSong.id!=item.songId || !isPlaying"><i class="fas fa-play"></i></igx-icon>
-                                <igx-icon *ngIf="_player.playingSong!=null && _player.playingSong.id==item.songId && isPlaying"><i class="fas fa-pause"></i></igx-icon>
-                            </div>
-                            <div class="name">
-                                <span igxListLineTitle>{{ item.songName}}</span>
-                            </div>
+                                <igx-icon *ngIf="
+                    _player.playingSong == null ||
+                    _player.playingSong.id != item.songId ||
+                    !isPlaying
+                  "><i class="fas fa-play"></i
+                ></igx-icon>
+                <igx-icon
+                  *ngIf="
+                    _player.playingSong != null &&
+                    _player.playingSong.id == item.songId &&
+                    isPlaying
+                  "
+                  ><i class="fas fa-pause"></i
+                ></igx-icon>
+              </div>
+              <div class="name">
+                <span igxListLineTitle>{{ item.songName }}</span>
+              </div>
 
-                            <div class="price">
-                                <span igxListLineTitle>${{ item.price}}</span>
-                            </div>
-                            <span igxListLineTitle></span>
+              <div class="price">
+                <span igxListLineTitle>${{ item.price }}</span>
+              </div>
+              <span igxListLineTitle></span>
 
-
-
-                            <div (click)="deleteCartItem(item)">
-                                <igx-icon><i class="fas fa-times"></i></igx-icon>
+              <div (click)="deleteCartItem(item)">
+                <igx-icon><i class="fas fa-times"></i></igx-icon>
                             </div>
 
                             <!-- <hr style="width:50%;text-align:left;margin-left:0"> -->
-
                         </igx-list-item>
                     </div>
                 </igx-list>
-                <div *ngIf="data.length==0">
+                <div *ngIf="data.length == 0">
                     <p>Cart is empty</p>
                 </div>
-
             </div>
-            <button mat-raised-button color="primary" [disabled]="data.length==0" (click)="checkout()">Checkout</button>
+            <button mat-raised-button color="primary" [disabled]="data.length == 0" (click)="checkout()">
+        Checkout
+      </button>
         </form>
 
         <!-- <ngx-paypal [config]="payPalConfig"></ngx-paypal> -->

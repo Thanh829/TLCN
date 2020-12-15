@@ -20,6 +20,13 @@ export class TagService {
     console.log(title)
     return this.http.post("http://localhost:8090/api/v1/tag/add",form);
   }
+  updateTag(id, title)
+  {
+      return this.http.post("http://localhost:8090/api/v1/tag/edit",{
+        id: id,
+        title: title
+      })
+  }
 }
 
 

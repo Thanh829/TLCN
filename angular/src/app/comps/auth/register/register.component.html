@@ -4,6 +4,11 @@
         <div class="overlay" routerLink="/start"></div>
         <form style="z-index: 50;" [formGroup]="registerForm" (ngSubmit)="registerSubmit()">
             <div class="form-group">
+                <label for="checkbox">
+          <span>Artist account <input type="checkbox" [checked]="isArtist" (click)="check()"/></span>
+        </label>
+            </div>
+            <div class="form-group">
                 <label for="name">
           <span>Username</span>
           <small class="error" *ngIf="hasError('name', 'required')">This field is required</small>
@@ -23,6 +28,7 @@
         </label>
                 <input type="email" id="email1" formControlName="email" [class.invalid]="invalid('email')" />
             </div>
+
             <div class="form-group">
                 <label for="password1"> 
           <span>Password</span>

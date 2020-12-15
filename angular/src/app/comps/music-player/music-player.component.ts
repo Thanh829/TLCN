@@ -34,6 +34,7 @@ export class MusicPlayerComponent implements OnInit, AfterViewInit {
       let storedVolume = localStorage.getItem("volume");
 
       this.song = song;
+      console.log(song)
       this.video.nativeElement.src = this.song.url;
       const au = new Audio(this.song.url);
 

@@ -3,7 +3,7 @@
         <div class="row">
             <div class="offset-md-1"></div>
             <div class="col-10 col-mdr-12">
-                <h1>Search for: "{{ query }}"</h1>
+                <h5>Search for: "{{ query }}"</h5>
             </div>
         </div>
         <div class="row" *ngFor="let song of songs; let i = index" @songSearchCardTrigger>
@@ -23,9 +23,9 @@
             <div class="offset-md-1"></div>
         </div>
 
-        <h1 style="text-align: center;" *ngIf="noResutls && songs.length == 0">No Results</h1>
+        <h5 style="text-align: center;" *ngIf="noResutls && songs.length == 0">No Results</h5>
         <div class="col-10 mx-auto col-mdr-12">
-            <app-fetching (bottom)="search()" *ngIf="!last"></app-fetching>
+            <app-fetching (bottom)="id!='0'?searchByTag():searchByQuery()" *ngIf="!last"></app-fetching>
         </div>
     </div>
 </section>

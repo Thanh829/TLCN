@@ -1,4 +1,5 @@
-<title>A simple, clean, and responsive HTML invoice template</title>
+<title>
+    A simple, clean, and responsive HTML invoice template</title>
 
 <div class="invoice-box">
     <table cellpadding="0" cellspacing="0">
@@ -22,13 +23,10 @@
             <td colspan="2">
                 <table>
                     <tr>
-                        <td>
-                            {{ invoice.shippingAddress.line1 }} <br /> {{ invoice.shippingAddress.city }} <br /> {{ invoice.shippingAddress.state }} <br /> Country Code: {{ invoice.shippingAddress.countryCode }}<br /> Postal Code: {{ invoice.shippingAddress.postalCode
-                            }}
-                        </td>
+
 
                         <td>
-                            Payer:<br /> {{ invoice.shippingAddress.recipientName }} <br /> {{ invoice.payerInfo.email }} <br />
+                            Payee:<br /> ArtistName <br /> email <br />
                             <!-- <invoice class="payerInfo"></invoice>.email}} -->
                         </td>
                     </tr>
@@ -38,6 +36,8 @@
 
         <tr class="heading">
             <td>Payment Method</td>
+            <td></td>
+            <td></td>
             <td></td>
         </tr>
 
@@ -49,22 +49,42 @@
             <td>Item</td>
 
             <td>Price</td>
+
+            <td>Checkouts</td>
+
+            <td>Total</td>
         </tr>
 
-        <tr class="item" *ngFor="let item of invoice.transaction.itemList.items">
+        <tr class="item" *ngFor="let item of revenue">
             <td>
-                {{ item.name }}
+                {{ item.title }}
             </td>
 
             <td>${{ item.price }}</td>
+            <td>{{ item.quaranty }}</td>
+            <td>${{ item.total }}</td>
         </tr>
 
         <tr class="total">
             <td></td>
 
-            <td>Total: {{ invoice.transaction.amount.total }}</td>
+            <td>Subtotal: ${{ total}}</td>
+
         </tr>
-        <div *ngIf="token">
+        <tr class="total">
+            <td></td>
+
+
+            <td>Fee (20%): ${{ (total*0.2).toFixed(1)}}</td>
+
+        </tr>
+        <tr class="total">
+            <td></td>
+
+
+            <td>Total: ${{ (total-total*0.2).toFixed(1)}}</td>
+        </tr>
+        <div>
             <button class="apple-pay-button apple-pay-button-white-with-line" (click)="excutePayment()">
         Pay Now
       </button>
