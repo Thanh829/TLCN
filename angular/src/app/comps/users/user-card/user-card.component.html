@@ -1,8 +1,8 @@
 <div class="artist-card">
-    <a [routerLink]="['/user', user.slug]">
+    <a [routerLink]="['/artist', user.id]">
         <img [src]="user.avatar ? user.avatar : 'assets/images/placeholder.png'" [alt]="user.name" />
     </a>
-    <a class="artist-name" [routerLink]="['/user', user.slug]">
+    <a class="artist-name" [routerLink]="['/artist', user.id]">
       {{ user.name | titlecase }}
       <span *ngIf="loggedUser && loggedUser.id == user.id" style="font-weight: 500">(You)</span>
     </a>

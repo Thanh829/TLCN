@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { environment } from 'src/environments/environment';
+import { AuthService } from "src/app/shared/services/auth.service";
+import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
   selector: "app-users",
@@ -15,7 +17,7 @@ export class UsersComponent implements OnInit {
   count:any
   page:number
 
-  constructor(private _http: HttpClient) {}
+  constructor(private _http: HttpClient,private _auth:AuthService, private router: Router) {}
 
   ngOnInit() {
    
@@ -29,6 +31,13 @@ export class UsersComponent implements OnInit {
       }
     )
     this.loading=true
+  }
+
+  navigateToArtistPage(id,user)
+  {
+      this._auth.artistId=id;
+      this._auth.artist=user
+      this.router.navigate(["/artist"]);
   }
 
   getUsers() {

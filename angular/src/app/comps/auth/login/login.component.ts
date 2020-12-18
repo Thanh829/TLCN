@@ -33,10 +33,14 @@ export class LoginComponent implements OnInit {
     this._auth.login(email, password).subscribe(
       (data: any)=>{
         //this._auth.storeData(data.expires_in, data.access_token, data.refresh_token)
-       
-        this._auth.storeData(data.timeExpire,data.accessToken,data.accessToken,false)
+        console.log(data)
         this._auth.storeUser(data)
+        this._auth.storeData(data.timeExpire,data.accessToken,data.accessToken,false)
+        console.log("assadd")
+        
+       this._auth.logged=true
         this._msg.success("Login success");
+        console.log(this._auth.user)
       },
       (error: any)=>{
         if(error.status == 400){

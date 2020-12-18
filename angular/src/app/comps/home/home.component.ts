@@ -90,18 +90,21 @@ export class HomeComponent implements OnInit {
     if(!this._auth.isLogged()) this.route.navigate(["/start/login"])
     userId=this._auth.getUser().id
     console.log(userId)
-    this.cartService.checkOwned(userId,song.id).subscribe(
-      res=> {
+    this.cartService.checkOwned(song.id,userId).subscribe(
+      res=> {console.log("res"+ res)
         if(res>0)
         {
-          this.cartService.addToCart(song.id,song.price, song.title, userId).subscribe(
+         
+          this.messageService.danger("You have own this song")
+        }
+        else {
+          this.cartService.addToCart(song.id,song.price, song.title, userId,song.avatarImage).subscribe(
             res=> {
                 this.cartService.setMyCount(res)
                 
             }
           )
         }
-        else this.messageService.danger("You have own this song")
       }
     )
 

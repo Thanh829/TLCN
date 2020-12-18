@@ -88,7 +88,7 @@ playSong(){
   } else {
     this.cartService.checkOwned(this.song.id,this.user.id).subscribe(
       res=> {
-        if(res>0)
+        if(res>0 || this._auth.getUser().artistId==this.song.artistId)
         {
           this._player.owner=true
         }

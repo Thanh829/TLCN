@@ -21,7 +21,7 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit() {
     
-   this.loadCartItem()
+   //this.loadCartItem()
     this._auth.userEmitter.subscribe((user)=>{
       this.user = user;
     });

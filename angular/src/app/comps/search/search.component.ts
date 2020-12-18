@@ -189,7 +189,7 @@ export class SearchComponent implements OnInit {
     userId = this._auth.getUser().id;
     console.log(userId);
     this.cartService
-      .addToCart(song.id, song.price, song.title, userId)
+      .addToCart(song.id, song.price, song.title, userId,song.avatarImage)
       .subscribe((res) => {
         this.cartService.setMyCount(res);
       });

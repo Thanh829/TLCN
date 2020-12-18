@@ -1,14 +1,14 @@
 <!------ Include the above in your HEAD tag ---------->
 
-<div *ngIf="_auth.getUser().active">
+<div *ngIf="user.active">
     <link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css" />
     <div class="cover-area">
         <div class="fb-profile">
-            <img align="left" class="fb-image-lg" [src]="_auth.getUser().coverImage" alt="Profile image example" />
-            <img align="left" class="fb-image-profile thumbnail" [src]="_auth.getUser().avatar" width="100 " height="100" alt="Profile image example" />
+            <img align="left" class="fb-image-lg" [src]="user.coverImageId" alt="Profile image example" />
+            <img align="left" class="fb-image-profile thumbnail" [src]="user.avatar" width="100 " height="100" alt="Profile image example" />
             <span></span>
             <div class="fb-profile-text">
-                <h3>Eli Macy</h3>
+                <h3>{{user.artistName}}</h3>
             </div>
         </div>
     </div>
@@ -33,7 +33,7 @@
         </div>
     </div>
 </div>
-<section class="hero-section d-flex" *ngIf="!_auth.getUser().active">
+<section class="hero-section d-flex" *ngIf="!user.active">
     <!-- <div class="overlay"></div> -->
     <div class="container">
         <div class="row">

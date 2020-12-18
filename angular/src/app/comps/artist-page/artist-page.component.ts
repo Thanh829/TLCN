@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import {
   fadeTrigger,
   songCardTrigger,
@@ -34,36 +34,46 @@ export class ArtistPageComponent implements OnInit {
     private _http: HttpClient,
     private playlistService: PlaylistService,
     private cartService: CartService,
-    private route: Router
+    private route: Router,
+    private router: ActivatedRoute
   ) {
     this.logged = this._auth.isLogged();
   }
 
   ngOnInit() {
-    console.log("user:" + this.user);
+    let id = this.router.snapshot.paramMap.get("id");
+   
     this._auth.statusEmitter.subscribe((status) => {
       this.logged = status;
     });
-    this.user = this._auth.getUser();
-    this.getAllPlaylist()
-    this._http
-      .get("http://localhost:8090/api/v1/songs/count")
-      .subscribe((res) => {
-        this.count = res;
-        if (this.count % 4 != 0) this.noPage = this.count / 4 + 1;
-        this.page = 0;
-        this.loadSong();
-      });
+    this._http.get(`http://localhost:8090/api/v1/artist?id=${id}`).subscribe(
+    res=>{
+      this.user=res
+      console.log(this.user)
+      this.getAllPlaylist()
+      this._http
+        .get(`http://localhost:8090/api/v1/songs/count-artist-song?artistId=${this.user.id}`)
+        .subscribe((res) => {
+          console.log("res:"+res)
+          this.count = res;
+          if (this.count % 4 != 0) this.noPage = this.count / 4 + 1;
+          this.page = 0;
+          this.loadSong();
+        });
+    }
+                    
+    )
+    
+
   }
 
   loadSong() {
     this.loading = true;
     // Search
     this._http
-      .get(`http://localhost:8090/api/v1/songs/all?page=${this.page}`)
+      .get(`http://localhost:8090/api/v1/songs/getAllByArtist?page=${this.page}&artistId=${this.user.id}`)
       .subscribe(
         (res: any) => {
-          this.user = null;
           let newSongs = res.map((s) => {
             s.path = s.url;
             return s;
@@ -97,7 +107,7 @@ export class ArtistPageComponent implements OnInit {
     userId = this._auth.getUser().id;
     console.log(userId);
     this.cartService
-      .addToCart(song.id, song.price, song.title, userId)
+      .addToCart(song.id, song.price, song.title, userId,song.avatarImage)
       .subscribe((res) => {
         this.cartService.setMyCount(res);
       });
@@ -111,7 +121,7 @@ export class ArtistPageComponent implements OnInit {
 
   getAllPlaylist()
   {
-    this.playlistService.getAllPlaylist(this._auth.artistUserId).subscribe(
+    this.playlistService.getAllPlaylist(this.user.userId).subscribe(
       res=>{
           this.playlists=res
       }

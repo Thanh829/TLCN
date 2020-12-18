@@ -1152,7 +1152,11 @@ body.show-modal-register .modal-register {
 
 .song-card .song-plays,
 .song-card .song-date {
-    font-size: 10px
+    font-size: 10px;
+    position: relative;
+    right: 560px;
+    ;
+    top: 20px;
 }
 
 .song-card .info-row {

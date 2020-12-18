@@ -26,6 +26,8 @@ import { TagManagementComponent } from './comps/tag-management/tag-management.co
 import { ArtistRevenueComponent } from './comps/artist-revenue/artist-revenue.component';
 import { ArtistInvoiceComponent } from './comps/artist-invoice/artist-invoice.component';
 import { UsersComponent } from './comps/users/users.component';
+import { ModGuard } from './guards/mod.guard';
+import { AdminGuard } from './guards/admin.guard';
 
 
 export const routes: Routes = [
@@ -37,23 +39,23 @@ export const routes: Routes = [
   {path: "settings", loadChildren: "./user/user.module#UserModule"},
   {path: "search/:id/:query", component: SearchComponent},
   {path: "user", component: ProfileComponent,canActivate:[AuthGuardGuard]},
-  {path: "upload", component: UploadComponent},
-  {path: "tags", component: TagComponent},
+  {path: "upload", component: UploadComponent,canActivate:[ModGuard]},
+  {path: "tags", component: TagComponent,canActivate:[AdminGuard]},
   {path: "test", component: TestComponent},
-  {path: "artist", component: ArtistPageComponent},
+  {path: "artist/:id", component: ArtistPageComponent},
   {path: "", component: StartComponent},
   {path: "cart", component: CartComponent,canActivate:[AuthGuardGuard]},
-  {path: "list-invoice", component: ListinvoiceComponent},
-  {path: "invoice", component: InvoiceComponent},
-  {path: "setting", component: SettingsComponent, canActivate: [AuthGuardGuard]},
+  {path: "list-invoice", component: ListinvoiceComponent,canActivate:[AuthGuardGuard]},
+  {path: "invoice", component: InvoiceComponent,canActivate:[AuthGuardGuard]},
+  {path: "setting", component: SettingsComponent, canActivate: [ModGuard]},
   {path: "user-playlists", component: UserPlaylistsComponent},
-  {path: "playlist", component: PlaylistComponent,canActivate:[AuthGuardGuard]},
+  {path: "playlist", component: PlaylistComponent,canActivate:[ModGuard]},
   {path: "forgot", component: ForgotComponent},
-  {path: "change-password", component: ChangePasswordComponent},
-  {path: "manage-artist", component: ArtistManagementComponent},
-  {path: "manage-tag", component: TagManagementComponent},
-  {path: "revenue", component: ArtistRevenueComponent},
-  {path: "artist-detail-invoice", component: ArtistInvoiceComponent},
+  {path: "settings/change-password", component: ChangePasswordComponent,canActivate:[AuthGuardGuard]},
+  {path: "manage-artist", component: ArtistManagementComponent,canActivate:[AdminGuard]},
+  {path: "manage-tag", component: TagManagementComponent,canActivate:[AdminGuard]},
+  {path: "revenue", component: ArtistRevenueComponent,canActivate:[ModGuard,AdminGuard]},
+  {path: "artist-detail-invoice", component: ArtistInvoiceComponent,canActivate:[ModGuard,AdminGuard]},
   {path: "all-artist", component: UsersComponent},
   {path: "**", redirectTo: "404"},
   {path: "404", component: NotFoundComponent},

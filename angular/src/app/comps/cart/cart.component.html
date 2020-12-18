@@ -1,5 +1,5 @@
 <div class="thanh modal-login">
-    <i routerLink="/" class="fas fa-times" style="
+    <i routerLink="/start" class="fas fa-times" style="
       color: white;
       font-size: 32px;
       position: absolute;
@@ -9,7 +9,7 @@
       cursor: pointer;
     "></i>
     <div class="form-container">
-        <div class="overlay" routerLink="/"></div>
+        <div class="overlay" routerLink="/start"></div>
         <form style="z-index: 50; height: 500px" [formGroup]="loginForm" (ngSubmit)="loginSubmit()">
             <div class="list-sample">
                 <igx-list *ngIf="data.length != 0">

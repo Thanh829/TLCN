@@ -29,10 +29,12 @@
     <div class="list-container">
         <i class="fas fa-times close-icon" (click)="toggleMenu()"></i>
         <ul>
-            <li routerLinkActive="active"><a [routerLink]="['/user', user? user.slug : '']">Profile</a></li>
-            <li routerLinkActive="active"><a [routerLink]="['/settings/upload']">Upload</a></li>
-            <li routerLinkActive="active"><a [routerLink]="['/settings/upload']">My playlists</a></li>
-            <li routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"><a routerLink="/settings">Settings</a></li>
+            <li *ngIf="!_auth.isAdmin && !_auth.isUser()" routerLinkActive="active"><a [routerLink]="['/user', user? user.slug : '']">Profile</a></li>
+            <li *ngIf="!_auth.isAdmin() && !_auth.isArtist()" routerLinkActive="active"><a [routerLink]="['/user']">My Songs</a></li>
+            <li *ngIf="_auth.isArtist()" routerLinkActive="active"><a [routerLink]="['/upload']">Upload</a></li>
+            <li *ngIf="_auth.isArtist()" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"><a routerLink="/setting">Settings</a></li>
+            <li *ngIf="_auth.isAdmin()" routerLinkActive="active"><a [routerLink]="['/manage-artist']">Manage Artist</a></li>
+            <li *ngIf="_auth.isAdmin()" routerLinkActive="active"><a [routerLink]="['/manage-tag']">Manage Tags</a></li>
         </ul>
         <ul>
             <li routerLinkActive="active"><a routerLink="/settings/change-password">Change Password</a></li>

@@ -61,7 +61,9 @@ showFormDone()
 
 getAllPlaylistOfUser()
 {
-  let userId=this.authService.getUser().id;
+  if(this.authService.isArtist())
+  {
+    let userId=this.authService.getUser().id;
   this.playlistService.getAllPlaylist(userId).subscribe(
     res=>{
         this.playlists=res
@@ -69,6 +71,7 @@ getAllPlaylistOfUser()
         this.checklist= new Array(this.playlists.length).fill(false)
     }
   )
+  }
 }
 
 createPlaylist()

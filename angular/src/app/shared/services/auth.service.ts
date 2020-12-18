@@ -14,9 +14,10 @@ export class AuthService {
   expires_in: number = parseInt(localStorage.getItem("expires_in"));
   access_token: string = null;
   refresh_token: string = null;
-
+  roles;
   user: any = null; // Authenticated user
 
+  artist:any
   artistId:number=0;
   artistActive:boolean
   artistUserId:number;
@@ -30,9 +31,17 @@ export class AuthService {
     let refresh_token = localStorage.getItem("refresh_token");
     if(this.getUser()) 
     {
+      this.artist=this.getUser()
       this.artistActive=this.getUser().active
       this.artistId=this.getUser().artistId
       this.artistUserId=this.getUser().id
+      this.getUserRoles().subscribe(
+        res=>{
+          this.roles=res
+          console.log(this.roles)
+        }
+      )
+
     }
     if (expires_in > Date.now()) {
 
@@ -136,6 +145,42 @@ export class AuthService {
 
   }
 
+  isUser()
+  {
+    let is=false
+    if(this.isLogged()){
+      let roles=this.roles
+      roles.forEach(element => { if(element=="ROLE_USER")
+        is=true
+      });
+      return is;
+    }
+  }
+
+  isArtist()
+  {
+    let is=false
+    if(this.isLogged()){
+      let roles=this.roles
+      roles.forEach(element => { if(element=="ROLE_MODERATOR")
+        is=true
+      });
+      return is;
+    }
+  }
+
+  isAdmin()
+  {
+    let is=false
+    if(this.isLogged()){
+      let roles=this.roles
+      roles.forEach(element => { if(element=="ROLE_ADMIN")
+        is=true
+      });
+      return is;
+    }
+  }
+
   getUserInfo() {
 
     this._http
@@ -186,6 +231,10 @@ export class AuthService {
     return this.logged;
   }
 
+  getUserRoles()
+  {
+    return this._http.get(`http://localhost:8090/api/v1/auth/get-roles?id=${this.getUser().id}`)
+  }
 
   logout() {
     this.logged = null;
