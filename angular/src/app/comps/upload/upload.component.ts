@@ -199,6 +199,7 @@ onKey()
 
     fd.append("song", this.file);
     fd.append("image",this.imageFile)
+    fd.append("artistId",this._auth.getUser().artistId)
     //Upload file
     this.loading = true;
     this._http

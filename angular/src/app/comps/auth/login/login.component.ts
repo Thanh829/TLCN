@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
         
        this._auth.logged=true
         this._msg.success("Login success");
-        console.log(this._auth.user)
+        this._auth.refresh()
       },
       (error: any)=>{
         if(error.status == 400){

@@ -14,7 +14,7 @@ export class AuthService {
   expires_in: number = parseInt(localStorage.getItem("expires_in"));
   access_token: string = null;
   refresh_token: string = null;
-  roles;
+  roles:any;
   user: any = null; // Authenticated user
 
   artist:any
@@ -26,6 +26,11 @@ export class AuthService {
   statusEmitter: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(private _http: HttpClient, private _router: Router) {
+   this.refresh()
+  }
+
+  refresh()
+  {
     let expires_in = parseInt(localStorage.getItem("expires_in"));
     let access_token = localStorage.getItem("access_token");
     let refresh_token = localStorage.getItem("refresh_token");
@@ -35,6 +40,7 @@ export class AuthService {
       this.artistActive=this.getUser().active
       this.artistId=this.getUser().artistId
       this.artistUserId=this.getUser().id
+      this.roles=this.getUser().roles
       this.getUserRoles().subscribe(
         res=>{
           this.roles=res
@@ -148,37 +154,41 @@ export class AuthService {
   isUser()
   {
     let is=false
-    if(this.isLogged()){
+    if(this.isLogged()&&this.roles){
       let roles=this.roles
       roles.forEach(element => { if(element=="ROLE_USER")
         is=true
       });
       return is;
     }
+    else console.log("admin null")
   }
 
   isArtist()
   {
     let is=false
-    if(this.isLogged()){
+    if(this.isLogged()&&this.roles){
       let roles=this.roles
       roles.forEach(element => { if(element=="ROLE_MODERATOR")
         is=true
       });
       return is;
     }
+    else console.log("artist null")
   }
 
   isAdmin()
   {
     let is=false
-    if(this.isLogged()){
+    console.log(this.isLogged()+this.roles)
+    if(this.isLogged()==true&&this.roles!=null){
       let roles=this.roles
       roles.forEach(element => { if(element=="ROLE_ADMIN")
         is=true
       });
       return is;
     }
+    else console.log("admin null")
   }
 
   getUserInfo() {

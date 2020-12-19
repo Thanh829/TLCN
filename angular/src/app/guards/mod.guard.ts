@@ -14,17 +14,12 @@ export class ModGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
       let isMod=false
       if(this._auth.isLogged()){
-        let roles=this._auth.roles
-        roles.forEach(element => { if(element=="ROLE_MODERATOR")
-          isMod=true
-        });
-
-        if(!isMod)
+        if(!this._auth.isArtist())
         {
          this.message.danger("You must have login as an Artist")
           this._router.navigate(['/login']);
         }
-        return isMod;
+        return this._auth.isArtist();
       } else {
         console.log("Is NOT Logged");
         this._router.navigate(['/login']);

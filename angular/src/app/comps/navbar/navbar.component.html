@@ -10,7 +10,7 @@
         <app-search-form></app-search-form>
         <ul class="navbar-nav" *ngIf="logged">
             <li>
-                <a routerLink="/cart"> <i class="fas fa-shopping-cart"></i> {{ totalItem }}</a>
+                <a *ngIf="_auth.isUser()" routerLink="/cart"> <i class="fas fa-shopping-cart"></i> {{ totalItem }}</a>
             </li>
             <li><a routerLink="/start/login">{{_auth.getUser().email}}</a></li>
 

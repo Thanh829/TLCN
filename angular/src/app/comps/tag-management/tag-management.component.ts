@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TagService } from 'src/app/shared/services/tag.service';
 
 @Component({
@@ -11,9 +12,15 @@ export class TagManagementComponent implements OnInit {
   tags: Tag[]
   edit=false
   title: string
+  show = false
+  tagForm: FormGroup
+
   constructor(private tagService: TagService) {}
 
   ngOnInit() {
+    this.tagForm = new FormGroup({
+      title: new FormControl(null, {validators: [Validators.required, Validators.minLength(3), Validators.maxLength(255)]})
+    });
     this.tagService.getALLTag().subscribe(
       res=> {
         this.tags=res
@@ -43,7 +50,20 @@ export class TagManagementComponent implements OnInit {
       }
     )
   }
+  showForm()
+  {
+    this.show=!this.show;
+  }
 
+  addTag()
+  {
+    console.log(this.tagForm.value.title)
+    this.tagService.addTag(this.tagForm.value.title).subscribe(
+      res=>{
+        this.showForm()
+      }
+    )
+  }
 
 
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
 import { AuthService } from "src/app/shared/services/auth.service";
 import { MessagesService } from "src/app/shared/services/messages.service";
 
@@ -15,7 +16,11 @@ export class ChangePasswordComponent implements OnInit {
 
   isLoading: boolean = false;
 
-  constructor(private _auth: AuthService, private _msg: MessagesService) {}
+  constructor(
+    private _auth: AuthService,
+    private _msg: MessagesService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.passwordForm = new FormGroup({
@@ -43,6 +48,7 @@ export class ChangePasswordComponent implements OnInit {
           "Congratulations!",
           "Your password updated successfully."
         );
+        this.router.navigate(["/start"]);
       },
       (err) => {
         if (err.status == 400) {

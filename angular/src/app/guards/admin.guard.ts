@@ -14,22 +14,13 @@ export class AdminGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
       let isAdmin=false
       if(this._auth.isLogged()){
-        let roles:any
-        roles=this._auth.roles
 
-        this._auth.getUserRoles().subscribe(
-          res=>{roles=res}
-        )
-        roles.forEach(element => { if(element=="ROLE_ADMIN")
-          isAdmin=true
-        });
-
-        if(!isAdmin)
+        if(!this._auth.isAdmin())
         {
          this.message.danger("You must have login as an Admin")
           this._router.navigate(['/login']);
         }
-        return isAdmin;
+        return this._auth.isAdmin();
       } else {
         console.log("Is NOT Logged");
         this._router.navigate(['/login']);
