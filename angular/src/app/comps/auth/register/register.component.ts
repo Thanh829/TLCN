@@ -89,7 +89,7 @@ export class RegisterComponent implements OnInit {
             "Congratulations!",
             "Your new account created successfully"
           );
-          this.router.navigate(['/login'])
+          this.router.navigate(['/start/login'])
         },
         (error: any) => {
           if (error.status == 401) {
