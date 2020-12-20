@@ -44,8 +44,9 @@ export class SettingsComponent implements OnInit {
       this.user = this._auth.getUser();
       console.log("user")
       console.log( this.user)
-      this.setPath( "/assets/images/placeholder.png");
-      this.coverimg.nativeElement.src =  "/assets/images/placeholder.png";
+      let path=  this.user?this.user.avatar:"/assets/images/placeholder.png"
+      this.setPath(path);
+      this.coverimg.nativeElement.src =  this.user?this.user.coverImage:"/assets/images/placeholder.png";
       this.updateForm.setValue({
         email: this.user.username,
         name: this.user.email,
@@ -57,7 +58,7 @@ export class SettingsComponent implements OnInit {
     // Get user
     this.user = this._auth.getUser();
     if(this.user){
-      this.setPath(this.user.pic ? this.user.pic : "/assets/images/placeholder.png");
+      this.setPath(this.user.avatar ? this.user.avatar : "/assets/images/placeholder.png");
     }
 
 
@@ -117,14 +118,14 @@ export class SettingsComponent implements OnInit {
       fd.append("coverImage", this.coverfile);
       
     }
-    fd.append("artistName", this.updateForm.value.email);
+    fd.append("artistName", this.updateForm.value.name?this.updateForm.value.name:this.user.email);
     fd.append("paypalAccount", this.user.paypalAccount);
    
 
         
     this.isLoading = true;
 
-    this._http.post( environment.url + "auth/artist/edit", fd, {
+    this._http.post( environment.url + "api/v1/artist/edit", fd, {
       observe: "events",
       reportProgress: true
     })
@@ -135,7 +136,7 @@ export class SettingsComponent implements OnInit {
         } else if (event.type == HttpEventType.Response) {
           
           // Store user
-          this._auth.storeUser(event.body.user);
+          this._auth.storeUser(event.body);
 
           this._auth.redirectProfile();
           
@@ -178,6 +179,7 @@ export class SettingsComponent implements OnInit {
     this.file = file;
     // this.img.nativeElement.src = URL.createObjectURL(this.file);
     this.setPath(URL.createObjectURL(this.file));
+    console.log(this.file, this.coverfile)
   }
   storeCoverFile(file: File){
     console.log(file.type);

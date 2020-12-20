@@ -234,7 +234,7 @@ export class AuthService {
    * Redirect the user to profile page
    */
   redirectProfile() {
-    this._router.navigate(["/user", this.user.slug]);
+    this._router.navigate([`/artist/${this.user.artistId}`]);
   }
 
   isLogged() {
