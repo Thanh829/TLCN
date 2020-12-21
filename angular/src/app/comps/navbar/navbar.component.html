@@ -35,6 +35,24 @@
             <li *ngIf="_auth.isArtist()" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"><a routerLink="/setting">Settings</a></li>
             <li *ngIf="_auth.isAdmin()" routerLinkActive="active"><a [routerLink]="['/manage-artist']">Manage Artist</a></li>
             <li *ngIf="_auth.isAdmin()" routerLinkActive="active"><a [routerLink]="['/manage-tag']">Manage Tags</a></li>
+            <li *ngIf="_auth.isAdmin()" routerLinkActive="active" (click)="showForm()">Set Fee ({{paymentService.fee}}%)</li>
+            <form class="w-100 upload" [formGroup]="feeForm" *ngIf="_auth.isAdmin()&&show">
+
+                <!-- <div class="col-1 flex-end number">
+                <div class="form-group m-0">1.</div>
+              </div> -->
+                <div class="form-group m-0 col-6">
+                    <label for="name"> <span>Value Of Fee</span></label>
+                    <input type="text" id="name" autocomplete="off" formControlName="fee" />
+                </div>
+
+                <div class="form-group col-10 col-mdr-12">
+                    <button (click)="setFee()" class="btn btn-success">OK</button>
+                </div>
+
+            </form>
+            <li>Tags</li>
+            <li style="position: relative;left: 20px;" routerLinkActive="active" *ngFor="let tag of tags; let i = index"><a [routerLink]="['/search', tag.id,tag.title]">{{tag.title}}</a></li>
         </ul>
         <ul>
             <li routerLinkActive="active"><a routerLink="/settings/change-password">Change Password</a></li>

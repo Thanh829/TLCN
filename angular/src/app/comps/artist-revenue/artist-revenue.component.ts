@@ -76,7 +76,7 @@ export class ArtistRevenueComponent implements OnInit {
             this.artistId,
             this.revenue,
             this.total,
-            (this.total-this.total*0.2).toFixed(1),
+            (this.total-this.total*this.paymentService.fee/100).toFixed(1),
            "sb-43gsoj3559342@business.example.com",
             this.payee
           )

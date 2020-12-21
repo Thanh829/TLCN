@@ -3,24 +3,42 @@
     <div class="form-container">
         <div class="overlay" routerLink="/start"></div>
         <form style="z-index: 50;" [formGroup]="forgotForm" (ngSubmit)="forgotSubmit()">
-            <div class="form-group" *ngIf="!sentMail">
+            <!-- <div class="form-group" *ngIf="!sentMail">
                 <label for="email">
           <span>Email</span>
-          <!-- Errors -->
+          <!-- Errors 
           <small class="error" *ngIf="forgotForm.get('email').errors?.required && invalid('email')">This field is require</small>
          
           <small class="error" 
             *ngIf="!((forgotForm.get('email').errors?.required || forgotForm.get('email').errors?.email)  && invalid('email')) && wrongInfo">Wrong email and code</small>
         </label>
                 <input [class.invalid]="invalid('email') || wrongInfo" type="email" id="email" formControlName="email" />
-            </div>
-            <div class="form-group" *ngIf="sentMail">
+            </div> -->
+            <div class="form-group">
                 <label for="code"> 
-          <span>code</span>
+          <span>Code</span>
             <!-- Errors -->
             <small class="error" *ngIf="forgotForm.get('code').errors?.required && invalid('code')">This field is require</small>
 
         </label>
+                <input [class.invalid]="invalid('code') || wrongInfo" type="email" id="code" formControlName="code" />
+            </div>
+            <div class="form-group">
+                <label for="code"> 
+        <span>New password</span>
+          <!-- Errors -->
+          <small class="error" *ngIf="forgotForm.get('code').errors?.required && invalid('code')">This field is require</small>
+
+      </label>
+                <input [class.invalid]="invalid('code') || wrongInfo" type="email" id="code" formControlName="code" />
+            </div>
+            <div class="form-group">
+                <label for="code"> 
+      <span>Confirm Password</span>
+        <!-- Errors -->
+        <small class="error" *ngIf="forgotForm.get('code').errors?.required && invalid('code')">This field is require</small>
+
+    </label>
                 <input [class.invalid]="invalid('code') || wrongInfo" type="email" id="code" formControlName="code" />
             </div>
 

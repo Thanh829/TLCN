@@ -15,6 +15,11 @@ export class CartService {
   private boolSubject: Subject<number>;
 
   constructor(private http: HttpClient, private message: MessagesService) {
+    this.getTotalItem().subscribe(
+      res=>{
+        this.setMyCount(res)
+      }
+    )
     this.boolSubject = new Subject<number>();
     this.myCount$ = this.boolSubject.asObservable();
     this.bucket = new S3({

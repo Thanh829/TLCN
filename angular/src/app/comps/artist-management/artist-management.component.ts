@@ -21,15 +21,28 @@ export class ArtistManagementComponent implements OnInit {
     });
   }
 
-  disableArtist(artistId)
+  disableArtist(artistId,i)
   {
     this.userService.disableArtist(artistId).subscribe(
       res=>{
         console.log(res)
         this.message.success("Disable successful")
+        this.artists[i].active=false
       }
     )
   }
+
+  enableArtist(artistId,i)
+  {
+    this.userService.enableArtist(artistId).subscribe(
+      res=>{
+        console.log(res)
+        this.message.success("Enable successful")
+        this.artists[i].active=true
+      }
+    )
+  }
+
   getRevenueOfArtist(artistId,userId,payee)
   {
       this.router.navigate(['/revenue'],{queryParams:{artistId:artistId}})
@@ -43,7 +56,7 @@ export class ArtistManagementComponent implements OnInit {
   {
     this.userService.Payee= paypalAccount
     this.userService.userId=userId
-    payslip = (payslip-payslip*0.2).toFixed(1)
+    payslip = (payslip-payslip*this.paymentService.fee/100).toFixed(1)
     this.paymentService.checkout(paypalAccount,[],payslip,"USD","Paypal","sale","Payment for artist",`http://localhost:4200/revenue?artistId=${artistId}`).subscribe(
       res=>{
         this.link= res

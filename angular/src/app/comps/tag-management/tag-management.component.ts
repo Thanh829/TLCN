@@ -58,12 +58,18 @@ export class TagManagementComponent implements OnInit {
   addTag()
   {
     console.log(this.tagForm.value.title)
-    this.tagService.addTag(this.tagForm.value.title).subscribe(
-      res=>{
-        this.showForm()
-      }
-    )
-  }
+    if(this.tagForm.value.title)
+    {
+      this.tagService.addTag(this.tagForm.value.title).subscribe(
+        res=>{
+          let Tag:any= res
+          this.tags.push(Tag)
+          this.showForm()
+        }
+      )
+    }
+    }
+  
 
 
 }

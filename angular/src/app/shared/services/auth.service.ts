@@ -180,7 +180,6 @@ export class AuthService {
   isAdmin()
   {
     let is=false
-    console.log(this.isLogged()+this.roles)
     if(this.isLogged()==true&&this.roles!=null){
       let roles=this.roles
       roles.forEach(element => { if(element=="ROLE_ADMIN")

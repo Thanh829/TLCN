@@ -5,6 +5,7 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { MessagesService } from 'src/app/shared/services/messages.service';
 import { CartService } from 'src/app/shared/services/cart.service';
+import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
   selector: 'app-song-card',
@@ -27,7 +28,8 @@ export class SongCardComponent implements OnInit {
               private _auth: AuthService, 
               private _http: HttpClient, 
               private _msg: MessagesService,
-              private cartService: CartService)
+              private cartService: CartService,
+              private userService: UserService)
                { }
 
 ngOnInit() {
@@ -113,7 +115,14 @@ getPlayingSong(song){
     }
 }
               
-            
+  bandSong()
+  {
+      this.userService.banSong(this.song.id,this.song.artistId,this.song.title).subscribe(
+        res=>{
+          this.song.banned=true
+        }
+      )
+  }          
   addToCart()
   {
     this.songAddToCart.emit(this.song)

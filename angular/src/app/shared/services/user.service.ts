@@ -20,6 +20,18 @@ export class UserService {
     return this.http.post("http://localhost:8090/api/v1/artist/disable",artistId)
   }
   
-  
+  enableArtist(artistId)
+  {
+    return this.http.post("http://localhost:8090/api/v1/artist/enable",artistId)
+  }
+
+  banSong(songId,artistId,songName)
+  {
+    return this.http.post("http://localhost:8090/api/v1/artist/ban-song",{
+      songId:songId,
+      artistId:artistId,
+      songName:songName
+    })
+  }
 
 }

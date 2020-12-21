@@ -49,6 +49,12 @@
 
             <!-- <span class="song-plays"> <i class="fas fa-play"></i> 20.1k</span> -->
         </div>
+        <div class="offset-md-1"></div>
+        <div *ngIf="_auth.isAdmin()&&!song.banned" class="btn" (click)="bandSong()">
+            <i class="fas fa-ban"></i>
+
+            <!-- <span class="song-plays"> <i class="fas fa-play"></i> 20.1k</span> -->
+        </div>
     </div>
     <ul class="tags">
         <li *ngFor="let tag of song.tags">
