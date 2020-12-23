@@ -9,11 +9,13 @@ import { TagService } from 'src/app/shared/services/tag.service';
 })
 export class TagManagementComponent implements OnInit {
 
-  tags: Tag[]
+  tags: any
   edit=false
   title: string
   show = false
   tagForm: FormGroup
+  count:any
+  pageNumber:number[]=[]
 
   constructor(private tagService: TagService) {}
 
@@ -21,14 +23,34 @@ export class TagManagementComponent implements OnInit {
     this.tagForm = new FormGroup({
       title: new FormControl(null, {validators: [Validators.required, Validators.minLength(3), Validators.maxLength(255)]})
     });
-    this.tagService.getALLTag().subscribe(
-      res=> {
-        this.tags=res
+
+    this.tagService.countTag().subscribe(
+      res=>{
+        this.count=res
+        this.count = res;
+        if (this.count % 4 != 0) {
+          this.count = this.count / 4 + 1;
+        } else {
+          this.count = this.count / 4;
+        }
+        for (let i=1;i<=this.count;i++)
+        {
+           this.pageNumber.push(i) 
+        }
+        if(res!=0)
+        this.getPageTag(0)
       }
     )
 
   }
-
+  getPageTag(page)
+  {
+      this.tagService.getPageTag(page).subscribe(
+        res=>{
+          this.tags=res
+        }
+      )
+  }
   allowEdit(i)
   {
     this.tags[i].edit=!this.tags[i].edit

@@ -15,14 +15,16 @@ export class ForgotComponent implements OnInit {
   wrongInfo: boolean = false;
 
   isLoading: boolean = false;
-  sentMail: boolean=true
+  sentMail: boolean=false
 
   constructor(private _auth: AuthService, private _msg: MessagesService , private router: Router) { }
 
   ngOnInit() {
     this.forgotForm = new FormGroup({
       email: new FormControl(null, {validators: [Validators.required]}),
-      code: new FormControl(null, {validators: [Validators.required]})
+      code: new FormControl(null, {validators: [Validators.required]}),
+      password: new FormControl(null, {validators: [Validators.required, Validators.minLength(6)]}),
+      password_confirmation: new FormControl(null, {validators: [Validators.required]}),
     });
     this.sentMail=false
   }
@@ -59,7 +61,7 @@ export class ForgotComponent implements OnInit {
   }
   else{
     let code = this.forgotForm.value.code;
-    this._auth.verify(code).subscribe(
+    this._auth.verify(code,email,this.forgotForm.value.password).subscribe(
       (data: any)=>{
         console.log(data.status)
       },
@@ -89,5 +91,28 @@ export class ForgotComponent implements OnInit {
   invalid(controlName){
     let control = this.forgotForm.get(controlName);
     return control.touched && control.value;
+  }
+
+ 
+
+  /**
+   * Return true if the control has the specified error, false otherwise
+   * @param controlName string
+   * @param errorName string
+   */
+  hasError(controlName, errorName){
+    let control = this.forgotForm.get(controlName);
+    console.log(control)
+    if(control.errors && control.errors[errorName] && this.invalid(controlName) ){
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Return true if the passwords don't match, fale otherwise
+   */
+  passwordsNotMatch(){
+    return this.forgotForm.value.password !== this.forgotForm.value.password_confirmation;
   }
 }

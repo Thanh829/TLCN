@@ -13,6 +13,13 @@ export class TagService {
     return this.http.get<any>("http://localhost:8090/api/v1/tag/all");
   }
 
+  countTag(){
+    return this.http.get<any>("http://localhost:8090/api/v1/tag/count-tag");
+  }
+  getPageTag(page)
+  {
+    return this.http.get(`http://localhost:8090/api/v1/tag/list-tag?page=${page}`)
+  }
   addTag(title: any)
   {
     const form = new FormData();

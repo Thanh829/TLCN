@@ -55,6 +55,7 @@ import { TagManagementComponent } from './comps/tag-management/tag-management.co
 import { ArtistRevenueComponent } from './comps/artist-revenue/artist-revenue.component';
 import { ArtistInvoiceComponent } from './comps/artist-invoice/artist-invoice.component';
 import { SuggestComponent } from './comps/suggest/suggest.component';
+import { DashboardComponent } from './comps/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -92,6 +93,7 @@ import { SuggestComponent } from './comps/suggest/suggest.component';
     ArtistRevenueComponent,
     ArtistInvoiceComponent,
     SuggestComponent,
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,

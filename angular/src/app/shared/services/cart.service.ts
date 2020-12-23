@@ -37,6 +37,14 @@ export class CartService {
     return this.http.get(`http://localhost:8090/api/v1/cart/count/`);
   }
 
+  getTotalItemAfterLogin() {
+    return this.http.get(`http://localhost:8090/api/v1/cart/count/`).subscribe(
+      res=>{
+        this.setMyCount(res)
+      }
+    );
+  }
+
   addToCart(songId, price, songName, userId,avatarImage) {
     return this.http.post("http://localhost:8090/api/v1/cart/addtocart", {
       userId: userId,

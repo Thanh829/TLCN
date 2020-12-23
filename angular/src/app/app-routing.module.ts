@@ -28,6 +28,7 @@ import { ArtistInvoiceComponent } from './comps/artist-invoice/artist-invoice.co
 import { UsersComponent } from './comps/users/users.component';
 import { ModGuard } from './guards/mod.guard';
 import { AdminGuard } from './guards/admin.guard';
+import { DashboardComponent } from './comps/dashboard/dashboard.component';
 
 
 export const routes: Routes = [
@@ -57,6 +58,7 @@ export const routes: Routes = [
   {path: "revenue", component: ArtistRevenueComponent/*,canActivate:[ModGuard,AdminGuard]*/},
   {path: "artist-detail-invoice", component: ArtistInvoiceComponent/*,canActivate:[ModGuard,AdminGuard]*/},
   {path: "all-artist", component: UsersComponent},
+  {path: "dashboard", component: DashboardComponent},
   {path: "**", redirectTo: "404"},
   {path: "404", component: NotFoundComponent},
 ];

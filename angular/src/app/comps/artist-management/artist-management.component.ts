@@ -15,12 +15,37 @@ export class ArtistManagementComponent implements OnInit {
 
   artists: any;
   link :any
+  count:any
+  pageNumber:number[]=[]
   ngOnInit() {
-    this.userService.getAllArtist().subscribe((res) => {
-      this.artists = res;
-    });
-  }
 
+    this.userService.countArtist().subscribe(
+      res=>{
+        this.count=res
+        this.count = res;
+        if (this.count % 4 != 0) {
+          this.count = this.count / 4 + 1;
+        } else {
+          this.count = this.count / 4;
+        }
+        for (let i=1;i<=this.count;i++)
+        {
+           this.pageNumber.push(i) 
+        }
+        if(res!=0)
+        this.getPageArtist(0)
+      }
+    )
+    
+  }
+  getPageArtist(page)
+  {
+      this.userService.getPageArtist(page).subscribe(
+        res=>{
+          this.artists=res
+        }
+      )
+  }
   disableArtist(artistId,i)
   {
     this.userService.disableArtist(artistId).subscribe(

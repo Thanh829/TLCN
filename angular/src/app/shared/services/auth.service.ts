@@ -88,9 +88,13 @@ export class AuthService {
       email:email
     })
   }
-  verify(code:String)
+  verify(code:String,email,password)
   {
-    return this._http.post(this.baseURL("api/v1/auth/verify"),code)
+    return this._http.post(this.baseURL("api/v1/auth/verify"),{
+      code:code,
+      email:email,
+      password:password
+    })
   }
 
   /**

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { CartService } from 'src/app/shared/services/cart.service';
 import { MessagesService } from 'src/app/shared/services/messages.service';
 
 @Component({
@@ -15,7 +16,7 @@ export class LoginComponent implements OnInit {
 
   isLoading: boolean = false;
 
-  constructor(private _auth: AuthService, private _msg: MessagesService) { }
+  constructor(private _auth: AuthService, private _msg: MessagesService,private cartService: CartService) { }
 
   ngOnInit() {
     this.loginForm = new FormGroup({
@@ -40,7 +41,9 @@ export class LoginComponent implements OnInit {
         
        this._auth.logged=true
         this._msg.success("Login success");
+        this.cartService.getTotalItemAfterLogin()
         this._auth.refresh()
+        
       },
       (error: any)=>{
         if(error.status == 400){

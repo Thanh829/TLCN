@@ -104,7 +104,7 @@ export class MusicPlayerComponent implements OnInit, AfterViewInit {
       this.barWidth = ((video.currentTime / video.duration) * 100) + "%"; 
 
       // need to get purchase
-     
+     console.log(this._player.owner)
        if(!this._player.owner) {
         if(minuts>0||sec>=59) 
         {

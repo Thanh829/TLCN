@@ -15,6 +15,17 @@ export class UserService {
   {
     return this.http.get("http://localhost:8090/api/v1/artist/all")
   }
+
+  countArtist()
+  {
+    return this.http.get("http://localhost:8090/api/v1/artist/count-artist")
+  }
+
+  getPageArtist(page)
+  {
+    return this.http.get(`http://localhost:8090/api/v1/artist/list-artist?page=${page}`)
+  }
+
   disableArtist(artistId)
   {
     return this.http.post("http://localhost:8090/api/v1/artist/disable",artistId)
@@ -25,11 +36,12 @@ export class UserService {
     return this.http.post("http://localhost:8090/api/v1/artist/enable",artistId)
   }
 
-  banSong(songId,artistId,songName)
+  banSong(songId,artistName,songName)
   {
-    return this.http.post("http://localhost:8090/api/v1/artist/ban-song",{
+    console.log(artistName)
+    return this.http.post("http://localhost:8090/api/v1/songs/ban-song",{
       songId:songId,
-      artistId:artistId,
+      artistName:artistName,
       songName:songName
     })
   }
