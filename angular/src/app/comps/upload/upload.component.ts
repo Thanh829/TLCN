@@ -60,7 +60,7 @@ export class UploadComponent implements OnInit {
         validators: [
           Validators.required,
           Validators.minLength(3),
-          Validators.maxLength(20)
+          Validators.maxLength(50)
         ]
       }),
       tags: new FormArray([], {
@@ -218,7 +218,7 @@ onKey()
           } else if (event.type == HttpEventType.Response) {
             // Redirect the user to the profile page
             //this._auth.redirectProfile();
-
+            this._auth.redirectProfile();
             this._msg.success("Congratulations!", "Your song uploaded successfully");
 
             // Increase number of songs
@@ -277,23 +277,23 @@ onKey()
   setPath(path){
 
     this.img.nativeElement.src = path;
-
-    console.log("Path ne")
-    console.log(path)
   }
   storeImageFile(file: File){
     console.log(file.type);
-    if(file.size > (1024 * 1024 * 2)){
+    console.log(file.size-(1024 * 1024 * 7))
+    if(file.size > (1024 * 1024 * 7)){
       return;
     }
+   
     let validTypes = ["image/jpeg", "image/png", "image/jpg"];
     if(validTypes.indexOf(file.type) == -1){
       return;
     }
-    
+   
     // Store the file
     this.imageFile = file;
     // this.img.nativeElement.src = URL.createObjectURL(this.file);
+    console.log(URL.createObjectURL(this.imageFile))
     this.setPath(URL.createObjectURL(this.imageFile));
   }
 }

@@ -42,7 +42,7 @@ export class UserSongCartComponent implements OnInit {
     }
 
     // console.log(this._auth.getUser().id, this.song.user.id);
-    console.log(this._auth.isLogged());
+    //console.log(this._auth.isLogged());
     // if(this._auth.isLogged()){
 
     //   if(!this._auth.getUser()){
@@ -131,6 +131,8 @@ export class UserSongCartComponent implements OnInit {
         // shows file download progress
       });
   }
+
+  
 
   // Delete the song
   delete() {

@@ -37,9 +37,9 @@ export class SettingsComponent implements OnInit {
   ngOnInit() {
 
     this.updateForm = new FormGroup({
-      email: new FormControl({value: this.user ? this.user.username : null, disabled :true}, {validators: [Validators.required, Validators.email,Validators.minLength(3), Validators.maxLength(15)]}),
+      email: new FormControl({value: this.user ? this.user.username : null, disabled :true}, {validators: [Validators.required, Validators.email,Validators.minLength(3), Validators.maxLength(50)]}),
       name: new FormControl(this.user? this.user.email : null, {validators: [Validators.required]}),
-      paypal: new FormControl({value: this.user ? this.user.username : null, disabled :true}, {validators: [Validators.required, Validators.email,Validators.minLength(3), Validators.maxLength(15)]}),
+      paypal: new FormControl({value: this.user ? this.user.paypalAccount : null}, {validators: [Validators.required, Validators.email,Validators.minLength(3), Validators.maxLength(50)]}),
     });
       this.user = this._auth.getUser();
       console.log("user")
@@ -119,7 +119,7 @@ export class SettingsComponent implements OnInit {
       
     }
     fd.append("artistName", this.updateForm.value.name?this.updateForm.value.name:this.user.email);
-    fd.append("paypalAccount", this.user.paypalAccount);
+    fd.append("paypalAccount",  this.updateForm.value.paypal?this.updateForm.value.paypal:this.user.paypalAccount);
    
 
         

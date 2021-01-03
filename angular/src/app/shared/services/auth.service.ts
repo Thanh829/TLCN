@@ -44,7 +44,6 @@ export class AuthService {
       this.getUserRoles().subscribe(
         res=>{
           this.roles=res
-          console.log(this.roles)
         }
       )
 
@@ -165,7 +164,7 @@ export class AuthService {
       });
       return is;
     }
-    else console.log("admin null")
+   
   }
 
   isArtist()
@@ -178,7 +177,7 @@ export class AuthService {
       });
       return is;
     }
-    else console.log("artist null")
+   
   }
 
   isAdmin()
@@ -191,7 +190,6 @@ export class AuthService {
       });
       return is;
     }
-    else console.log("admin null")
   }
 
   getUserInfo() {
@@ -237,7 +235,7 @@ export class AuthService {
    * Redirect the user to profile page
    */
   redirectProfile() {
-    this._router.navigate([`/artist/${this.user.artistId}`]);
+    this._router.navigate([`/artist/${this.getUser().artistId}`]);
   }
 
   isLogged() {

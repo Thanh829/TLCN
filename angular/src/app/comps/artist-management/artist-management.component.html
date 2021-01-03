@@ -22,7 +22,7 @@
                 <td>{{ artist.id }}</td>
                 <td>{{ artist.artistName }}</td>
                 <td>{{ artist.paypalAccount }}</td>
-                <td>{{ (artist.payslip-artist.payslip*0.2).toFixed(1) }}</td>
+                <td>{{ (artist.payslip).toFixed(1) }}</td>
                 <td>{{ artist.active }}</td>
                 <td>
                     <button [disabled]="artist.payslip==0" (click)="checkout(artist.id,artist.paypalAccount,artist.payslip,artist.userId)" class="btn btn-success">

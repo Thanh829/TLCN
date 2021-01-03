@@ -3,6 +3,7 @@ import { MusicPlayerService } from 'src/app/shared/services/music-player.service
 import { AuthService } from 'src/app/shared/services/auth.service';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { CartService } from 'src/app/shared/services/cart.service';
+import { MessagesService } from 'src/app/shared/services/messages.service';
 @Component({
   selector: 'app-music-player',
   templateUrl: './music-player.component.html',
@@ -25,7 +26,7 @@ export class MusicPlayerComponent implements OnInit, AfterViewInit {
   user:any
 
 
-  constructor(private _player: MusicPlayerService, private _auth: AuthService,private cartService: CartService) { }
+  constructor(private _player: MusicPlayerService, private _auth: AuthService,private cartService: CartService,private _msg:MessagesService) { }
 
   ngOnInit() {
     this._player.songObserve.subscribe((song)=>{
@@ -35,8 +36,9 @@ export class MusicPlayerComponent implements OnInit, AfterViewInit {
 
       this.song = song;
       console.log(song)
-      this.video.nativeElement.src = this.song.url;
-      const au = new Audio(this.song.url);
+      //this.video.nativeElement.src = this.song.url;
+      this.download(this.song)
+      //const au = new Audio(this.song.url);
 
      
       // Default values
@@ -52,7 +54,7 @@ export class MusicPlayerComponent implements OnInit, AfterViewInit {
         this.toggleLoop();
       }
 
-      this.play();
+     
      
     });
 
@@ -80,6 +82,8 @@ export class MusicPlayerComponent implements OnInit, AfterViewInit {
     })
 
   }
+
+
 
   ngAfterViewInit(){
     // Native element
@@ -134,6 +138,36 @@ export class MusicPlayerComponent implements OnInit, AfterViewInit {
 
 
   }
+
+  download(song) {
+    var FileSaver = require("file-saver");
+    let index = song.url.lastIndexOf("/");
+    let keyname = song.url.substring(index + 1);
+    let params = {
+      Bucket: "thanhproject",
+      Key: keyname,
+    };
+    this.cartService.bucket
+      .getObject(params, (err: any, data: any) => {
+        if (err) {
+          this._msg.danger("Can't get this file");
+        } else {
+          // response of binary data
+          // use your download function here
+          var file = new File([data.Body], keyname, {
+            type: "audio/mpeg",
+          });
+          console.log("1+ "+URL.createObjectURL(file))
+          this.video.nativeElement.src= URL.createObjectURL(file)
+          console.log("2+ "+URL.createObjectURL(file))
+          this.play();
+        }
+      })
+      .on("httpDownloadProgress", (progress) => {
+        // shows file download progress
+      });
+  }
+
   purchaseNotification(){
     Swal.fire('Hi', 'You need to purchase to listen to the whole song!', 'warning')
   }

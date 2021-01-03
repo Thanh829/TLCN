@@ -81,6 +81,7 @@ export class ArtistRevenueComponent implements OnInit {
             this.payee
           )
           .subscribe((res) => {
+            this.route.navigate(["/manage-artist"])
             this.message.success("Successfully Payment");
           });
       });

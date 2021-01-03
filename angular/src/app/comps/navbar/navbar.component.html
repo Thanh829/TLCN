@@ -29,13 +29,18 @@
     <div class="list-container">
         <i class="fas fa-times close-icon" (click)="toggleMenu()"></i>
         <ul>
-            <li *ngIf="!_auth.isAdmin && !_auth.isUser()" routerLinkActive="active"><a [routerLink]="['/user', user? user.slug : '']">Profile</a></li>
-            <li *ngIf="!_auth.isAdmin() && !_auth.isArtist()" routerLinkActive="active"><a [routerLink]="['/user']">My Songs</a></li>
-            <li *ngIf="_auth.isArtist()" routerLinkActive="active"><a [routerLink]="['/upload']">Upload</a></li>
-            <li *ngIf="_auth.isArtist()" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"><a routerLink="/setting">Settings</a></li>
-            <li *ngIf="_auth.isAdmin()" routerLinkActive="active"><a [routerLink]="['/manage-artist']">Manage Artist</a></li>
-            <li *ngIf="_auth.isAdmin()" routerLinkActive="active"><a [routerLink]="['/manage-tag']">Manage Tags</a></li>
-            <li *ngIf="_auth.isAdmin()" routerLinkActive="active" (click)="showForm()">Set Fee ({{paymentService.fee}}%)</li>
+            <!-- <li (click)="toggleMenu()" *ngIf="!_auth.isAdmin() && !_auth.isUser()" routerLinkActive="active"><a [routerLink]="['/user', user? user.slug : '']">Profile</a></li> -->
+            <li (click)="toggleMenu()" *ngIf="_auth.isArtist()" routerLinkActive="active"><a [routerLink]="['/artist', _auth.getUser()? _auth.getUser().artistId : '']">Profile</a></li>
+
+            <li (click)="toggleMenu()" *ngIf="!_auth.isAdmin() && !_auth.isArtist()" routerLinkActive="active"><a [routerLink]="['/user']">My Songs</a></li>
+            <li (click)="toggleMenu()" *ngIf="_auth.isArtist()" routerLinkActive="active"><a [routerLink]="['/upload']">Upload</a></li>
+            <li (click)="toggleMenu()" *ngIf="_auth.isArtist()" routerLinkActive="active"><a [routerLink]="['/list-invoice']">Invoice</a></li>
+            <li (click)="toggleMenu()" *ngIf="!_auth.isAdmin() && !_auth.isArtist()" routerLinkActive="active"><a [routerLink]="['/list-invoice']">Invoice</a></li>
+            <li (click)="toggleMenu()" *ngIf="_auth.isArtist()" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"><a routerLink="/setting">Settings</a></li>
+            <li (click)="toggleMenu()" *ngIf="_auth.isAdmin()" routerLinkActive="active"><a [routerLink]="['/dashboard']">Dashboard</a></li>
+            <li (click)="toggleMenu()" *ngIf="_auth.isAdmin()" routerLinkActive="active"><a [routerLink]="['/manage-artist']">Manage Artist</a></li>
+            <li (click)="toggleMenu()" *ngIf="_auth.isAdmin()" routerLinkActive="active"><a [routerLink]="['/manage-tag']">Manage Tags</a></li>
+            <li (click)="toggleMenu()" *ngIf="_auth.isAdmin()" routerLinkActive="active" (click)="showForm()">Set Fee ({{paymentService.fee}}%)</li>
             <form class="w-100 upload" [formGroup]="feeForm" *ngIf="_auth.isAdmin()&&show">
 
                 <!-- <div class="col-1 flex-end number">
@@ -52,7 +57,7 @@
 
             </form>
             <li>Tags</li>
-            <li style="position: relative;left: 20px;" routerLinkActive="active" *ngFor="let tag of tags; let i = index"><a [routerLink]="['/search', tag.id,tag.title]">{{tag.title}}</a></li>
+            <li style="position: relative;left: 20px;" routerLinkActive="active" *ngFor="let tag of tags; let i = index"><a (click)="toggleMenu()" [routerLink]="['/search', tag.id,tag.title]">{{tag.title}}</a></li>
         </ul>
         <ul>
             <li routerLinkActive="active"><a routerLink="/settings/change-password">Change Password</a></li>

@@ -15,11 +15,11 @@ export class UserCardComponent implements OnInit {
   constructor(private _auth: AuthService) { }
 
   ngOnInit() {
+
     this.loggedUser = this._auth.getUser();
     this._auth.userEmitter.subscribe((user)=>{
       this.loggedUser = user;
     });
-    console.log(this.user)
   }
 
 }

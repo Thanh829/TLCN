@@ -4,7 +4,7 @@
     </a>
     <a class="artist-name" [routerLink]="['/artist', user.id]">
       {{ user.artistName | titlecase }}
-      <span *ngIf="loggedUser && loggedUser.id == user.id" style="font-weight: 500">(You)</span>
+      <span *ngIf="loggedUser && loggedUser.artistId == user.id" style="font-weight: 500">(You)</span>
     </a>
     <div class="artist-info">
         <div class="songs">{{ user.songs.length }} Songs</div>

@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AuthService } from "src/app/shared/services/auth.service";
+import { CartService } from "src/app/shared/services/cart.service";
 import { InvoiceService } from "src/app/shared/services/invoice.service";
 import { MessagesService } from "src/app/shared/services/messages.service";
 import { PaymentService } from "src/app/shared/services/payment.service";
@@ -19,7 +20,8 @@ export class InvoiceComponent implements OnInit {
     private message: MessagesService,
     private authService: AuthService,
     private route: Router,
-    private invoiceService: InvoiceService
+    private invoiceService: InvoiceService,
+    private cartService: CartService
   ) {}
   paymentId: String;
   token: String;
@@ -70,6 +72,8 @@ export class InvoiceComponent implements OnInit {
           )
           .subscribe((res) => {
             this.message.success("Successfully Payment");
+            this.route.navigate(["/cart"])
+            this.cartService.setMyCount(0)
           });
       });
   }

@@ -29,11 +29,8 @@ export class UsersComponent implements OnInit {
       .get(`http://localhost:8090/api/v1/artist/count-active-artist`)
       .subscribe((res) => {
         this.count = res;
-        if (this.count % 4 != 0) {
-          this.count = this.count / 4 + 1;
-        } else {
+       
           this.count = this.count / 4;
-        }
 
         this.getUsers();
       });
@@ -62,6 +59,8 @@ export class UsersComponent implements OnInit {
           return u;
         });
         this.users.push(...newUsers);
+        console.log(this.page)
+        
       },
       (error) => {
         console.table(error);

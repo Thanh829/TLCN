@@ -111,7 +111,7 @@ export class SearchComponent implements OnInit {
               this.songs.push(newSongs[i]);
             }, i * this.time);
           }
-          this.page++;
+         
           if (this.page >= this.sumPage) {
             this.last = true;
             this.loading = false;
@@ -126,6 +126,7 @@ export class SearchComponent implements OnInit {
           this.loading = false;
         }
       );
+      this.page++;
   }
 
 
@@ -189,7 +190,7 @@ export class SearchComponent implements OnInit {
     userId = this._auth.getUser().id;
     console.log(userId);
     this.cartService
-      .addToCart(song.id, song.price, song.title, userId,song.avatarImage)
+      .addToCart(song.id, song.price, song.title, userId,song.avatarImage,song.artistid)
       .subscribe((res) => {
         this.cartService.setMyCount(res);
       });

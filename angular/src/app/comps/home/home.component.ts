@@ -58,8 +58,6 @@ export class HomeComponent implements OnInit {
       .get(`http://localhost:8090/api/v1/songs/all?page=${this.page}`)
       .subscribe(
         (res: any) => {
-          console.log("loi ne")
-          console.log(res)
           this.user = null;
           let newSongs = res.map(s => {
             s.path = s.url;
@@ -86,6 +84,7 @@ export class HomeComponent implements OnInit {
   addToCart(song)
   {
 
+    console.log(song)
     let userId;
     if(!this._auth.isLogged()) this.route.navigate(["/start/login"])
     userId=this._auth.getUser().id
@@ -98,7 +97,7 @@ export class HomeComponent implements OnInit {
           this.messageService.danger("You have own this song")
         }
         else {
-          this.cartService.addToCart(song.id,song.price, song.title, userId,song.avatarImage).subscribe(
+          this.cartService.addToCart(song.id,song.price, song.title, userId,song.avatarImage,song.artistid).subscribe(
             res=> {
                 this.cartService.setMyCount(res)
                 

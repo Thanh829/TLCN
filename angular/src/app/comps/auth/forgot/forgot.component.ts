@@ -40,7 +40,8 @@ export class ForgotComponent implements OnInit {
       (data: any)=>{
         //this._auth.storeData(data.expires_in, data.access_token, data.refresh_token)
         this.sentMail= true;
-        console.log(data.status)
+        console.log(data)
+        this.isLoading = false;
       },
       (error: any)=>{
         if(error.status == 400){
@@ -63,7 +64,9 @@ export class ForgotComponent implements OnInit {
     let code = this.forgotForm.value.code;
     this._auth.verify(code,email,this.forgotForm.value.password).subscribe(
       (data: any)=>{
-        console.log(data.status)
+        console.log(data)
+        this._msg.success("Success!", "Change password success");
+        this.router.navigate(['/start/login'])
       },
       (error: any)=>{
         if(error.status == 400){

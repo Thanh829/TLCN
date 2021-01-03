@@ -29,6 +29,7 @@ import { UsersComponent } from './comps/users/users.component';
 import { ModGuard } from './guards/mod.guard';
 import { AdminGuard } from './guards/admin.guard';
 import { DashboardComponent } from './comps/dashboard/dashboard.component';
+import { BannedSongComponent } from './comps/banned-song/banned-song.component';
 
 
 export const routes: Routes = [
@@ -43,6 +44,7 @@ export const routes: Routes = [
   {path: "upload", component: UploadComponent,canActivate:[ModGuard]},
   {path: "tags", component: TagComponent,canActivate:[AdminGuard]},
   {path: "test", component: TestComponent},
+  {path: "banned-song", component: BannedSongComponent},
   {path: "artist/:id", component: ArtistPageComponent},
   {path: "", component: StartComponent},
   {path: "cart", component: CartComponent,canActivate:[AuthGuardGuard]},
@@ -58,8 +60,9 @@ export const routes: Routes = [
   {path: "revenue", component: ArtistRevenueComponent/*,canActivate:[ModGuard,AdminGuard]*/},
   {path: "artist-detail-invoice", component: ArtistInvoiceComponent/*,canActivate:[ModGuard,AdminGuard]*/},
   {path: "all-artist", component: UsersComponent},
-  {path: "dashboard", component: DashboardComponent},
-  {path: "**", redirectTo: "404"},
+  {path: "dashboard", component: DashboardComponent,canActivate:[AdminGuard]},
+  
+  //{path: "**", redirectTo: "404"},
   {path: "404", component: NotFoundComponent},
 ];
 

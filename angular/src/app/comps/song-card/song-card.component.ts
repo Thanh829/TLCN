@@ -40,7 +40,6 @@ ngOnInit() {
   this.user =this._auth.getUser()
   
   // console.log(this._auth.getUser().id, this.song.user.id);
-  console.log(this._auth.isLogged());
   // if(this._auth.isLogged()){
     
   //   if(!this._auth.getUser()){
@@ -92,14 +91,12 @@ playSong(){
   {
     this.cartService.checkOwned(this.song.id,this.user.id).subscribe(
       res=> {
-        console.log(this._auth.getUser().artistId)
         if(res>0 || this._auth.isArtist()&&this._auth.getUser().artistId==this.song.artistId)
         {
           this._player.owner=true
         }
         else this._player.owner =false
 
-        console.log("owner: " + this._player.owner)
         this._player.emitSong(this.song);
       }
     )
@@ -130,7 +127,17 @@ getPlayingSong(song){
           this._msg.success("Ban song successful")
         }
       )
-  }          
+  }
+  
+  unBandSong()
+  {
+      this.userService.unBanSong(this.song.id,this.song.artistName,this.song.title).subscribe(
+        res=>{
+          this.song.banned=false
+          this._msg.success("Unban song successful")
+        }
+      )
+  } 
   addToCart()
   {
     this.songAddToCart.emit(this.song)

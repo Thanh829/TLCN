@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { MessagesService } from 'src/app/shared/services/messages.service';
 import { PlaylistService } from 'src/app/shared/services/playlist.service';
@@ -15,11 +16,12 @@ export class PlaylistComponent implements OnInit {
   showCreate:boolean=false
   playlists:any
   checklist:boolean[]
-  selectedItem:number
+  selectedItem:number=0
   song:any=null
 inputForm: FormGroup
   constructor(private playlistService: PlaylistService,
     private authService: AuthService,
+    private router: Router,
     private message: MessagesService) { }
 
   ngOnInit() {
@@ -84,6 +86,7 @@ createPlaylist()
           this.message.success("Create successful")
           this.inputForm.reset()
           this.showFormDone()
+          window.location.reload()
     }
   )
 
@@ -91,13 +94,18 @@ createPlaylist()
 
 addSongToPlaylist()
 {
+  console.log(this.selectedItem)
     let song= this.song
+    if(this.selectedItem!=0 )
+    {
     this.playlistService.addSongToPlayList(this.selectedItem,song).subscribe(
       res=>{
         this.message.success("Added")
             this.playlistService.setSong(null)
       }
     )
+    }
+    this.playlistService.setSong(null)
 }
 
 closePlaylist()

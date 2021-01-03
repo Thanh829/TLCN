@@ -1,0 +1,16 @@
+<div>
+
+    <div class="section">
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="offset-md-1"></div>
+
+            <div class="col-10 col-mdr-12">
+                <app-song-card *ngFor="let song of songs; let i = index" [song]="song" [user]="user" (songAddToCart)="addToCart($event)" (songAddToPlaylist)="addToPlaylist($event)" @songCardTrigger></app-song-card>
+                <app-fetching (bottom)="loadSong()" *ngIf="page<=noPage"></app-fetching>
+            </div>
+        </div>
+    </div>
+
+</div>

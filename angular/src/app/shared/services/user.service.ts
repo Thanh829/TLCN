@@ -38,8 +38,16 @@ export class UserService {
 
   banSong(songId,artistName,songName)
   {
-    console.log(artistName)
     return this.http.post("http://localhost:8090/api/v1/songs/ban-song",{
+      songId:songId,
+      artistName:artistName,
+      songName:songName
+    })
+  }
+
+  unBanSong(songId,artistName,songName)
+  {
+    return this.http.post("http://localhost:8090/api/v1/songs/unban-song",{
       songId:songId,
       artistName:artistName,
       songName:songName

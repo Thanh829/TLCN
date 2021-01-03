@@ -56,6 +56,7 @@ import { ArtistRevenueComponent } from './comps/artist-revenue/artist-revenue.co
 import { ArtistInvoiceComponent } from './comps/artist-invoice/artist-invoice.component';
 import { SuggestComponent } from './comps/suggest/suggest.component';
 import { DashboardComponent } from './comps/dashboard/dashboard.component';
+import { BannedSongComponent } from './comps/banned-song/banned-song.component';
 
 @NgModule({
   declarations: [
@@ -94,6 +95,7 @@ import { DashboardComponent } from './comps/dashboard/dashboard.component';
     ArtistInvoiceComponent,
     SuggestComponent,
     DashboardComponent,
+    BannedSongComponent,
   ],
   imports: [
     BrowserModule,

@@ -45,13 +45,14 @@ export class CartService {
     );
   }
 
-  addToCart(songId, price, songName, userId,avatarImage) {
+  addToCart(songId, price, songName, userId,avatarImage,artistId) {
     return this.http.post("http://localhost:8090/api/v1/cart/addtocart", {
       userId: userId,
       price: price,
       songId: songId,
       songName: songName,
-      avatar:avatarImage
+      avatar:avatarImage,
+      artistId:artistId
     });
   }
 

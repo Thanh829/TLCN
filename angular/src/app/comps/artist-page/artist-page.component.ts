@@ -56,7 +56,7 @@ export class ArtistPageComponent implements OnInit {
         .subscribe((res) => {
           console.log("res:"+res)
           this.count = res;
-          if (this.count % 4 != 0) this.noPage = this.count / 4 + 1;
+          this.noPage = this.count / 4 
           this.page = 0;
           this.loadSong();
         });
@@ -107,7 +107,7 @@ export class ArtistPageComponent implements OnInit {
     userId = this._auth.getUser().id;
     console.log(userId);
     this.cartService
-      .addToCart(song.id, song.price, song.title, userId,song.avatarImage)
+      .addToCart(song.id, song.price, song.title, userId,song.avatarImage,song.artistid)
       .subscribe((res) => {
         this.cartService.setMyCount(res);
       });
@@ -117,6 +117,7 @@ export class ArtistPageComponent implements OnInit {
     if (!this._auth.isLogged()) this.route.navigate(["/start/login"]);
     console.log(song);
     this.playlistService.setSong(song);
+
   }
 
   getAllPlaylist()

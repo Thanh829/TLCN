@@ -19,23 +19,29 @@ export class ArtistManagementComponent implements OnInit {
   pageNumber:number[]=[]
   ngOnInit() {
 
-    this.userService.countArtist().subscribe(
+    this.userService.getAllArtist().subscribe(
       res=>{
-        this.count=res
-        this.count = res;
-        if (this.count % 4 != 0) {
-          this.count = this.count / 4 + 1;
-        } else {
-          this.count = this.count / 4;
-        }
-        for (let i=1;i<=this.count;i++)
-        {
-           this.pageNumber.push(i) 
-        }
-        if(res!=0)
-        this.getPageArtist(0)
+        this.userService.countArtist().subscribe(
+          res=>{
+            this.count=res
+            this.count = res;
+            if (this.count % 4 != 0) {
+              this.count = this.count / 4 + 1;
+            } else {
+              this.count = this.count / 4;
+            }
+            for (let i=1;i<=this.count;i++)
+            {
+               this.pageNumber.push(i) 
+            }
+            if(res!=0)
+            this.getPageArtist(0)
+          }
+        )
+
       }
     )
+ 
     
   }
   getPageArtist(page)
