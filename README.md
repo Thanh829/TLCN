@@ -31,9 +31,6 @@ ng serve
 
 ```bash
 create database thebeats;
-
-spring.datasource.username= your_mysql_username
-spring.datasource.password= your_mysql_password
 ```
 
 **Change con username, password in application.properties file**
