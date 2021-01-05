@@ -43,6 +43,7 @@ export class LoginComponent implements OnInit {
         this._msg.success("Login success");
         this.cartService.getTotalItemAfterLogin()
         this._auth.refresh()
+        window.location.reload()
         
       },
       (error: any)=>{

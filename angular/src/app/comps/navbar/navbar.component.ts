@@ -69,6 +69,7 @@ export class NavbarComponent implements OnInit {
 
   logout() {
     this._auth.logout();
+    window.location.reload()
   }
   showForm() {
     this.show = !this.show;
