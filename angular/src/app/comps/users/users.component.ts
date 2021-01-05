@@ -42,6 +42,9 @@ export class UsersComponent implements OnInit {
     this._auth.artist = user;
     this.router.navigate(["/artist"]);
   }
+  onRightClick() {
+    return false;
+}
 
   getUsers() {
     // if (this.nextPage == null && !this.first) return;

@@ -1,4 +1,4 @@
-<div>
+<div (contextmenu)="onRightClick()">
     <section class="hero-section d-flex">
 
         <div class="overlay"></div>
@@ -34,7 +34,7 @@
 
 
 <!-- Users -->
-<app-users></app-users>
+<app-users (contextmenu)="onRightClick()"></app-users>
 
 <!-- Router -->
 <router-outlet></router-outlet>

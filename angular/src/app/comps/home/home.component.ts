@@ -80,6 +80,9 @@ export class HomeComponent implements OnInit {
       );
       this.page++
   }
+  onRightClick() {
+    return false;
+}
 
   addToCart(song)
   {

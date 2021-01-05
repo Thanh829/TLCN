@@ -75,7 +75,9 @@ ngOnInit() {
 
   });
 }
-
+onRightClick() {
+  return false;
+}
 playSong(){
 
   if(this.playingSong && this.playingSong.id == this.song.id){

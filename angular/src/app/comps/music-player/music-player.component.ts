@@ -24,6 +24,7 @@ export class MusicPlayerComponent implements OnInit, AfterViewInit {
   isLoop: boolean = false;
   duration:any
   user:any
+  audio:any
 
 
   constructor(private _player: MusicPlayerService, private _auth: AuthService,private cartService: CartService,private _msg:MessagesService) { }
@@ -38,7 +39,7 @@ export class MusicPlayerComponent implements OnInit, AfterViewInit {
       console.log(song)
       //this.video.nativeElement.src = this.song.url;
       this.download(this.song)
-      //const au = new Audio(this.song.url);
+     
 
      
       // Default values
@@ -47,6 +48,9 @@ export class MusicPlayerComponent implements OnInit, AfterViewInit {
       this.barWidth = "0%";
       this.video.nativeElement.volume = storedVolume ? storedVolume : 1;
       this.volumeWidth = this.video.nativeElement.volume * 100;
+
+      // this.audio.volume= storedVolume ? storedVolume : 1;
+      // this.volumeWidth = this.audio.volume * 100;
      
 
       // Disable looping
@@ -62,9 +66,11 @@ export class MusicPlayerComponent implements OnInit, AfterViewInit {
     
       if(play){
         this.video.nativeElement.play();
+        //this.audio.play()
         this.isPlaying = true;
       } else {
         this.video.nativeElement.pause();
+        // this.audio.pause()
         this.isPlaying = false;
       }
     });
@@ -88,6 +94,7 @@ export class MusicPlayerComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(){
     // Native element
     let video = this.video.nativeElement;
+    // let video = this.audio
     let owner:boolean
     
     video.addEventListener("timeupdate", ()=>{
@@ -159,6 +166,7 @@ export class MusicPlayerComponent implements OnInit, AfterViewInit {
           });
           console.log("1+ "+URL.createObjectURL(file))
           this.video.nativeElement.src= URL.createObjectURL(file)
+          //this.audio = new Audio(URL.createObjectURL(file));
           console.log("2+ "+URL.createObjectURL(file))
           this.play();
         }
