@@ -15,6 +15,7 @@
     <!-- <section class="hero-section d-flex"> -->
     <div>
         <div class="col album">
+            <span class="name btn" (click)="getAllSong()"> ALL</span>
             <div class="col col-sm-3" *ngFor="let playlist of playlists">
                 <img [src]="playlist.listSong[0]?playlist.listSong[0].avatarImage:'assets/images/placeholder.png'" class="image-album" alt="Magnetism" (click)="setSong(playlist.listSong)" />
                 <span class="name btn"> {{playlist.name}}</span>

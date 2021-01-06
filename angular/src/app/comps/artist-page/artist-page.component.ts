@@ -23,6 +23,7 @@ export class ArtistPageComponent implements OnInit {
   page: number;
   user: any = null;
   songs: any[] = [];
+  allSong: any[] = [];
   time: number = 100;
   count: any;
   noPage: number;
@@ -83,6 +84,7 @@ export class ArtistPageComponent implements OnInit {
           for (let i = 0; i < newSongs.length; i++) {
             setTimeout(() => {
               this.songs.push(newSongs[i]);
+              this.allSong.push(newSongs[i]);
             }, i * this.time);
           }
         },
@@ -97,8 +99,11 @@ export class ArtistPageComponent implements OnInit {
   {
 
     this.songs=list
-    console.log(this.songs)
 
+  }
+  getAllSong()
+  {
+    this.songs=this.allSong
   }
 
   addToCart(song) {

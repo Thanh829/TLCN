@@ -38,13 +38,19 @@
             <!-- <span class="song-plays"> <i class="fas fa-play"></i> 20.1k</span> -->
         </div>
         <div class="offset-md-1"></div>
+        <div class="btn">
+
+            <span class="song-length">{{ song.duration }}</span>
+            <!-- <span class="song-plays"> <i class="fas fa-play"></i> 20.1k</span> -->
+        </div>
+        <div class="offset-md-1"></div>
         <div *ngIf="!_auth.isAdmin() && !_auth.isArtist() && !owned" class="btn" (click)="addToCart()">
             <i class="fas fa-shopping-cart"></i>
             <!-- <span class="song-length">{{ song.time | songTime }}</span> -->
             <!-- <span class="song-plays"> <i class="fas fa-play"></i> 20.1k</span> -->
         </div>
         <div class="offset-md-1"></div>
-        <div *ngIf="_auth.isArtist()" class="btn" (click)="addToPlaylist()">
+        <div *ngIf="_auth.isArtist() && canAddToPlayList" class="btn" (click)="addToPlaylist()">
             <i class="fas fa-plus"></i>
 
             <!-- <span class="song-plays"> <i class="fas fa-play"></i> 20.1k</span> -->

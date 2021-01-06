@@ -184,9 +184,24 @@ onKey()
     //let headers = new HttpHeaders()
     //  .set("Accept", "application/json")
     //  .set("Authorization", "Bearer " + token);
+    let fd = new FormData();
+    let audio = new Audio();
+    audio.src = URL.createObjectURL(this.file);
+    let time = "";
+    audio.preload = "metadata";
+    let load =false;
+    audio.onloadedmetadata = function () {
+      time =
+        parseInt((audio.duration / 60).toString()) +
+        ":" +
+        (audio.duration % 60);
+        console.log(time.substring(0,4))
+        fd.append("duration",time.substring(0,4))
+        load=true
+    };
     console.log("upload")
     // Form data
-    let fd = new FormData();
+    
 
     fd.append("title", this.uploadForm.value.name);
 
@@ -196,44 +211,46 @@ onKey()
     }
     fd.append("tags[]", this.uploadForm.value.tags);
     fd.append("price", this.uploadForm.value.price);
-
+   
     fd.append("song", this.file);
     fd.append("image",this.imageFile)
     fd.append("artistId",this._auth.getUser().artistId)
     //Upload file
     this.loading = true;
-    this._http
-      .post("http://localhost:8090/api/v1/songs/add", fd, {
-     //   headers: headers,
-        reportProgress: true,
-        observe: "events"
-      })
-      .subscribe(
-        (event: any) => {
-          // Upload progress
-          if (event.type == HttpEventType.UploadProgress) {
-            this.width = (event.loaded / event.total) * 100;
-            console.log(this.width + "%");
-            return;
-          } else if (event.type == HttpEventType.Response) {
-            // Redirect the user to the profile page
-            //this._auth.redirectProfile();
-            this._auth.redirectProfile();
-            this._msg.success("Congratulations!", "Your song uploaded successfully");
+    setTimeout(() => this._http
+    .post("http://localhost:8090/api/v1/songs/add", fd, {
+   //   headers: headers,
+      reportProgress: true,
+      observe: "events"
+    })
+    .subscribe(
+      (event: any) => {
+        // Upload progress
+        if (event.type == HttpEventType.UploadProgress) {
+          this.width = (event.loaded / event.total) * 100;
+          console.log(this.width + "%");
+          return;
+        } else if (event.type == HttpEventType.Response) {
+          // Redirect the user to the profile page
+          //this._auth.redirectProfile();
+          this._auth.redirectProfile();
+          this._msg.success("Congratulations!", "Your song uploaded successfully");
 
-            // Increase number of songs
-            //this._auth.addSongNumber(1);
-          }
-        },
-        error => {
-          console.log(error);
-          this._msg.danger("Error!", "Something went wrong uploading the song.");
-          this.loading = false;
-        },
-        () => {
-          this.loading = false;
+          // Increase number of songs
+          //this._auth.addSongNumber(1);
         }
-      );
+      },
+      error => {
+        console.log(error);
+        this._msg.danger("Error!", "Something went wrong uploading the song.");
+        this.loading = false;
+      },
+      () => {
+        this.loading = false;
+      }
+    ) ,4000)
+   
+
   }
 
   /**

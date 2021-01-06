@@ -23,6 +23,7 @@ export class SongCardComponent implements OnInit {
   isOwner: boolean = false;
   isPlaying: boolean = false;
   playingSong: any = null;
+  canAddToPlayList:boolean=false
 
   owned:boolean = false;
   constructor(private _player: MusicPlayerService, 
@@ -34,6 +35,8 @@ export class SongCardComponent implements OnInit {
                { }
 
 ngOnInit() {
+  if (window.location.href!='http://localhost:4200/start')
+  this.canAddToPlayList=true;
   if(this.user){
     this.song.user = this.user;
    
@@ -126,17 +129,21 @@ getPlayingSong(song){
 checkOwn()
 {
     let userId;
-    userId=this._auth.getUser().id
-    console.log(userId)
-    this.cartService.checkOwned(this.song.id,userId).subscribe(
-      res=> {console.log("res"+ res)
-        if(res>0)
-        {
-         this.owned=true
-          
+    
+    if(this._auth.getUser()!=null)
+    {
+      userId=this._auth.getUser().id
+      this.cartService.checkOwned(this.song.id,userId).subscribe(
+        res=> {console.log("res"+ res)
+          if(res>0)
+          {
+           this.owned=true
+            
+          }
         }
-      }
-    )
+      )
+    }
+   
 }
               
   bandSong()

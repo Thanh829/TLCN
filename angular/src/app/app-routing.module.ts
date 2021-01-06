@@ -54,7 +54,7 @@ export const routes: Routes = [
   {path: "user-playlists", component: UserPlaylistsComponent},
   {path: "playlist", component: PlaylistComponent,canActivate:[ModGuard]},
   {path: "forgot", component: ForgotComponent},
-  {path: "settings/change-password", component: ChangePasswordComponent,canActivate:[AuthGuardGuard]},
+  {path: "settings/change-password", component: ChangePasswordComponent},
   {path: "manage-artist", component: ArtistManagementComponent,canActivate:[AdminGuard]},
   {path: "manage-tag", component: TagManagementComponent,canActivate:[AdminGuard]},
   {path: "revenue", component: ArtistRevenueComponent/*,canActivate:[ModGuard,AdminGuard]*/},

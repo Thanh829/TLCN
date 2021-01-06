@@ -76,6 +76,7 @@ export class SearchComponent implements OnInit {
           console.log("count ne: " + this.sumPage);
           this.page = 0;
           this.searchByQuery();
+          console.log("by query")
           this.last = false;
         });
       }

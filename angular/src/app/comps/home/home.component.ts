@@ -42,7 +42,7 @@ export class HomeComponent implements OnInit {
     this._http.get("http://localhost:8090/api/v1/songs/count").subscribe(
      res=>{
        this.count=res
-       if(this.count % 4!=0) this.noPage=this.count/4 +1 
+        this.noPage= this.count 
        this.page=0
        this.loadSong()
      }
@@ -53,6 +53,8 @@ export class HomeComponent implements OnInit {
   loadSong() {
 
     this.loading = true;
+    console.log(this.page)
+    console.log(this.noPage)
     // Search
     this._http
       .get(`http://localhost:8090/api/v1/songs/all?page=${this.page}`)
