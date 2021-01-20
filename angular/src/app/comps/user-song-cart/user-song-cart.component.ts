@@ -76,17 +76,40 @@ export class UserSongCartComponent implements OnInit {
     });
   }
 
-  playSong() {
-    if (this.playingSong && this.playingSong.id == this.song.id) {
-      if (this.isPlaying) {
+  playSong(){
+
+    if(this.playingSong && this.playingSong.id == this.song.id){
+      
+      if(this.isPlaying){
         this._player.pause();
       } else {
         this._player.play();
       }
-    } else {
+      
+    } 
+    else if(this.user)
+    {
+      this.cartService.checkOwned(this.song.id,this.user.id).subscribe(
+        res=> {
+          console.log(res)
+          if(res>0 || this._auth.isArtist()&&this._auth.getUser().artistId==this.song.artistId)
+          {
+            this._player.owner=true
+          }
+          else this._player.owner =false
+  
+          this._player.emitSong(this.song);
+        }
+      )
+     
+    }
+    else{
+      this._player.owner =false
       this._player.emitSong(this.song);
     }
+    
   }
+  
 
   getPlayingSong(song) {
     if (song == null) {

@@ -154,6 +154,7 @@ export class MusicPlayerComponent implements OnInit, AfterViewInit {
       Bucket: "thanhproject",
       Key: keyname,
     };
+    console.log(keyname)
     this.cartService.bucket
       .getObject(params, (err: any, data: any) => {
         if (err) {
@@ -164,10 +165,9 @@ export class MusicPlayerComponent implements OnInit, AfterViewInit {
           var file = new File([data.Body], keyname, {
             type: "audio/mpeg",
           });
-          console.log("1+ "+URL.createObjectURL(file))
+          //console.log("1+ "+URL.createObjectURL(file))
           this.video.nativeElement.src= URL.createObjectURL(file)
           //this.audio = new Audio(URL.createObjectURL(file));
-          console.log("2+ "+URL.createObjectURL(file))
           this.play();
         }
       })
